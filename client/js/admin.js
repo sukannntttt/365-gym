@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (u.pendingTxnId) {
-          feeDateStr += `<br><span style="color:#feca57; font-size:0.75rem; font-weight:normal;">Txn: ${u.pendingTxnId}</span>`;
+          feeDateStr += `<br><span style="color:#feca57; font-size:0.75rem; font-weight:bold;">Txn: ${u.pendingTxnId} [${u.pendingTier || 'PRO'}]</span>`;
         }
         
         let roleHtml = `<span class="role-user">User</span>`;

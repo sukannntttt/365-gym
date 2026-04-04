@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IronForge — Dashboard</title>
+  <title>365 FITNESS GYM — Dashboard</title>
   <meta name="description" content="Your personal gym dashboard — track workouts, diet, BMI and progress." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -15,7 +15,7 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <span class="brand-icon">⚡</span>
-      <span class="brand-name">IronForge</span>
+      <span class="brand-name">365 FITNESS GYM</span>
     </div>
     <nav class="sidebar-nav">
       <a href="dashboard.html" class="nav-item active" id="nav-dashboard">
@@ -48,7 +48,7 @@
   <!-- Mobile Top Bar -->
   <header class="mobile-header">
     <button class="hamburger" onclick="toggleSidebar()" id="hamburger-btn">☰</button>
-    <span class="brand-name">⚡ IronForge</span>
+    <span class="brand-name">⚡ 365 FITNESS GYM</span>
   </header>
 
   <!-- Main Content -->
@@ -57,7 +57,10 @@
     
     <div class="page-header">
       <div>
-        <h1 id="greeting">Good morning!</h1>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <h1 id="greeting">Good morning!</h1>
+          <span id="membership-badge" style="font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; background: var(--surface2); color: var(--accent); border: 1px solid var(--accent); box-shadow: 0 0 15px var(--accent-glow);">FREE</span>
+        </div>
         <p class="page-sub" id="user-goal-label">Loading your profile…</p>
       </div>
       <div class="date-pill">📅 <span id="today-date"></span></div>
@@ -65,11 +68,18 @@
 
     <!-- Stats Row -->
     <div class="stats-grid">
-      <div class="stat-card" id="stat-bmi">
-        <div class="stat-icon">⚖️</div>
+      <div class="stat-card" id="stat-volume">
+        <div class="stat-icon">🏋️‍♂️</div>
         <div class="stat-info">
-          <div class="stat-value" id="bmi-val">—</div>
-          <div class="stat-label">BMI</div>
+          <div class="stat-value" id="weekly-volume">—</div>
+          <div class="stat-label">Weekly Volume (kg)</div>
+        </div>
+      </div>
+      <div class="stat-card" id="stat-calories">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-info">
+          <div class="stat-value" id="avg-calories">—</div>
+          <div class="stat-label">Avg Calories/Day</div>
         </div>
       </div>
       <div class="stat-card" id="stat-weight">
@@ -80,17 +90,10 @@
         </div>
       </div>
       <div class="stat-card" id="stat-logs">
-        <div class="stat-icon">🔥</div>
+        <div class="stat-icon">✅</div>
         <div class="stat-info">
           <div class="stat-value" id="log-count">—</div>
-          <div class="stat-label">Workouts Logged</div>
-        </div>
-      </div>
-      <div class="stat-card" id="stat-goal">
-        <div class="stat-icon">🎯</div>
-        <div class="stat-info">
-          <div class="stat-value" id="goal-val">—</div>
-          <div class="stat-label">Your Goal</div>
+          <div class="stat-label">Workouts (7d)</div>
         </div>
       </div>
     </div>

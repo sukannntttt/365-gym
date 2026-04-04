@@ -83,3 +83,15 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 ## Contact
 
 For any inquiries, please reach out to [your-email@example.com].
+
+## API Endpoints
+
+- **Get All Users**: `GET /api/users`
+- **Get User by ID**: `GET /api/users/:id`
+- **Create New User**: `POST /api/users`
+- **Update User**: `PUT /api/users/:id`
+- **Delete User**: `DELETE /api/users/:id`
+
+## Deployment
+
+The application is deployed on Render. You can access the live demo at [Iron Forge Gym](https://gym-backend-aukv.onrender.com/).

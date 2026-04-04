@@ -22,11 +22,12 @@
   --error: #ff5b6d;
   --warn: #ffb347;
   --sidebar-w: 240px;
-  --radius: 18px;
-  --radius-sm: 12px;
-  --radius-xs: 8px;
-  --shadow: 0 8px 32px rgba(0,0,0,0.4);
-  --transition: 0.2s ease;
+  --radius: 20px;
+  --radius-sm: 14px;
+  --radius-xs: 10px;
+  --shadow-3d: 0 10px 25px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.05);
+  --shadow-inset: inset 0 4px 10px rgba(0,0,0,0.6), inset 0 1px 2px rgba(0,0,0,0.4);
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ---- RESET & BASE ---- */
@@ -236,17 +237,27 @@ input, select, textarea { font-family: 'Outfit', sans-serif; }
   cursor: default;
   /* 3D Stat Box Elevation */
   box-shadow: 
-    inset 0 1px 1px rgba(255,255,255,0.05),
-    0 10px 20px rgba(0,0,0,0.5);
+    inset 0 1px 2px rgba(255,255,255,0.07),
+    0 12px 30px rgba(0,0,0,0.6);
   transform-style: preserve-3d;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
 }
 .stat-card:hover {
-  transform: translateY(-5px) perspective(1000px) rotateX(2deg);
-  border-color: rgba(108, 99, 255, 0.4);
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(108, 99, 255, 0.5);
   box-shadow: 
-    inset 0 1px 1px rgba(255,255,255,0.1),
-    0 20px 40px rgba(0,0,0,0.8),
-    0 0 30px var(--accent-glow);
+    inset 0 1px 2px rgba(255,255,255,0.1),
+    0 25px 50px rgba(0,0,0,0.8),
+    0 0 35px var(--accent-glow);
 }
 .stat-icon { font-size: 2rem; }
 .stat-value {
@@ -335,23 +346,25 @@ input, select, textarea { font-family: 'Outfit', sans-serif; }
 }
 .form-group input,
 .form-group select {
-  background: rgba(0,0,0,0.3);
-  border: 1px solid rgba(0,0,0,0.8);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  /* Premium Carved Look */
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(0,0,0,0.9);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  border-right: 1px solid rgba(255,255,255,0.02);
   border-radius: var(--radius-xs);
-  padding: 0.65rem 0.9rem;
+  padding: 0.75rem 1rem;
   color: var(--text);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
   width: 100%;
-  /* Carved Screen effect */
-  box-shadow: inset 0 4px 6px rgba(0,0,0,0.6), inset 0 2px 4px rgba(0,0,0,0.4);
+  box-shadow: var(--shadow-inset);
 }
 .form-group input:focus,
 .form-group select:focus {
   border-color: var(--accent);
-  box-shadow: inset 0 4px 6px rgba(0,0,0,0.6), 0 0 0 2px var(--accent-glow);
+  background: rgba(0,0,0,0.5);
+  box-shadow: var(--shadow-inset), 0 0 0 3px var(--accent-glow);
 }
 .form-group input[type="date"] { color-scheme: dark; }
 
@@ -370,28 +383,35 @@ input, select, textarea { font-family: 'Outfit', sans-serif; }
   cursor: pointer;
   transition: transform 0.1s, box-shadow 0.1s, opacity 0.2s;
   /* 3D Button Shadows (Dashboard Size) */
+  /* Premium 3D Push Button */
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: var(--radius-xs);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
   box-shadow: 
-    inset 0 1px 1px rgba(255,255,255,0.3),
-    0 5px 0 #4a45ad,
-    0 6px 15px rgba(0,0,0,0.4),
-    0 4px 15px var(--accent-glow);
-  transform: translateY(-3px);
+    inset 0 1px 1px rgba(255,255,255,0.4),
+    0 4px 0 #4338ca,
+    0 8px 20px rgba(0,0,0,0.5);
+  transform: translateY(-2px);
+  position: relative;
 }
 .btn-primary:hover { 
-  transform: translateY(-5px); 
+  transform: translateY(-4px); 
   box-shadow: 
-    inset 0 1px 1px rgba(255,255,255,0.3),
-    0 7px 0 #4a45ad,
-    0 10px 20px rgba(0,0,0,0.5),
-    0 4px 20px var(--accent-glow);
+    inset 0 1px 1px rgba(255,255,255,0.4),
+    0 6px 0 #4338ca,
+    0 12px 25px rgba(0,0,0,0.6);
 }
 .btn-primary:active { 
   transform: translateY(2px); 
   box-shadow: 
     inset 0 1px 1px rgba(255,255,255,0.1),
-    0 0 0 #4a45ad,
-    0 2px 5px rgba(0,0,0,0.4),
-    0 0 10px var(--accent-glow);
+    0 0 0 #4338ca,
+    0 2px 5px rgba(0,0,0,0.4);
 }
 .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
 .btn-sm { padding: 0.6rem 1.2rem; font-size: 0.85rem; }

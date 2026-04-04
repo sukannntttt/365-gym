@@ -23,14 +23,12 @@ let chartInstance = null;
   document.getElementById('user-goal-label').textContent =
     `Goal: ${currentUser.goal || 'Not set'} · ${currentUser.height || '—'}cm · ${currentUser.weight || '—'}kg`;
 
-  document.getElementById('goal-val').textContent =
-    (currentUser.goal || '—').replace(/\b\w/g, c => c.toUpperCase());
+  // Membership Badge
+  const badge = document.getElementById('membership-badge');
+  badge.textContent = currentUser.membershipTier || 'FREE';
+  if (currentUser.membershipTier === 'Pro') badge.style.color = '#3b82f6', badge.style.borderColor = '#3b82f6';
+  if (currentUser.membershipTier === 'Elite') badge.style.color = '#f59e0b', badge.style.borderColor = '#f59e0b';
 
-  // BMI stat
-  if (currentUser.weight && currentUser.height) {
-    const bmi = (currentUser.weight / ((currentUser.height / 100) ** 2)).toFixed(1);
-    document.getElementById('bmi-val').textContent = bmi;
-  }
   document.getElementById('cur-weight').textContent = currentUser.weight || '—';
 
   // Fee Check
@@ -66,8 +64,19 @@ let chartInstance = null;
   }
 
   // Load all parallel data
-  await Promise.all([loadDiet(), loadLogs(), loadProgress()]);
+  await Promise.all([loadDiet(), loadLogs(), loadProgress(), loadAnalytics()]);
 })();
+
+async function loadAnalytics() {
+  try {
+    const stats = await authFetch('/api/analytics/stats');
+    document.getElementById('weekly-volume').textContent = stats.weeklyVolume ? stats.weeklyVolume.toLocaleString() : '0';
+    document.getElementById('avg-calories').textContent = stats.avgDailyCalories ? stats.avgDailyCalories.toLocaleString() : '0';
+    document.getElementById('log-count').textContent = stats.workoutCount || '0';
+  } catch (err) {
+    console.error('Failed to load analytics:', err);
+  }
+}
 
 async function loadDiet() {
   if (!currentUser?.goal) {
@@ -222,4 +231,10 @@ async function handleQuickLog(e) {
 // Payment trigger
 window.createPayment = function() {
   window.location.href = 'checkout.html';
+};
+
+// Sidebar Toggle (Mobile)
+window.toggleSidebar = function() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.classList.toggle('active');
 };
