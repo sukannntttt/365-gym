@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IronForge — Progress Tracker</title>
+  <meta name="description" content="Track your weight and fitness progress over time with visual charts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="brand-icon">⚡</span><span class="brand-name">IronForge</span></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item" id="nav-dashboard"><span class="nav-icon">🏠</span><span>Dashboard</span></a>
+      <a href="workout.html" class="nav-item" id="nav-workout"><span class="nav-icon">🏋️</span><span>Workouts</span></a>
+      <a href="diet.html" class="nav-item" id="nav-diet"><span class="nav-icon">🥗</span><span>Diet Plan</span></a>
+      <a href="log.html" class="nav-item" id="nav-log"><span class="nav-icon">📋</span><span>Workout Log</span></a>
+      <a href="progress.html" class="nav-item active" id="nav-progress"><span class="nav-icon">📈</span><span>Progress</span></a>
+      <a href="bmi.html" class="nav-item" id="nav-bmi"><span class="nav-icon">⚖️</span><span>BMI Calculator</span></a>
+          <a href="settings.html" class="nav-item" id="nav-settings">
+        <span class="nav-icon">⚙️</span><span>Settings</span>
+      </a>
+    </nav>
+    <button class="logout-btn" onclick="logout()"><span>🚪</span> Logout</button>
+  </aside>
+  <header class="mobile-header">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <span class="brand-name">⚡ IronForge</span>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h1>📈 Progress Tracker</h1>
+        <p class="page-sub">Visualize your weight journey over time.</p>
+      </div>
+    </div>
+
+    <div class="log-layout">
+      <!-- Log Weight Form -->
+      <div class="card log-form-card">
+        <h2 class="card-title">⚖️ Log Weight</h2>
+        <form id="progress-form" onsubmit="handleAddProgress(event)">
+          <div class="form-group">
+            <label>Weight (kg)</label>
+            <input type="number" id="prog-weight" placeholder="e.g. 75.5" step="0.1" required />
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="prog-date" />
+          </div>
+          <button type="submit" class="btn-primary" id="prog-submit-btn">
+            <span class="btn-text">Save Entry</span>
+            <span class="btn-loader hidden">⏳</span>
+          </button>
+          <div id="prog-msg" class="success-msg"></div>
+        </form>
+
+        <!-- Stats Summary -->
+        <div class="progress-stats" id="progress-stats"></div>
+      </div>
+
+      <!-- Chart -->
+      <div class="card" style="flex:2">
+        <h2 class="card-title">📊 Weight Over Time</h2>
+        <canvas id="weight-chart" height="300"></canvas>
+        <p class="chart-empty hidden" id="chart-empty-prog">No entries yet. Start logging your weight!</p>
+      </div>
+    </div>
+
+    <!-- Entries Table -->
+    <div class="card" style="margin-top: 1.5rem;">
+      <h2 class="card-title">📋 All Entries</h2>
+      <div id="progress-list">
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="src/api.js"></script>
+  <script src="src/auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/progress.js"></script>
+</body>
+</html>

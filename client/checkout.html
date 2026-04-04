@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complete Payment — IronForge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <style>
+    .qr-container {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      margin: 15px auto;
+      width: 250px;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .qr-placeholder {
+      color: #000;
+      text-align: center;
+      font-weight: bold;
+    }
+    .instruction-text {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .amt-pill {
+      display: inline-block;
+      background: rgba(34, 211, 165, 0.15);
+      color: var(--success);
+      border: 1px solid rgba(34, 211, 165, 0.3);
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-wrapper" style="text-align: center; max-width: 500px;">
+    <div class="brand" style="margin-bottom: 10px;">
+      <h1 class="brand-name">Secure Checkout</h1>
+    </div>
+
+    <div class="amt-pill">₹1200</div>
+    <p class="instruction-text">
+      Scan the QR code below using any UPI app (GPay, PhonePe, Paytm) to pay your monthly gym membership fee.
+    </p>
+
+    <!-- Replace src with your actual QR code image path -->
+    <div class="qr-container">
+      <img src="img/upi-qr.png" alt="UPI QR Code" style="max-width: 100%; height: auto; display: none;" id="real-qr" onerror="this.style.display='none'; document.getElementById('placeholder-qr').style.display='block';" onload="this.style.display='block'; document.getElementById('placeholder-qr').style.display='none';" />
+      <div id="placeholder-qr" class="qr-placeholder">
+        [Upload upi-qr.png to img/ directory]
+      </div>
+    </div>
+
+    <form class="auth-form" id="txn-form" style="margin-top: 20px; text-align: left;">
+      <div class="form-group">
+        <label>Transaction ID / UTR Number</label>
+        <input type="text" id="txn-id" placeholder="Enter 12-digit UPI reference number" required />
+      </div>
+      <div id="msg" style="margin-bottom: 10px; font-weight: bold;"></div>
+      <button type="submit" class="btn-primary" id="submit-btn" style="width: 100%;">
+        Submit for Verification
+      </button>
+      <a href="dashboard.html" style="color: var(--text-muted); text-align: center; display: block; margin-top: 15px; font-size: 0.9rem;">
+        Cancel and return to dashboard
+      </a>
+    </form>
+  </div>
+
+  <script src="src/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!localStorage.getItem('token')) {
+        window.location.href = 'index.html';
+      }
+
+      document.getElementById('txn-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        const msg = document.getElementById('msg');
+        const txnId = document.getElementById('txn-id').value;
+
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        try {
+          const res = await fetch(`${BASE}/api/payment/submit-txn`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ txnId })
+          });
+
+          const data = await res.json();
+          if (res.ok) {
+            msg.style.color = '#1dd1a1';
+            msg.textContent = '✅ Submitted successfully! Redirecting...';
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 2000);
+          } else {
+            msg.style.color = '#ff6b6b';
+            msg.textContent = data.message || 'Failed to submit transaction.';
+            btn.disabled = false;
+            btn.textContent = 'Submit for Verification';
+          }
+        } catch (err) {
+          msg.style.color = '#ff6b6b';
+          msg.textContent = 'Network error.';
+          btn.disabled = false;
+          btn.textContent = 'Submit for Verification';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

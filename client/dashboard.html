@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IronForge — Dashboard</title>
+  <meta name="description" content="Your personal gym dashboard — track workouts, diet, BMI and progress." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-name">IronForge</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item active" id="nav-dashboard">
+        <span class="nav-icon">🏠</span><span>Dashboard</span>
+      </a>
+      <a href="workout.html" class="nav-item" id="nav-workout">
+        <span class="nav-icon">🏋️</span><span>Workouts</span>
+      </a>
+      <a href="diet.html" class="nav-item" id="nav-diet">
+        <span class="nav-icon">🥗</span><span>Diet Plan</span>
+      </a>
+      <a href="log.html" class="nav-item" id="nav-log">
+        <span class="nav-icon">📋</span><span>Workout Log</span>
+      </a>
+      <a href="progress.html" class="nav-item" id="nav-progress">
+        <span class="nav-icon">📈</span><span>Progress</span>
+      </a>
+      <a href="bmi.html" class="nav-item" id="nav-bmi">
+        <span class="nav-icon">⚖️</span><span>BMI Calculator</span>
+      </a>
+          <a href="settings.html" class="nav-item" id="nav-settings">
+        <span class="nav-icon">⚙️</span><span>Settings</span>
+      </a>
+    </nav>
+    <button class="logout-btn" onclick="logout()">
+      <span>🚪</span> Logout
+    </button>
+  </aside>
+
+  <!-- Mobile Top Bar -->
+  <header class="mobile-header">
+    <button class="hamburger" onclick="toggleSidebar()" id="hamburger-btn">☰</button>
+    <span class="brand-name">⚡ IronForge</span>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div id="fee-reminder-container"></div>
+    
+    <div class="page-header">
+      <div>
+        <h1 id="greeting">Good morning!</h1>
+        <p class="page-sub" id="user-goal-label">Loading your profile…</p>
+      </div>
+      <div class="date-pill">📅 <span id="today-date"></span></div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-grid">
+      <div class="stat-card" id="stat-bmi">
+        <div class="stat-icon">⚖️</div>
+        <div class="stat-info">
+          <div class="stat-value" id="bmi-val">—</div>
+          <div class="stat-label">BMI</div>
+        </div>
+      </div>
+      <div class="stat-card" id="stat-weight">
+        <div class="stat-icon">📊</div>
+        <div class="stat-info">
+          <div class="stat-value" id="cur-weight">—</div>
+          <div class="stat-label">Current Weight (kg)</div>
+        </div>
+      </div>
+      <div class="stat-card" id="stat-logs">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-info">
+          <div class="stat-value" id="log-count">—</div>
+          <div class="stat-label">Workouts Logged</div>
+        </div>
+      </div>
+      <div class="stat-card" id="stat-goal">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-info">
+          <div class="stat-value" id="goal-val">—</div>
+          <div class="stat-label">Your Goal</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two-col cards -->
+    <div class="dashboard-grid">
+      <!-- Quick Workout Log -->
+      <div class="card">
+        <div class="card-header">
+          <h2>⚡ Quick Log</h2>
+          <a href="log.html" class="card-link">See all →</a>
+        </div>
+        <form id="quick-log-form" onsubmit="handleQuickLog(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Exercise</label>
+              <input type="text" id="ql-exercise" placeholder="e.g. Bench Press" required />
+            </div>
+            <div class="form-group">
+              <label>Sets</label>
+              <input type="number" id="ql-sets" placeholder="3" min="1" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Reps</label>
+              <input type="number" id="ql-reps" placeholder="10" min="1" required />
+            </div>
+            <div class="form-group">
+              <label>Weight (kg)</label>
+              <input type="number" id="ql-weight" placeholder="60" step="0.5" />
+            </div>
+          </div>
+          <button type="submit" class="btn-primary btn-sm">Log Exercise</button>
+          <div id="ql-msg" class="success-msg"></div>
+        </form>
+      </div>
+
+      <!-- Today's Diet Summary -->
+      <div class="card">
+        <div class="card-header">
+          <h2>🥗 Diet Plan</h2>
+          <a href="diet.html" class="card-link">Full plan →</a>
+        </div>
+        <div id="diet-summary">
+          <div class="loading-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Chart + Recent Logs -->
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-header">
+          <h2>📈 Weight Progress</h2>
+          <a href="progress.html" class="card-link">Log weight →</a>
+        </div>
+        <canvas id="progress-chart" height="200"></canvas>
+        <p class="chart-empty hidden" id="chart-empty">No progress entries yet. Start logging your weight!</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>📋 Recent Workouts</h2>
+          <a href="log.html" class="card-link">View all →</a>
+        </div>
+        <div id="recent-logs">
+          <div class="loading-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="src/api.js"></script>
+  <script src="src/auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

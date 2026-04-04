@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verifying Email Update — IronForge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <div class="brand">
+      <div class="brand-icon">🔄</div>
+      <h1 class="brand-name">Email Update</h1>
+      <p class="brand-tagline">Verifying your authorization link...</p>
+    </div>
+
+    <div class="auth-form" style="text-align: center;">
+      <div id="status-msg" style="font-size: 1.2rem; margin-bottom: 20px; color: var(--primary);">
+        ⏳ Processing your request...
+      </div>
+      <a href="index.html" class="btn-primary" style="display:inline-block; text-decoration:none;" id="home-btn">
+        Return to Login
+      </a>
+    </div>
+  </div>
+
+  <script src="src/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      const statusEl = document.getElementById('status-msg');
+
+      if (!token) {
+        statusEl.textContent = '❌ Invalid or missing verification link.';
+        statusEl.style.color = '#ff6b6b';
+        return;
+      }
+
+      try {
+        const res = await fetch(`${BASE}/api/auth/email/verify/${token}`, {
+          method: 'POST'
+        });
+        
+        const data = await res.json();
+        
+        if (res.ok) {
+          statusEl.textContent = '✅ Email successfully changed! Please log in again.';
+          statusEl.style.color = '#1dd1a1';
+          localStorage.removeItem('token'); // Force them to login with new email
+        } else {
+          statusEl.textContent = '❌ ' + (data.message || 'Failed to verify email.');
+          statusEl.style.color = '#ff6b6b';
+        }
+      } catch (err) {
+        statusEl.textContent = '❌ Network error.';
+        statusEl.style.color = '#ff6b6b';
+      }
+    });
+  </script>
+</body>
+</html>

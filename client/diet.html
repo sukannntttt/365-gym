@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IronForge — Diet Plan</title>
+  <meta name="description" content="Your personalized nutrition plan based on your fitness goal." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="brand-icon">⚡</span><span class="brand-name">IronForge</span></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item" id="nav-dashboard"><span class="nav-icon">🏠</span><span>Dashboard</span></a>
+      <a href="workout.html" class="nav-item" id="nav-workout"><span class="nav-icon">🏋️</span><span>Workouts</span></a>
+      <a href="diet.html" class="nav-item active" id="nav-diet"><span class="nav-icon">🥗</span><span>Diet Plan</span></a>
+      <a href="log.html" class="nav-item" id="nav-log"><span class="nav-icon">📋</span><span>Workout Log</span></a>
+      <a href="progress.html" class="nav-item" id="nav-progress"><span class="nav-icon">📈</span><span>Progress</span></a>
+      <a href="bmi.html" class="nav-item" id="nav-bmi"><span class="nav-icon">⚖️</span><span>BMI Calculator</span></a>
+          <a href="settings.html" class="nav-item" id="nav-settings">
+        <span class="nav-icon">⚙️</span><span>Settings</span>
+      </a>
+    </nav>
+    <button class="logout-btn" onclick="logout()"><span>🚪</span> Logout</button>
+  </aside>
+  <header class="mobile-header">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <span class="brand-name">⚡ IronForge</span>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h1>🥗 Diet Plan</h1>
+        <p class="page-sub" id="diet-subtitle">Your personalized nutrition plan</p>
+      </div>
+    </div>
+
+    <!-- Macro cards -->
+    <div class="macro-grid" id="macro-grid">
+      <div class="loading-full"><div class="loading-dots"><span></span><span></span><span></span></div></div>
+    </div>
+
+    <!-- Meals -->
+    <div class="meals-section" id="meals-section"></div>
+  </main>
+
+  <script src="src/api.js"></script>
+  <script src="src/auth.js"></script>
+  <script src="js/diet.js"></script>
+</body>
+</html>

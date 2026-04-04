@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IronForge — Admin Panel</title>
+  <meta name="description" content="Admin Dashboard for IronForge." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <style>
+    /* Specific Admin UI Tweaks */
+    .admin-header { display: flex; justify-content: space-between; align-items: center; }
+    .badge-admin { background: rgba(255,107,107,0.2); color: #ff6b6b; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    
+    .table-container { margin-top: 2rem; overflow-x: auto; }
+    .admin-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .admin-table th, .admin-table td { padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .admin-table th { color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+    .admin-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+    
+    .role-user { color: var(--accent-blue); }
+    .role-admin { color: #ff6b6b; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-name">IronForge</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item" id="nav-dashboard">
+        <span class="nav-icon">🏠</span><span>Dashboard</span>
+      </a>
+      <a href="workout.html" class="nav-item" id="nav-workout">
+        <span class="nav-icon">🏋️</span><span>Workouts</span>
+      </a>
+      <a href="diet.html" class="nav-item" id="nav-diet">
+        <span class="nav-icon">🥗</span><span>Diet Plan</span>
+      </a>
+      <a href="log.html" class="nav-item" id="nav-log">
+        <span class="nav-icon">📋</span><span>Workout Log</span>
+      </a>
+      <a href="progress.html" class="nav-item" id="nav-progress">
+        <span class="nav-icon">📈</span><span>Progress</span>
+      </a>
+      <a href="bmi.html" class="nav-item" id="nav-bmi">
+        <span class="nav-icon">⚖️</span><span>BMI Calculator</span>
+      </a>
+      <!-- Admin Link is injected via auth.js if applicable -->
+          <a href="settings.html" class="nav-item" id="nav-settings">
+        <span class="nav-icon">⚙️</span><span>Settings</span>
+      </a>
+    </nav>
+    <button class="logout-btn" onclick="logout()">
+      <span>🚪</span> Logout
+    </button>
+  </aside>
+
+  <!-- Mobile Top Bar -->
+  <header class="mobile-header">
+    <button class="hamburger" onclick="toggleSidebar()" id="hamburger-btn">☰</button>
+    <span class="brand-name">⚡ IronForge</span>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-header admin-header">
+      <div>
+        <h1>Control Panel <span class="badge-admin">ADMIN ONLY</span></h1>
+        <p class="page-sub">Manage users and view application statistics.</p>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-total-users">—</div>
+          <div class="stat-label">Total Users</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🏋️</div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-total-workouts">—</div>
+          <div class="stat-label">Total Workouts Logged</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-total-progress">—</div>
+          <div class="stat-label">Total Progress Entries</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="dashboard-grid" style="grid-template-columns: 1fr; margin-top: 2rem;">
+      <div class="card">
+        <div class="card-header">
+          <h2>Registered Users</h2>
+        </div>
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Goal</th>
+                <th>Fee Due / Pending Txn</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody">
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-secondary);">Loading users...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="src/api.js"></script>
+  <script src="src/auth.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

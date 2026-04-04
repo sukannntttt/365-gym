@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IronForge — Workout Log</title>
+  <meta name="description" content="Log and track your workout sessions with detailed exercise records." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="brand-icon">⚡</span><span class="brand-name">IronForge</span></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item" id="nav-dashboard"><span class="nav-icon">🏠</span><span>Dashboard</span></a>
+      <a href="workout.html" class="nav-item" id="nav-workout"><span class="nav-icon">🏋️</span><span>Workouts</span></a>
+      <a href="diet.html" class="nav-item" id="nav-diet"><span class="nav-icon">🥗</span><span>Diet Plan</span></a>
+      <a href="log.html" class="nav-item active" id="nav-log"><span class="nav-icon">📋</span><span>Workout Log</span></a>
+      <a href="progress.html" class="nav-item" id="nav-progress"><span class="nav-icon">📈</span><span>Progress</span></a>
+      <a href="bmi.html" class="nav-item" id="nav-bmi"><span class="nav-icon">⚖️</span><span>BMI Calculator</span></a>
+          <a href="settings.html" class="nav-item" id="nav-settings">
+        <span class="nav-icon">⚙️</span><span>Settings</span>
+      </a>
+    </nav>
+    <button class="logout-btn" onclick="logout()"><span>🚪</span> Logout</button>
+  </aside>
+  <header class="mobile-header">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <span class="brand-name">⚡ IronForge</span>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h1>📋 Workout Log</h1>
+        <p class="page-sub">Every rep counts. Keep track of your grind.</p>
+      </div>
+    </div>
+
+    <div class="log-layout">
+      <!-- Add Log Form -->
+      <div class="card log-form-card">
+        <h2 class="card-title">➕ Log Exercise</h2>
+        <form id="log-form" onsubmit="handleAddLog(event)">
+          <div class="form-group">
+            <label>Exercise Name</label>
+            <input type="text" id="log-exercise" placeholder="e.g. Squat" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Sets</label>
+              <input type="number" id="log-sets" placeholder="4" min="1" required />
+            </div>
+            <div class="form-group">
+              <label>Reps</label>
+              <input type="number" id="log-reps" placeholder="12" min="1" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Weight (kg)</label>
+            <input type="number" id="log-weight" placeholder="80" step="0.5" />
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="log-date" />
+          </div>
+          <button type="submit" class="btn-primary" id="log-submit-btn">
+            <span class="btn-text">Add to Log</span>
+            <span class="btn-loader hidden">⏳</span>
+          </button>
+          <div id="log-msg" class="success-msg"></div>
+        </form>
+      </div>
+
+      <!-- Log List -->
+      <div class="card log-list-card">
+        <h2 class="card-title">📅 Your History</h2>
+        <div id="log-list">
+          <div class="loading-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="src/api.js"></script>
+  <script src="src/auth.js"></script>
+  <script src="js/log.js"></script>
+</body>
+</html>

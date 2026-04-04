@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IronForge — BMI Calculator</title>
+  <meta name="description" content="Calculate your Body Mass Index and understand your health category." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="brand-icon">⚡</span><span class="brand-name">IronForge</span></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item" id="nav-dashboard"><span class="nav-icon">🏠</span><span>Dashboard</span></a>
+      <a href="workout.html" class="nav-item" id="nav-workout"><span class="nav-icon">🏋️</span><span>Workouts</span></a>
+      <a href="diet.html" class="nav-item" id="nav-diet"><span class="nav-icon">🥗</span><span>Diet Plan</span></a>
+      <a href="log.html" class="nav-item" id="nav-log"><span class="nav-icon">📋</span><span>Workout Log</span></a>
+      <a href="progress.html" class="nav-item" id="nav-progress"><span class="nav-icon">📈</span><span>Progress</span></a>
+      <a href="bmi.html" class="nav-item active" id="nav-bmi"><span class="nav-icon">⚖️</span><span>BMI Calculator</span></a>
+          <a href="settings.html" class="nav-item" id="nav-settings">
+        <span class="nav-icon">⚙️</span><span>Settings</span>
+      </a>
+    </nav>
+    <button class="logout-btn" onclick="logout()"><span>🚪</span> Logout</button>
+  </aside>
+  <header class="mobile-header">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <span class="brand-name">⚡ IronForge</span>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h1>⚖️ BMI Calculator</h1>
+        <p class="page-sub">Know your numbers. Know your health.</p>
+      </div>
+    </div>
+
+    <div class="bmi-layout">
+      <!-- Form -->
+      <div class="card bmi-form-card">
+        <h2 class="card-title">Enter Your Stats</h2>
+        <form id="bmi-form" onsubmit="handleBMI(event)">
+          <div class="form-group">
+            <label>Weight (kg)</label>
+            <input type="number" id="bmi-weight" placeholder="e.g. 75" step="0.1" required />
+          </div>
+          <div class="form-group">
+            <label>Height (cm)</label>
+            <input type="number" id="bmi-height" placeholder="e.g. 175" required />
+          </div>
+          <button type="submit" class="btn-primary">Calculate BMI</button>
+        </form>
+      </div>
+
+      <!-- Result -->
+      <div class="card bmi-result-card" id="bmi-result-card">
+        <div id="bmi-result-inner">
+          <div class="bmi-placeholder">
+            <div class="bmi-placeholder-icon">⚖️</div>
+            <p>Enter your weight and height to calculate your BMI</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category info -->
+    <div class="bmi-categories card">
+      <h2 class="card-title">BMI Categories</h2>
+      <div class="bmi-cat-grid">
+        <div class="bmi-cat underweight">
+          <div class="bmi-cat-range">Below 18.5</div>
+          <div class="bmi-cat-label">Underweight</div>
+          <div class="bmi-cat-desc">You may need to gain weight. Consult a doctor.</div>
+        </div>
+        <div class="bmi-cat normal">
+          <div class="bmi-cat-range">18.5 – 24.9</div>
+          <div class="bmi-cat-label">Normal Weight</div>
+          <div class="bmi-cat-desc">Great! Maintain your current lifestyle.</div>
+        </div>
+        <div class="bmi-cat overweight">
+          <div class="bmi-cat-range">25 – 29.9</div>
+          <div class="bmi-cat-label">Overweight</div>
+          <div class="bmi-cat-desc">Consider a fat loss plan and more cardio.</div>
+        </div>
+        <div class="bmi-cat obese">
+          <div class="bmi-cat-range">30 and above</div>
+          <div class="bmi-cat-label">Obese</div>
+          <div class="bmi-cat-desc">High health risk. Seek medical guidance.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="src/api.js"></script>
+  <script src="src/auth.js"></script>
+  <script src="js/bmi.js"></script>
+</body>
+</html>
