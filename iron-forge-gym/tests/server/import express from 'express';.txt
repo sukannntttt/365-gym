@@ -1,0 +1,21 @@
+import express from 'express';
+import WorkoutController from '../controllers/workoutController';
+
+const router = express.Router();
+
+// Create workout (body should include userId or use auth middleware to set user)
+router.post('/', WorkoutController.create.bind(WorkoutController));
+
+// Get all workouts for a user
+router.get('/user/:userId', WorkoutController.listByUser.bind(WorkoutController));
+
+// Get / update / delete specific workout
+router.get('/:id', WorkoutController.get.bind(WorkoutController));
+router.put('/:id', WorkoutController.update.bind(WorkoutController));
+router.delete('/:id', WorkoutController.delete.bind(WorkoutController));
+
+// Exercises management
+router.post('/:id/exercises', WorkoutController.addExercise.bind(WorkoutController));
+router.delete('/:id/exercises/:exerciseId', WorkoutController.removeExercise.bind(WorkoutController));
+
+export default router;

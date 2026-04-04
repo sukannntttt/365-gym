@@ -1,0 +1,35 @@
+import mongoose, { Document, Schema } from 'mongoose';
+
+export interface Exercise {
+    name: string;
+    sets?: number;
+    reps?: number;
+    weight?: number;
+    notes?: string;
+}
+
+export interface WorkoutDocument extends Document {
+    userId: mongoose.Types.ObjectId;
+    date: Date;
+    notes?: string;
+    exercises: Exercise[];
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const ExerciseSchema = new Schema<Exercise>({
+    name: { type: String, required: true },
+    sets: Number,
+    reps: Number,
+    weight: Number,
+    notes: String,
+}, { _id: true });
+
+const WorkoutSchema = new Schema<WorkoutDocument>({
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    date: { type: Date, default: Date.now },
+    notes: String,
+    exercises: { type: [ExerciseSchema], default: [] },
+}, { timestamps: true });
+
+export const Workout = mongoose.model<WorkoutDocument>('Workout', WorkoutSchema);

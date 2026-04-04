@@ -1,0 +1,38 @@
+import { Workout, WorkoutDocument } from '../models/workout.model';
+import mongoose from 'mongoose';
+
+export class WorkoutService {
+    public async createWorkout(userId: string, payload: Partial<WorkoutDocument>) {
+        const workout = new Workout({
+            userId: new mongoose.Types.ObjectId(userId),
+            ...payload,
+        });
+        return await workout.save();
+    }
+
+    public async getWorkoutsByUser(userId: string) {
+        return await Workout.find({ userId }).sort({ date: -1 }).lean().exec();
+    }
+
+    public async getWorkoutById(workoutId: string) {
+        return await Workout.findById(workoutId).exec();
+    }
+
+    public async updateWorkout(workoutId: string, updateData: Partial<WorkoutDocument>) {
+        return await Workout.findByIdAndUpdate(workoutId, updateData, { new: true }).exec();
+    }
+
+    public async deleteWorkout(workoutId: string) {
+        return await Workout.findByIdAndDelete(workoutId).exec();
+    }
+
+    public async addExercise(workoutId: string, exercise: any) {
+        return await Workout.findByIdAndUpdate(workoutId, { $push: { exercises: exercise } }, { new: true }).exec();
+    }
+
+    public async removeExercise(workoutId: string, exerciseId: string) {
+        return await Workout.findByIdAndUpdate(workoutId, { $pull: { exercises: { _id: exerciseId } } }, { new: true }).exec();
+    }
+}
+
+export default new WorkoutService();
