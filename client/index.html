@@ -1,223 +1,317 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>365 FITNESS GYM — Your Fitness Journey Starts Here</title>
-  <meta name="description" content="365 FITNESS GYM App — Track workouts, diet, BMI, and your fitness progress all in one place." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/auth.css" />
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>KINETIC | High-Performance Monolith</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/kinetic.css" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#474747",
+                        "on-primary-fixed-variant": "#e2e2e2",
+                        "on-error-container": "#ffdad6",
+                        "secondary-container": "#46464e",
+                        "surface-container-highest": "#353535",
+                        "on-surface-variant": "#c6c6c6",
+                        "tertiary": "#e4e1e5",
+                        "surface-container-high": "#2a2a2a",
+                        "inverse-primary": "#5d5f5f",
+                        "on-tertiary-fixed": "#ffffff",
+                        "on-tertiary-fixed-variant": "#e4e1e5",
+                        "tertiary-fixed": "#5f5e61",
+                        "surface-container": "#1f1f1f",
+                        "on-primary": "#1a1c1c",
+                        "error-container": "#93000a",
+                        "outline": "#919191",
+                        "on-background": "#e2e2e2",
+                        "primary-fixed": "#5d5f5f",
+                        "primary-fixed-dim": "#454747",
+                        "surface-dim": "#131313",
+                        "surface-container-low": "#1b1b1b",
+                        "background": "#131313",
+                        "tertiary-container": "#919094",
+                        "tertiary-fixed-dim": "#47464a",
+                        "inverse-on-surface": "#303030",
+                        "primary-container": "#d4d4d4",
+                        "error": "#ffb4ab",
+                        "on-surface": "#e2e2e2",
+                        "on-secondary-fixed": "#1a1b22",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface": "#131313",
+                        "on-secondary-container": "#e3e1ec",
+                        "on-secondary-fixed-variant": "#3a3b43",
+                        "secondary": "#c6c5cf",
+                        "surface-bright": "#393939",
+                        "on-tertiary-container": "#000000",
+                        "on-primary-container": "#000000",
+                        "surface-tint": "#c6c6c7",
+                        "on-tertiary": "#1b1b1e",
+                        "secondary-fixed-dim": "#abaab4",
+                        "secondary-fixed": "#c6c5cf",
+                        "on-secondary": "#1a1b22",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e2e2e2",
+                        "surface-variant": "#353535",
+                        "primary": "#ffffff",
+                        "on-primary-fixed": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Lexend"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
 </head>
-<body>
+<body class="bg-background text-on-surface font-body overflow-x-hidden selection:bg-primary selection:text-black">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 glass-nav">
+<div class="flex justify-between items-center px-8 py-6 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-black italic tracking-tighter text-zinc-50 font-headline">KINETIC</div>
+<!-- Desktop Links -->
+<div class="hidden md:flex gap-10 items-center">
+<a class="font-['Lexend'] uppercase tracking-[0.05em] text-sm font-bold text-zinc-500 hover:text-white transition-colors duration-300" href="#">TRAINING</a>
+<a class="font-['Lexend'] uppercase tracking-[0.05em] text-sm font-bold text-zinc-500 hover:text-white transition-colors duration-300" href="#">FACILITY</a>
+<a class="font-['Lexend'] uppercase tracking-[0.05em] text-sm font-bold text-zinc-500 hover:text-white transition-colors duration-300" href="#">TRAINERS</a>
+<a class="font-['Lexend'] uppercase tracking-[0.05em] text-sm font-bold text-zinc-500 hover:text-white transition-colors duration-300" href="#">PRICING</a>
+</div>
+<div class="flex items-center gap-6">
+<a href="auth.html" class="hidden md:block font-['Lexend'] uppercase tracking-[0.05em] text-sm font-bold bg-primary text-on-primary px-6 py-2 transition-transform active:scale-95 duration-100 btn-3d">JOIN NOW</a>
+<a href="auth.html" class="material-symbols-outlined text-zinc-50 text-2xl cursor-pointer" data-icon="account_circle">account_circle</a>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-start px-8 pt-20 overflow-hidden hero-depth">
+<!-- Abstract Background Texture -->
+<div class="absolute inset-0 z-0">
+<img alt="" class="w-full h-full object-cover opacity-20 grayscale" data-alt="monochrome cinematic wide shot of a brutalist concrete training facility with dramatic overhead lighting and heavy shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuD_sVewYiN318wKkOGihH50WJzCD4dmCIsFAhJ-hxsDQLDAxcTxSl6C0drA_0HTyIfKk43ZTI9KKmtH8blK3WRiuemzcdRkWT2p-_jzSOBfTncCIweVNwX3W8qGLDNOOdrrV82mhY91oWp7lApH4dhpg0VY1CTxQmypSsCubjJhjvg9xcYfcOcmjbIMBijyhnaRgT2-4duTEI0eYWYDUl1M3DI8DOgSbO-BgDgyuODXNyfzoBGz7wP6HIOdKJKxoezRW_QXC92M18"/>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-5xl hero-content">
+<div class="flex items-center gap-4 mb-6">
+<div class="h-[1px] w-12 bg-primary"></div>
+<span class="font-label text-xs tracking-[0.3em] uppercase font-bold text-primary">Est. 2024 / PROTOCOL 01</span>
+</div>
+<h1 class="font-headline font-black text-6xl md:text-9xl uppercase leading-[0.85] tracking-tighter italic mb-8">
+                UNLEASH <br/>
+<span class="text-glow">KINETIC</span> <br/>
+                ENERGY
+            </h1>
+<p class="font-body text-on-surface-variant max-w-md text-lg mb-10 leading-relaxed">
+                A high-performance monolithic environment engineered for those who demand absolute physical dominance. No distractions. No soft edges.
+            </p>
+<div class="flex flex-col md:flex-row gap-4">
+<a href="auth.html" class="bg-primary text-black text-center font-headline font-black uppercase px-12 py-5 tracking-widest hover:bg-primary-container transition-all btn-3d">INITIALIZE TRAINING</a>
+<button class="border border-outline-variant text-primary font-headline font-black uppercase px-12 py-5 tracking-widest hover:bg-surface-container transition-all">VIEW SYSTEMS</button>
+</div>
+</div>
+<!-- Technical Detail Overlay -->
+<div class="absolute bottom-12 right-12 hidden lg:block text-right">
+<div class="font-label text-[10px] tracking-widest text-outline-variant mb-2">COORD: 40.7128° N, 74.0060° W</div>
+<div class="font-label text-[10px] tracking-widest text-outline-variant">STATUS: OPTIMIZED PERFORMANCE</div>
+</div>
+</section>
+<!-- Video Section -->
+<section class="py-32 relative bg-surface-container-lowest overflow-hidden">
+<div class="absolute inset-0 opacity-40">
+<img alt="" class="w-full h-full object-cover grayscale" data-alt="dark grainy monochrome video still of an athlete performing a heavy barbell back squat in a dimly lit industrial gym" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVlZDz01x2vodCqMCJqL_SzWVnFehf7mY_UJv6pLofWQwHb6WUtdgxpeNBBs6QC2IV8da74ZVf8jMGmO8wRSDD5mY33O8GeKTOWpXzs0SuaMjPwuO0pGJ4P_k3TltbNiMQOcKt_BwlUoLn3Rm_aJTqYSTbu6fa8S5Z4VzTMYD3khk57NxWd9nMEwbvHrDPEIOT0JHTsyzIwZjw1Wpdi_AkeJK9g5mSVQ99W4DkVlJ1ZRA67Sw3-1JAX70R5o3FYTLaf-I-v3LE7ZEu"/>
+<div class="absolute inset-0 bg-zinc-950/60 backdrop-blur-[2px]"></div>
+</div>
+<div class="relative z-10 container mx-auto px-8 text-center">
+<span class="material-symbols-outlined text-6xl mb-8 opacity-50" data-icon="format_quote">format_quote</span>
+<h2 class="font-headline font-black text-4xl md:text-7xl uppercase tracking-tight italic text-white mb-6">
+                "LIFT HEAVY, <br class="md:hidden"/> LIVE LIGHT"
+            </h2>
+<div class="flex justify-center gap-2 mb-12">
+<div class="w-1.5 h-1.5 bg-primary"></div>
+<div class="w-1.5 h-1.5 bg-outline-variant"></div>
+<div class="w-1.5 h-1.5 bg-outline-variant"></div>
+</div>
+<button class="inline-flex items-center gap-4 text-xs font-label tracking-[0.4em] uppercase font-bold text-primary group">
+                WATCH THE KINETIC MANIFESTO
+                <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform" data-icon="arrow_right_alt">arrow_right_alt</span>
+</button>
+</div>
+</section>
+<!-- Elite Trainers Section -->
+<section class="py-32 bg-background px-8">
+<div class="max-w-[1920px] mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+<div class="max-w-2xl">
+<h3 class="font-headline font-black text-5xl uppercase tracking-tighter italic mb-4">ELITE OPERATORS</h3>
+<p class="text-on-surface-variant font-body">Our trainers are architects of human potential, operating at the intersection of sports science and raw intensity.</p>
+</div>
+<div class="font-label text-xs tracking-widest text-outline-variant uppercase">SYSTEM_DIR / PERSONNEL_04</div>
+</div>
+<!-- Bento-Style Trainer Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Trainer 1 -->
+<div class="group relative aspect-[3/4] bg-surface-container overflow-hidden">
+<img alt="" class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-110" data-alt="monochrome portrait of a muscular male trainer with tattoos, intense expression, in a concrete gym setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2hXcnX91YlSscmNnP5g-EMMhn-AnwvKpISZnrCn-rdjvooSAo5tLD7KP3l8_rAEQm58HUtPlK9LKy5tbCe4CWwvzwP-umYEaNEMP5AytiJ3MM9alx-cu17N1I7JZkRAOlB0NebAjJlPh09Dm7XFA0Bt19QR0_1o9ko5JIswDdz1Nf4HW6txrTI6H5maThTKfio45VPMrfBaokxhSsdY0wmKBOMErq1Z8RjFLTpXgQZoSV1IDa30VH1M0mBuN2g3JX0JwLacIAsZKA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<div class="text-[10px] font-label tracking-[0.3em] text-primary mb-2">POWERLIFTING</div>
+<h4 class="font-headline font-black text-2xl uppercase tracking-tighter italic text-white">VIKTOR KANE</h4>
+</div>
+<!-- Technical UI element -->
+<div class="absolute top-4 right-4 text-[10px] font-label text-outline-variant vertical-text opacity-0 group-hover:opacity-100 transition-opacity">
+                        V-01 / STRENGTH_SPEC
+                    </div>
+</div>
+<!-- Trainer 2 -->
+<div class="group relative aspect-[3/4] bg-surface-container overflow-hidden lg:mt-12">
+<img alt="" class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-110" data-alt="monochrome portrait of a female fitness trainer focusing on mobility, wearing technical gear in a minimal studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo9ASRY8H_zyzeTr43egJoifaRMfcNjbSIVqmt3vW44Mo88MU9zGTxF2FjmILvxQI1II2AFIHdQLohYS8j_PJXnq7IwhUnb_bfNmwy2xYl1CZ1DN3HFvydbSu8fk5UcAzFEKDghVqqPDSTv889YDRvfkEtu_slnWffe_oQoCLWouMy7Jy6B27q5XCwbzgwTpqIa24C24o_ZuAtNcU56McdYgnAPwJAGlwgxzDYTmcjTfS4n9wz9gbG5ivrOWr4KHFrwML814LFrtVC"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<div class="text-[10px] font-label tracking-[0.3em] text-primary mb-2">HYPER-MOBILITY</div>
+<h4 class="font-headline font-black text-2xl uppercase tracking-tighter italic text-white">SARA VANCE</h4>
+</div>
+</div>
+<!-- Trainer 3 -->
+<div class="group relative aspect-[3/4] bg-surface-container overflow-hidden">
+<img alt="" class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-110" data-alt="monochrome action shot of a trainer hitting a heavy bag, intense motion blur on the background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ73XsN6dCCCKeEyHGhj3tr7TvWN2MKL_vxx6xH6PDx5VAr9EfiqOyB-0kHNs7W1BnIVoiVlqjA3UuChIfASGZfNGlp6CTZNEsPQGLKm4d65EJnGKWjTb0HPcZL-vZxob4umHY58WTqDzTYFVVBY-32lnopIeJM8LBe2WxrsTgAPOfy_TXIIijDXSFRkKWs7eidv-7SyjRzfJV5I-uzCO4rcTmkKwLsRAuZA6qltro9uFtMsANnOAniWlzKcL1UBUSYGiPF1wnFk-f"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<div class="text-[10px] font-label tracking-[0.3em] text-primary mb-2">STRIKE_COMBAT</div>
+<h4 class="font-headline font-black text-2xl uppercase tracking-tighter italic text-white">MARCUS REID</h4>
+</div>
+</div>
+<!-- Trainer 4 -->
+<div class="group relative aspect-[3/4] bg-surface-container overflow-hidden lg:mt-12">
+<img alt="" class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-110" data-alt="monochrome close up portrait of an older expert coach with intense focus, sweat on forehead, industrial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvN3mFsKK5wZDpCBzUnrfWlimtvtjU8YuoGVOic_5vMWyvFLTasUipTdNSUN258V0aq4NlaF13XWapWDEJDQcUeZEzt6jB5bazuOpN6jMAP_VTpC8LBwYoScGtD2hiS0K8oD6IvSkJin84qVt0DqnFUKupVLOVHZtbLGrr9x8ff0Tz2uHTXF67xwf987kQGkYqFf-kUq8AqyP6IBZcgxVi3-3TXCo4CWK8RVqoeqBZ8e4rNp2RD9Pugxd1frE7a6ueAF0jiO3-w_Hz"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<div class="text-[10px] font-label tracking-[0.3em] text-primary mb-2">ENDURANCE</div>
+<h4 class="font-headline font-black text-2xl uppercase tracking-tighter italic text-white">ELIAS THORNE</h4>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Protocols -->
+<section class="py-32 bg-surface-container-lowest px-8">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-24">
+<h3 class="font-headline font-black text-5xl uppercase tracking-tighter italic mb-4">TIER PROTOCOLS</h3>
+<div class="w-24 h-1 bg-primary mx-auto mb-8"></div>
+<p class="text-on-surface-variant font-body max-w-xl mx-auto uppercase text-xs tracking-widest">Select your level of immersion. All tiers include 24/7 Monolith access.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+<!-- Basic -->
+<div class="pricing-card p-12 bg-surface-container-low flex flex-col items-start border border-transparent shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:border-outline transition-all duration-500 group">
+<div class="text-xs font-label tracking-[0.3em] uppercase text-outline-variant mb-8">PROTOCOL_01</div>
+<h4 class="font-headline font-black text-3xl uppercase italic mb-2">BASIC</h4>
+<div class="text-5xl font-headline font-black mb-8">₹1,200<span class="text-sm font-label text-outline-variant tracking-normal">/MO</span></div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-sm font-label text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            UNLIMITED ACCESS
+                        </li>
+<li class="flex items-center gap-3 text-sm font-label text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            LOCKER ACCESS
+                        </li>
+<li class="flex items-center gap-3 text-sm font-label text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            HYDRATION STATION
+                        </li>
+</ul>
+<a href="auth.html" class="w-full py-4 text-center border border-outline-variant font-headline font-black uppercase text-xs tracking-widest group-hover:bg-primary group-hover:text-black transition-all btn-3d">INITIALIZE</a>
+</div>
+<!-- Elite Kinetic -->
+<div class="pricing-card p-12 bg-surface-container flex flex-col items-start relative shadow-[0_45px_100px_rgba(0,0,0,0.6)] border border-primary/20 transform lg:-translate-y-8 z-10">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-black font-headline font-black text-[10px] tracking-[0.4em] px-8 py-2 uppercase shadow-[0_0_20px_rgba(255,255,255,0.4)]">RECOMMENDED</div>
+<div class="text-xs font-label tracking-[0.3em] uppercase text-primary mb-8 font-bold">PROTOCOL_02</div>
+<h4 class="font-headline font-black text-3xl uppercase italic mb-2 text-primary">ELITE KINETIC</h4>
+<div class="text-5xl font-headline font-black mb-8 text-white">₹2,500<span class="text-sm font-label text-outline-variant tracking-normal">/MO</span></div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-sm font-label text-white font-medium">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            ALL BASIC FEATURES
+                        </li>
+<li class="flex items-center gap-3 text-sm font-label text-white font-medium">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            4 SESSIONS WITH OPERATOR
+                        </li>
+<li class="flex items-center gap-3 text-sm font-label text-white font-medium">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            KINETIC ANALYSIS TOOLS
+                        </li>
+<li class="flex items-center gap-3 text-sm font-label text-white font-medium">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            PRIORITY BOOKING
+                        </li>
+</ul>
+<a href="auth.html" class="w-full py-5 text-center bg-primary text-black font-headline font-black uppercase text-xs tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_30px_rgba(255,255,255,0.1)] btn-3d">INITIALIZE</a>
+</div>
+<!-- Monolith -->
+<div class="pricing-card p-12 bg-surface-container-low flex flex-col items-start border border-transparent shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:border-outline transition-all duration-500 group">
+<div class="text-xs font-label tracking-[0.3em] uppercase text-outline-variant mb-8">PROTOCOL_03</div>
+<h4 class="font-headline font-black text-3xl uppercase italic mb-2">MONOLITH</h4>
+<div class="text-5xl font-headline font-black mb-8">₹5,000<span class="text-sm font-label text-outline-variant tracking-normal">/MO</span></div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-sm font-label text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            ULTIMATE SYSTEM ACCESS
+                        </li>
+<li class="flex items-center gap-3 text-sm font-label text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            DEDICATED PERFORMANCE COACH
+                        </li>
+<li class="flex items-center gap-3 text-sm font-label text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            BIOMETRIC DATA ANALYSIS
+                        </li>
+<li class="flex items-center gap-3 text-sm font-label text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            PRIVATE RECOVERY SUITE
+                        </li>
+<li class="flex items-center gap-3 text-sm font-label text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check">check</span>
+                            CUSTOM SUPPLEMENT PROTOCOL
+                        </li>
+</ul>
+<a href="auth.html" class="w-full py-4 text-center border border-outline-variant font-headline font-black uppercase text-xs tracking-widest group-hover:bg-primary group-hover:text-black transition-all btn-3d">INITIALIZE</a>
+</div>
+</div>
+</div>
+</section>
 
-  <div class="bg-grid"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-
-  <div class="auth-wrapper">
-    <div class="brand">
-      <div class="brand-icon">⚡</div>
-      <h1 class="brand-name">365 FITNESS GYM</h1>
-      <p class="brand-tagline">Train Smart. Live Strong.</p>
+<footer class="py-20 bg-background border-t border-outline-variant/20 px-8 text-center">
+    <div class="font-headline font-black italic text-2xl mb-8 tracking-tighter">KINETIC</div>
+    <div class="flex justify-center gap-8 mb-12">
+        <a href="#" class="text-outline-variant hover:text-primary transition-colors text-xs font-label tracking-widest uppercase">Instagram</a>
+        <a href="#" class="text-outline-variant hover:text-primary transition-colors text-xs font-label tracking-widest uppercase">X / Twitter</a>
+        <a href="#" class="text-outline-variant hover:text-primary transition-colors text-xs font-label tracking-widest uppercase">Discord</a>
     </div>
+    <div class="text-[10px] font-label tracking-widest text-outline-variant uppercase">© 2024 KINETIC PERFORMANCE MONOLITH. ALL PROTOCOLS ENFORCED.</div>
+</footer>
 
-    <!-- Tab Switcher -->
-    <div class="tab-switcher">
-      <button class="tab-btn active" id="tab-login" onclick="showTab('login')">Login</button>
-      <button class="tab-btn" id="tab-register" onclick="showTab('register')">Register</button>
-    </div>
-
-    <!-- Login Form -->
-    <form class="auth-form" id="login-form" onsubmit="handleLogin(event)">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="login-email" placeholder="you@example.com" required />
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="login-password" placeholder="••••••••" required />
-      </div>
-      <div id="login-error" class="error-msg"></div>
-      <button type="submit" class="btn-primary" id="login-btn">
-        <span class="btn-text">Login</span>
-        <span class="btn-loader hidden">⏳</span>
-      </button>
-      <div style="text-align: center; margin-top: 15px;">
-        <a href="#" onclick="showTab('forgot')" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Forgot Password?</a>
-      </div>
-    </form>
-
-    <!-- Register Form -->
-    <form class="auth-form hidden" id="register-form" onsubmit="handleRegister(event)">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Name</label>
-          <input type="text" id="reg-name" placeholder="John Doe" required />
-        </div>
-        <div class="form-group">
-          <label>Age</label>
-          <input type="number" id="reg-age" placeholder="25" min="10" max="100" required />
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="reg-email" placeholder="you@example.com" required />
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="reg-password" placeholder="••••••••" required />
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Height (cm)</label>
-          <input type="number" id="reg-height" placeholder="175" required />
-        </div>
-        <div class="form-group">
-          <label>Weight (kg)</label>
-          <input type="number" id="reg-weight" placeholder="70" required />
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Your Goal</label>
-        <select id="reg-goal" required>
-          <option value="">Select goal…</option>
-          <option value="fat loss">🔥 Fat Loss</option>
-          <option value="muscle gain">💪 Muscle Gain</option>
-          <option value="weight gain">⬆️ Weight Gain</option>
-        </select>
-      </div>
-      <div id="register-error" class="error-msg"></div>
-      <button type="submit" class="btn-primary" id="register-btn">
-        <span class="btn-text">Create Account</span>
-        <span class="btn-loader hidden">⏳</span>
-      </button>
-    </form>
-
-    <!-- Forgot Password Form -->
-    <form class="auth-form hidden" id="forgot-form" onsubmit="handleForgot(event)">
-      <h3 style="text-align: center; margin-bottom: 20px;">Reset Password</h3>
-      <div class="form-group">
-        <label>Enter your email</label>
-        <input type="email" id="forgot-email" placeholder="you@example.com" required />
-      </div>
-      <div id="forgot-error" class="error-msg"></div>
-      <button type="submit" class="btn-primary" id="forgot-btn">
-        <span class="btn-text">Send Reset Link</span>
-        <span class="btn-loader hidden">⏳</span>
-      </button>
-      <div style="text-align: center; margin-top: 15px;">
-        <a href="#" onclick="showTab('login')" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Back to Login</a>
-      </div>
-    </form>
-  </div>
-
-  <script src="src/api.js"></script>
-  <script src="src/auth.js"></script>
-  <script>
-    // Redirect if already logged in
-    if (localStorage.getItem('token')) window.location.href = 'dashboard.html';
-
-    function showTab(tab) {
-      document.getElementById('login-form').classList.toggle('hidden', tab !== 'login');
-      document.getElementById('register-form').classList.toggle('hidden', tab !== 'register');
-      document.getElementById('forgot-form').classList.toggle('hidden', tab !== 'forgot');
-      
-      const tabSwitcher = document.querySelector('.tab-switcher');
-      if (tab === 'forgot') {
-        tabSwitcher.style.display = 'none';
-      } else {
-        tabSwitcher.style.display = 'flex';
-        document.getElementById('tab-login').classList.toggle('active', tab === 'login');
-        document.getElementById('tab-register').classList.toggle('active', tab === 'register');
-      }
-    }
-
-    async function handleLogin(e) {
-      e.preventDefault();
-      const btn = document.getElementById('login-btn');
-      const errEl = document.getElementById('login-error');
-      errEl.textContent = '';
-      setLoading(btn, true);
-      try {
-        const data = await authFetch('/api/auth/login', {
-          method: 'POST',
-          body: JSON.stringify({
-            email: document.getElementById('login-email').value,
-            password: document.getElementById('login-password').value
-          })
-        });
-        if (data.token) {
-          localStorage.setItem('token', data.token);
-          window.location.href = 'dashboard.html';
-        } else {
-          errEl.textContent = data.message || 'Login failed';
-        }
-      } catch (err) {
-        errEl.textContent = 'Network error. Try again.';
-      }
-      setLoading(btn, false);
-    }
-
-    async function handleRegister(e) {
-      e.preventDefault();
-      const btn = document.getElementById('register-btn');
-      const errEl = document.getElementById('register-error');
-      errEl.textContent = '';
-      setLoading(btn, true);
-      try {
-        const data = await authFetch('/api/auth/register', {
-          method: 'POST',
-          body: JSON.stringify({
-            name: document.getElementById('reg-name').value,
-            email: document.getElementById('reg-email').value,
-            password: document.getElementById('reg-password').value,
-            age: parseInt(document.getElementById('reg-age').value),
-            height: parseFloat(document.getElementById('reg-height').value),
-            weight: parseFloat(document.getElementById('reg-weight').value),
-            goal: document.getElementById('reg-goal').value
-          })
-        });
-        if (data.token) {
-          localStorage.setItem('token', data.token);
-          window.location.href = 'dashboard.html';
-        } else {
-          errEl.textContent = data.message || 'Registration failed';
-        }
-      } catch (err) {
-        errEl.textContent = 'Network error. Try again.';
-      }
-      setLoading(btn, false);
-  }
-    async function handleForgot(e) {
-      e.preventDefault();
-      const btn = document.getElementById('forgot-btn');
-      const errEl = document.getElementById('forgot-error');
-      errEl.textContent = '';
-      errEl.style.color = 'var(--text-secondary)';
-      setLoading(btn, true);
-      
-      try {
-        const data = await authFetch('/api/auth/forgotpassword', {
-          method: 'POST',
-          body: JSON.stringify({ email: document.getElementById('forgot-email').value })
-        });
-        
-        errEl.textContent = data.message || 'Check your email for a reset link.';
-        errEl.style.color = '#1dd1a1'; // Green success
-        document.getElementById('forgot-form').reset();
-      } catch (err) {
-        errEl.textContent = 'Network error. Try again.';
-        errEl.style.color = 'var(--error)';
-      }
-      setLoading(btn, false);
-    }
-
-    function setLoading(btn, loading) {
-      btn.querySelector('.btn-text').classList.toggle('hidden', loading);
-      btn.querySelector('.btn-loader').classList.toggle('hidden', !loading);
-      btn.disabled = loading;
-    }
-  </script>
+<script>
+    // Hero 3D Parallax Effect
+    document.addEventListener('mousemove', (e) => {
+        const hero = document.querySelector('.hero-content');
+        if (!hero) return;
+        const x = (window.innerWidth / 2 - e.pageX) / 50;
+        const y = (window.innerHeight / 2 - e.pageY) / 50;
+        hero.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+    });
+</script>
 </body>
 </html>
