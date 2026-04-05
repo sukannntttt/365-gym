@@ -117,7 +117,8 @@ async function loadDiet() {
 
 async function loadLogs() {
   try {
-    const logs = await authFetch(`/api/workout-log/${currentUser.id}`);
+    const userId = currentUser._id || currentUser.id;
+    const logs = await authFetch(`/api/workout-log/${userId}`);
     document.getElementById('log-count').textContent = Array.isArray(logs) ? logs.length : 0;
 
     const recent = Array.isArray(logs) ? logs.slice(0, 5) : [];

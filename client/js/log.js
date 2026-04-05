@@ -18,7 +18,8 @@ async function loadLogs() {
   el.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
 
   try {
-    const logs = await authFetch(`/api/workout-log/${currentUser.id}`);
+    const userId = currentUser._id || currentUser.id;
+    const logs = await authFetch(`/api/workout-log/${userId}`);
     if (!Array.isArray(logs) || !logs.length) {
       el.innerHTML = `
         <div class="empty-state">
