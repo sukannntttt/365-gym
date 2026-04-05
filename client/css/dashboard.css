@@ -603,6 +603,17 @@ input, select, textarea { font-family: 'Outfit', sans-serif; }
   margin-bottom: 0.5rem;
 }
 .meal-desc { font-size: 0.92rem; color: var(--text); line-height: 1.5; }
+.meal-macros {
+  display: block;
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  color: var(--accent3);
+  background: rgba(34, 211, 165, 0.1);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-xs);
+  border: 1px solid rgba(34, 211, 165, 0.2);
+  font-weight: 500;
+}
 
 /* ==============================
    LOG PAGE

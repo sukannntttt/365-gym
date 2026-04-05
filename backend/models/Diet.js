@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const DietSchema = new mongoose.Schema({
   goal: { type: String, required: true }, // e.g. 'fat loss', 'muscle gain', 'weight gain'
+  type: { type: String, enum: ['veg', 'non-veg'], required: true }, // 'veg' or 'non-veg'
   calories: Number,
   protein: Number,
   carbs: Number,

@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   height: Number,
   weight: Number,
   goal: String,
+  dietPreference: { type: String, enum: ['veg', 'non-veg'], default: 'veg' },
   role: { type: String, default: 'user' },
   membershipTier: { type: String, enum: ['Free', 'Pro', 'Elite'], default: 'Free' },
   pendingTier: { type: String, enum: ['Pro', 'Elite'] },

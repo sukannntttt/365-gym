@@ -8,11 +8,11 @@ router.get('/', async (req, res) => {
   res.json(list);
 });
 
-// get by goal
-router.get('/:goal', async (req, res) => {
-  const goal = req.params.goal;
-  const diet = await Diet.findOne({ goal });
-  if (!diet) return res.status(404).json({ message: 'No diet for that goal' });
+// get by goal and type
+router.get('/:goal/:type', async (req, res) => {
+  const { goal, type } = req.params;
+  const diet = await Diet.findOne({ goal, type });
+  if (!diet) return res.status(404).json({ message: 'No diet found for that goal and preference' });
   res.json(diet);
 });
 

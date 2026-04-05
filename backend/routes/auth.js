@@ -11,18 +11,18 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // register
 router.post('/register', async (req, res) => {
-  const { name, email, password, age, height, weight, goal } = req.body;
+  const { name, email, password, age, height, weight, goal, dietPreference } = req.body;
   try {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: 'User already exists' });
     const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash(password, salt);
     const role = email.toLowerCase() === 'sukantrai826@gmail.com' ? 'admin' : 'user';
-    user = new User({ name, email, password: hashed, age, height, weight, goal, role });
+    user = new User({ name, email, password: hashed, age, height, weight, goal, dietPreference: dietPreference || 'veg', role });
     await user.save();
     const payload = { user: { id: user.id } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.json({ token, user: { id: user.id, name: user.name, email: user.email, goal: user.goal } });
+    res.json({ token, user: { id: user.id, name: user.name, email: user.email, goal: user.goal, dietPreference: user.dietPreference } });
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
@@ -109,12 +109,13 @@ router.put('/profile', auth, async (req, res) => {
     if (!user) return res.status(404).json({ message: 'User not found' });
     
     // Only allow updating specific fields
-    const { name, goal, height, weight, age } = req.body;
+    const { name, goal, height, weight, age, dietPreference } = req.body;
     if (name) user.name = name;
     if (goal) user.goal = goal;
     if (height) user.height = height;
     if (weight) user.weight = weight;
     if (age) user.age = age;
+    if (dietPreference) user.dietPreference = dietPreference;
     
     await user.save();
     res.json({ message: 'Profile updated successfully', user });

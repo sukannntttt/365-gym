@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (currentUser.goal) {
     document.getElementById('set-goal').value = currentUser.goal.toLowerCase();
   }
+  if (currentUser.dietPreference) {
+    document.getElementById('set-diet').value = currentUser.dietPreference.toLowerCase();
+  }
 
   document.getElementById('current-email').value = currentUser.email || '';
 
@@ -38,7 +41,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           age: parseInt(document.getElementById('set-age').value),
           height: parseFloat(document.getElementById('set-height').value),
           weight: parseFloat(document.getElementById('set-weight').value),
-          goal: document.getElementById('set-goal').value
+          goal: document.getElementById('set-goal').value,
+          dietPreference: document.getElementById('set-diet').value
         })
       });
 

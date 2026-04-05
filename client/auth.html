@@ -78,14 +78,23 @@
           <input type="number" id="reg-weight" placeholder="70" required />
         </div>
       </div>
-      <div class="form-group">
-        <label>Your Goal</label>
-        <select id="reg-goal" required>
-          <option value="">Select goal…</option>
-          <option value="fat loss">🔥 Fat Loss</option>
-          <option value="muscle gain">💪 Muscle Gain</option>
-          <option value="weight gain">⬆️ Weight Gain</option>
-        </select>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Goal</label>
+          <select id="reg-goal" required>
+            <option value="">Select goal…</option>
+            <option value="fat loss">🔥 Fat Loss</option>
+            <option value="muscle gain">💪 Muscle Gain</option>
+            <option value="weight gain">⬆️ Weight Gain</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Diet Preference</label>
+          <select id="reg-diet" required>
+            <option value="veg">🌿 Vegetarian</option>
+            <option value="non-veg">🍗 Non-Vegetarian</option>
+          </select>
+        </div>
       </div>
       <div id="register-error" class="error-msg"></div>
       <button type="submit" class="btn-primary" id="register-btn">
@@ -175,7 +184,8 @@
             age: parseInt(document.getElementById('reg-age').value),
             height: parseFloat(document.getElementById('reg-height').value),
             weight: parseFloat(document.getElementById('reg-weight').value),
-            goal: document.getElementById('reg-goal').value
+            goal: document.getElementById('reg-goal').value,
+            dietPreference: document.getElementById('reg-diet').value
           })
         });
         if (data.token) {

@@ -14,42 +14,63 @@ router.get('/', async (req, res) => {
     // ─────────────────────────────────────────
     await Diet.create([
       {
-        goal: 'fat loss',
-        calories: 1800,
-        protein: 150,
-        carbs: 150,
-        fats: 50,
+        goal: 'fat loss', type: 'veg',
+        calories: 1600, protein: 120, carbs: 150, fats: 50,
         meals: {
-          breakfast: '4 egg whites + 1 whole egg omelette with spinach & tomatoes. 1 cup oats with berries. Black coffee or green tea.',
-          lunch: '200g grilled chicken breast with large mixed salad (cucumber, tomato, lettuce, olive oil). 1 medium sweet potato.',
-          dinner: '200g baked salmon or tuna with 2 cups steamed broccoli and green beans. No rice.',
-          snacks: 'Greek yogurt (0% fat) + handful of almonds. OR 1 apple + 2 tbsp peanut butter.'
+          breakfast: 'Moong Dal Chilla (2 small) with Mint Chutney. 1 cup Black Coffee/Green Tea.<br><span class="meal-macros">🔥 300 kcal | 💪 15g Protein | 🌾 40g Carbs | 🥑 8g Fats | 🌿 6g Fiber</span>',
+          lunch: '1 Katori Dal (Yellow/Moong), 100g Paneer Bhurji, 1 Multigrain Roti, Large Cucumber/Tomato Salad.<br><span class="meal-macros">🔥 450 kcal | 💪 25g Protein | 🌾 45g Carbs | 🥑 18g Fats | 🌿 10g Fiber</span>',
+          dinner: '1 Katori Soya Chunk Curry, 1 Katori Mixed Veg Subzi (low oil), 1 Roti.<br><span class="meal-macros">🔥 400 kcal | 💪 25g Protein | 🌾 45g Carbs | 🥑 10g Fats | 🌿 12g Fiber</span>',
+          snacks: '1 scoop Whey Protein in Water, 1 bowl Makhana (Fox nuts) roasted in 1 tsp ghee.<br><span class="meal-macros">🔥 250 kcal | 💪 26g Protein | 🌾 15g Carbs | 🥑 8g Fats | 🌿 2g Fiber</span>'
         }
       },
       {
-        goal: 'muscle gain',
-        calories: 3200,
-        protein: 200,
-        carbs: 380,
-        fats: 90,
+        goal: 'fat loss', type: 'non-veg',
+        calories: 1700, protein: 140, carbs: 130, fats: 55,
         meals: {
-          breakfast: '4 whole eggs scrambled + 3 egg whites. 2 cups oats with banana and honey. 1 glass whole milk.',
-          lunch: '250g chicken breast or beef with 2 cups white rice. Mixed vegetables stir-fried in olive oil. 1 banana post-meal.',
-          dinner: '300g steak or salmon with 2 large baked potatoes. Steamed vegetables. Cottage cheese before bed.',
-          snacks: 'Protein shake (30g protein) with whole milk. Handful of mixed nuts + dried fruit. Peanut butter on whole wheat toast.'
+          breakfast: '3 Boiled Egg Whites + 1 Whole Egg. 1 slice Brown Bread. Green Tea.<br><span class="meal-macros">🔥 250 kcal | 💪 20g Protein | 🌾 15g Carbs | 🥑 10g Fats | 🌿 2g Fiber</span>',
+          lunch: '150g Chicken Tikka (grilled), 1 Roti, 1 Katori Curd (Dahi), Large Green Salad.<br><span class="meal-macros">🔥 450 kcal | 💪 40g Protein | 🌾 30g Carbs | 🥑 15g Fats | 🌿 6g Fiber</span>',
+          dinner: '150g Baked/Grilled Fish (Bhetki/Surmai) with Lemon & Herbs, 1 Katori Vegetable Soup, 1 cup Steamed Broccoli.<br><span class="meal-macros">🔥 350 kcal | 💪 35g Protein | 🌾 15g Carbs | 🥑 12g Fats | 🌿 8g Fiber</span>',
+          snacks: '1 scoop Whey Protein in Water, Handful of Almonds (10-12).<br><span class="meal-macros">🔥 220 kcal | 💪 28g Protein | 🌾 5g Carbs | 🥑 12g Fats | 🌿 3g Fiber</span>'
         }
       },
       {
-        goal: 'weight gain',
-        calories: 3800,
-        protein: 180,
-        carbs: 480,
-        fats: 130,
+        goal: 'muscle gain', type: 'veg',
+        calories: 2800, protein: 160, carbs: 320, fats: 90,
         meals: {
-          breakfast: '3 large pancakes with maple syrup + 3 whole eggs. 1 glass whole milk. 1 banana.',
-          lunch: '300g pasta with meat sauce (minced beef + tomato). Garlic bread. Large glass of milk.',
-          dinner: '250g beef burger in whole wheat bun + sweet potato fries (baked). Side salad with full-fat dressing.',
-          snacks: 'Peanut butter & banana sandwich on thick white bread. Mass gainer shake OR whole milk + oats blended. Handful of cashews.'
+          breakfast: '2 Paneer Parathas (low oil) with 1 Katori Curd. 1 Banana. 1 glass Skim Milk.<br><span class="meal-macros">🔥 600 kcal | 💪 30g Protein | 🌾 75g Carbs | 🥑 20g Fats | 🌿 8g Fiber</span>',
+          lunch: '1.5 Katori Rajma or Chole, 2 Katori White Rice, 100g Paneer Curry, Salad.<br><span class="meal-macros">🔥 850 kcal | 💪 40g Protein | 🌾 110g Carbs | 🥑 25g Fats | 🌿 15g Fiber</span>',
+          dinner: '1.5 Katori Dal Makhani (homemade), 3 Multigrain Rotis, 1 Katori Mixed Veg.<br><span class="meal-macros">🔥 700 kcal | 💪 25g Protein | 🌾 90g Carbs | 🥑 20g Fats | 🌿 14g Fiber</span>',
+          snacks: '2 scoops Mass/Whey Protein + 300ml Milk + 1 Banana + 1 tbsp Peanut Butter Smoothie.<br><span class="meal-macros">🔥 650 kcal | 💪 55g Protein | 🌾 60g Carbs | 🥑 20g Fats | 🌿 6g Fiber</span>'
+        }
+      },
+      {
+        goal: 'muscle gain', type: 'non-veg',
+        calories: 3000, protein: 190, carbs: 300, fats: 100,
+        meals: {
+          breakfast: '5 Egg Omelette (3 whole, 2 whites) with Cheese. 2 slices Whole Wheat Toast. 1 Banana.<br><span class="meal-macros">🔥 600 kcal | 💪 35g Protein | 🌾 50g Carbs | 🥑 28g Fats | 🌿 5g Fiber</span>',
+          lunch: '250g Chicken Curry (Home style, 1 tbsp oil), 2 Katori White Rice, 1 Roti, Cucumber Salad.<br><span class="meal-macros">🔥 850 kcal | 💪 60g Protein | 🌾 90g Carbs | 🥑 25g Fats | 🌿 6g Fiber</span>',
+          dinner: '200g Mutton Rogan Josh or Chicken Kheema, 3 Rotis, 1 Katori Spinach (Palak).<br><span class="meal-macros">🔥 800 kcal | 💪 55g Protein | 🌾 70g Carbs | 🥑 30g Fats | 🌿 8g Fiber</span>',
+          snacks: 'Whey Protein (1 scoop) + Oatmeal (50g) + Handful of Walnuts & Almonds.<br><span class="meal-macros">🔥 550 kcal | 💪 35g Protein | 🌾 50g Carbs | 🥑 20g Fats | 🌿 7g Fiber</span>'
+        }
+      },
+      {
+        goal: 'weight gain', type: 'veg',
+        calories: 3400, protein: 150, carbs: 450, fats: 110,
+        meals: {
+          breakfast: '3 Aloo Parathas with Butter & 1 Katori Sweet Curd. 1 Mango or 2 Bananas. 1 glass Full Fat Milk.<br><span class="meal-macros">🔥 900 kcal | 💪 25g Protein | 🌾 120g Carbs | 🥑 35g Fats | 🌿 10g Fiber</span>',
+          lunch: '2 Katori Chole, 2 Katori Jeera Rice, 2 Rotis, 100g Paneer Butter Masala.<br><span class="meal-macros">🔥 1100 kcal | 💪 40g Protein | 🌾 150g Carbs | 🥑 40g Fats | 🌿 18g Fiber</span>',
+          dinner: '2 Katori Dal Fry (with tadka), 4 Rotis, 1 Katori Potato/Peas Vegetable. 1 Bowl Gajar Halwa or Sweet.<br><span class="meal-macros">🔥 950 kcal | 💪 30g Protein | 🌾 130g Carbs | 🥑 30g Fats | 🌿 15g Fiber</span>',
+          snacks: 'Heavy Smoothie: 500ml Full Fat Milk, 2 Bananas, 2 tbsp Peanut Butter, 1 scoop Protien/Gainer, Oats.<br><span class="meal-macros">🔥 800 kcal | 💪 45g Protein | 🌾 90g Carbs | 🥑 30g Fats | 🌿 8g Fiber</span>'
+        }
+      },
+      {
+        goal: 'weight gain', type: 'non-veg',
+        calories: 3600, protein: 180, carbs: 450, fats: 120,
+        meals: {
+          breakfast: '6 Scrambled Eggs (4 whole, 2 whites). 3 slices Buttered Toast. 1 Glass Full Fat Milk with 1 Banana.<br><span class="meal-macros">🔥 900 kcal | 💪 45g Protein | 🌾 75g Carbs | 🥑 45g Fats | 🌿 6g Fiber</span>',
+          lunch: '300g Chicken Biryani (Restaurant or homemade heavy), 1 Katori Raita, 2 Boiled Eggs.<br><span class="meal-macros">🔥 1200 kcal | 💪 70g Protein | 🌾 140g Carbs | 🥑 40g Fats | 🌿 5g Fiber</span>',
+          dinner: '250g Butter Chicken, 3 Garlic Naans or 4 Rotis, Side Salad.<br><span class="meal-macros">🔥 1100 kcal | 💪 60g Protein | 🌾 130g Carbs | 🥑 40g Fats | 🌿 8g Fiber</span>',
+          snacks: 'Weight Gainer Shake: Mass Gainer / Whey + 500ml Milk + Peanut butter sandwich (thick slices).<br><span class="meal-macros">🔥 850 kcal | 💪 50g Protein | 🌾 90g Carbs | 🥑 30g Fats | 🌿 6g Fiber</span>'
         }
       }
     ]);

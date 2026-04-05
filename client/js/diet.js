@@ -15,7 +15,8 @@
     `Your plan for: ${user.goal.replace(/\b\w/g, c => c.toUpperCase())}`;
 
   try {
-    const diet = await authFetch(`/api/diet/${encodeURIComponent(user.goal)}`);
+    const dietPref = user.dietPreference || 'veg';
+    const diet = await authFetch(`/api/diet/${encodeURIComponent(user.goal)}/${encodeURIComponent(dietPref)}`);
 
     if (diet.message) {
       document.getElementById('macro-grid').innerHTML = `
