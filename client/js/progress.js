@@ -20,7 +20,8 @@ async function loadProgress() {
   listEl.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
 
   try {
-    allEntries = await authFetch(`/api/progress/${currentUser.id}`);
+    const userId = currentUser._id || currentUser.id;
+    allEntries = await authFetch(`/api/progress/${userId}`);
     if (!Array.isArray(allEntries)) allEntries = [];
 
     renderChart();

@@ -19,6 +19,9 @@ const UserSchema = new mongoose.Schema({
   emailChangeExpire: Date,
   pendingEmail: String,
   pendingTxnId: String
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 });
 
 module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
