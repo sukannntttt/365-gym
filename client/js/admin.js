@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <td>${u.age || '—'}</td>
           <td>${userGoal}</td>
           <td style="color: ${feeStatusColor}; font-weight: bold;">${feeDateStr}</td>
+          <td><span style="font-weight: 800; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: ${u.membershipTier === 'Elite' ? '#f59e0b' : (u.membershipTier === 'Pro' ? '#6366f1' : 'var(--text-muted)')}">${(u.membershipTier || 'Free').toUpperCase()}</span></td>
           <td>${roleHtml}</td>
           <td>
             <button class="btn-primary" style="padding: 4px 10px; font-size: 0.8rem;" onclick="markPaid('${u._id}')">Mark Paid</button>
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         tbody.appendChild(tr);
       });
     } else {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-secondary);">No users found.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-secondary);">No users found.</td></tr>`;
     }
     
   } catch (err) {

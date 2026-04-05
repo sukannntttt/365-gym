@@ -60,6 +60,70 @@
     .tier-name { font-weight: 800; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px; }
     .tier-price { font-size: 1.2rem; font-weight: 900; color: white; }
     .tier-details { font-size: 0.7rem; color: var(--text-muted); margin-top: 10px; }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal-content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+    .spec-table th, .spec-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .spec-table th { color: var(--accent); text-transform: uppercase; font-size: 0.75rem; }
+    .check-icon { color: var(--success); font-weight: bold; }
+    .btn-info {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: all 0.2s;
+    }
+    .btn-info:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      transform: translateY(-2px);
+    }
   </style>
 </head>
 <body>
@@ -88,6 +152,8 @@
         <div class="tier-details">Personalized Coaching</div>
       </div>
     </div>
+
+    <button class="btn-info" onclick="toggleModal(true)">📋 View Membership Specifications</button>
 
     <div id="payment-section" style="display: none;">
       <div class="amt-pill" id="display-amt">₹1200</div>
@@ -194,6 +260,82 @@
         }
       });
     });
+  </script>
+
+  <!-- Membership Specs Modal -->
+  <div class="modal-overlay" id="specs-modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="toggleModal(false)">&times;</span>
+      <h2 style="margin-bottom: 10px;">Membership Specifications</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Compare our tiers to find the best fit for your fitness journey.</p>
+      
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Free</th>
+            <th>Pro</th>
+            <th>Elite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>BMI Calculator</td>
+            <td class="check-icon">✓</td>
+            <td class="check-icon">✓</td>
+            <td class="check-icon">✓</td>
+          </tr>
+          <tr>
+            <td>Workout Logging</td>
+            <td class="check-icon">✓</td>
+            <td class="check-icon">✓</td>
+            <td class="check-icon">✓</td>
+          </tr>
+          <tr>
+            <td>Basic Progress Charts</td>
+            <td class="check-icon">✓</td>
+            <td class="check-icon">✓</td>
+            <td class="check-icon">✓</td>
+          </tr>
+          <tr>
+            <td>Weekly Volume Analytics</td>
+            <td>—</td>
+            <td class="check-icon">✓</td>
+            <td class="check-icon">✓</td>
+          </tr>
+          <tr>
+            <td>Calorie Averaging</td>
+            <td>—</td>
+            <td class="check-icon">✓</td>
+            <td class="check-icon">✓</td>
+          </tr>
+          <tr>
+            <td>3D Tier Badge</td>
+            <td>—</td>
+            <td class="check-icon">✓</td>
+            <td class="check-icon">✓</td>
+          </tr>
+          <tr>
+            <td>Personalized Coaching</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="check-icon">✓</td>
+          </tr>
+          <tr>
+            <td>Advanced Analytics</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="check-icon">✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    window.toggleModal = function(show) {
+      document.getElementById('specs-modal').style.display = show ? 'flex' : 'none';
+    }
   </script>
 </body>
 </html>
