@@ -6,6 +6,8 @@ const WorkoutPlan = require('../models/WorkoutPlan');
 // POST /api/seed -> populates DB
 router.get('/', async (req, res) => {
   try {
+    try { await Diet.collection.dropIndex('goal_1'); } catch(e) {}
+    
     await Diet.deleteMany({});
     await WorkoutPlan.deleteMany({});
 
