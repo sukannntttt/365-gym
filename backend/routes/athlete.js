@@ -35,7 +35,25 @@ router.get('/profile', auth, async (req, res) => {
 // PUT / POST Athlete Profile
 router.post('/profile', auth, async (req, res) => {
   try {
-    const { sport, positionOrEvent, level, primaryGoal, trainingDaysPerWeek, dietBudget, dietPreference, isWheyFree } = req.body;
+    const {
+      sport,
+      secondarySport,
+      positionOrEvent,
+      level,
+      primaryGoal,
+      secondaryGoals,
+      age,
+      bodyWeight,
+      height,
+      trainingDaysPerWeek,
+      sessionDuration,
+      equipment,
+      trainingLocation,
+      dietBudget,
+      dietPreference,
+      isWheyFree,
+      competitionDate
+    } = req.body;
     
     let profile = await AthleteProfile.findOne({ userId: req.user.id });
     if (!profile) {
@@ -43,17 +61,114 @@ router.post('/profile', auth, async (req, res) => {
     }
 
     if (sport !== undefined) profile.sport = sport;
+    if (secondarySport !== undefined) profile.secondarySport = secondarySport;
     if (positionOrEvent !== undefined) profile.positionOrEvent = positionOrEvent;
     if (level !== undefined) profile.level = level;
     if (primaryGoal !== undefined) profile.primaryGoal = primaryGoal;
-    if (trainingDaysPerWeek !== undefined) profile.trainingDaysPerWeek = trainingDaysPerWeek;
+    if (secondaryGoals !== undefined) profile.secondaryGoals = secondaryGoals;
+    if (age !== undefined) profile.age = age ? Number(age) : null;
+    if (bodyWeight !== undefined) profile.bodyWeight = bodyWeight ? Number(bodyWeight) : null;
+    if (height !== undefined) profile.height = height ? Number(height) : null;
+    if (trainingDaysPerWeek !== undefined) profile.trainingDaysPerWeek = Number(trainingDaysPerWeek);
+    if (sessionDuration !== undefined) profile.sessionDuration = sessionDuration;
+    if (equipment !== undefined) profile.equipment = equipment;
+    if (trainingLocation !== undefined) profile.trainingLocation = trainingLocation;
     if (dietBudget !== undefined) profile.dietBudget = dietBudget;
     if (dietPreference !== undefined) profile.dietPreference = dietPreference;
     if (isWheyFree !== undefined) profile.isWheyFree = isWheyFree;
+    if (competitionDate !== undefined) profile.competitionDate = competitionDate ? new Date(competitionDate) : null;
     profile.updatedAt = Date.now();
 
     await profile.save();
     res.json(profile);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// POST Reset Athlete Profile Preferences (Preserves Logs & History)
+router.post('/profile/reset', auth, async (req, res) => {
+  try {
+    let profile = await AthleteProfile.findOne({ userId: req.user.id });
+    if (!profile) {
+      profile = new AthleteProfile({ userId: req.user.id });
+    } else {
+      profile.sport = 'General Athletic';
+      profile.secondarySport = '';
+      profile.positionOrEvent = 'All-Rounder';
+      profile.level = 'intermediate';
+      profile.primaryGoal = 'Explosive Power & Speed';
+      profile.secondaryGoals = [];
+      profile.age = undefined;
+      profile.bodyWeight = undefined;
+      profile.height = undefined;
+      profile.trainingDaysPerWeek = 4;
+      profile.sessionDuration = '60 Min';
+      profile.equipment = 'Full Gym';
+      profile.trainingLocation = 'Mixed';
+      profile.dietBudget = 'moderate';
+      profile.dietPreference = 'veg';
+      profile.isWheyFree = false;
+      profile.competitionDate = undefined;
+      profile.customSchedule = [];
+      profile.updatedAt = Date.now();
+      await profile.save();
+    }
+    res.json({ message: 'Profile preferences reset to defaults successfully', profile });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// POST Log Completed Workout Session
+router.post('/workout/complete', auth, async (req, res) => {
+  try {
+    const { planId, planName, category, durationMinutes, completedExercises } = req.body;
+    if (!planId) {
+      return res.status(400).json({ message: 'planId is required' });
+    }
+
+    let profile = await AthleteProfile.findOne({ userId: req.user.id });
+    if (!profile) {
+      profile = new AthleteProfile({ userId: req.user.id });
+    }
+
+    const completionRecord = {
+      planId,
+      planName: planName || 'Workout Session',
+      category: category || 'general',
+      completedAt: new Date(),
+      durationMinutes: durationMinutes ? Number(durationMinutes) : 0,
+      completedExercises: Array.isArray(completedExercises) ? completedExercises : []
+    };
+
+    profile.completedWorkouts.push(completionRecord);
+    await profile.save();
+
+    res.json({ message: 'Workout completed and logged successfully', completionRecord, totalCompleted: profile.completedWorkouts.length });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// POST Save Custom Schedule Updates
+router.post('/schedule/update', auth, async (req, res) => {
+  try {
+    const { schedule } = req.body;
+    if (!Array.isArray(schedule)) {
+      return res.status(400).json({ message: 'schedule must be an array of day objects' });
+    }
+
+    let profile = await AthleteProfile.findOne({ userId: req.user.id });
+    if (!profile) {
+      profile = new AthleteProfile({ userId: req.user.id });
+    }
+
+    profile.customSchedule = schedule;
+    profile.updatedAt = Date.now();
+    await profile.save();
+
+    res.json({ message: 'Custom schedule saved successfully', customSchedule: profile.customSchedule });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }

@@ -24,12 +24,12 @@ const ATHLETE_GYM_PLANS = [
     description: 'Race-simulated hybrid workout balancing high-zone running with heavy functional station strength.',
     exercises: [
       { name: '1000m SkiErg Pace Warm-Up', sets: 1, reps: '1000m', rest: '90s', benefit: 'Upper body aerobic engine', technique: 'Hinge hips, drive handles to thighs with core engagement.' },
-      { name: 'Heavy Sled Push / Sled Pull', sets: 4, reps: '25m Push + 25m Pull', rest: '2 Min', benefit: 'Quad & glute force under extreme fatigue', technique: 'Keep low torso angle, drive through whole foot.' },
+      { name: 'Heavy Sled Push / Sled Pull', sets: 4, reps: '25m Push + 25m Pull', rest: '2 Min', benefit: 'Quad & glute force under fatigue', technique: 'Keep low torso angle, drive through whole foot.' },
       { name: 'Burpee Broad Jumps', sets: 3, reps: '20m distance', rest: '90s', benefit: 'Full-body explosive endurance', technique: 'Chest to floor, jump forward aggressively using arm swing.' },
-      { name: '1000m Rowing Intervals', sets: 3, reps: '1000m @ 2:00/500m pace', rest: '2 Min', benefit: 'Posterior chain endurance', technique: 'Legs drive first, then hips, then arms pull to sternum.' },
-      { name: 'Heavy Farmer Carry', sets: 4, reps: '50m distance (24kg/32kg)', rest: '90s', benefit: 'Grip & core anti-lateral flexion', technique: 'Stand tall, shoulders packed down, tight grip.' },
-      { name: 'Sandbag Walking Lunges', sets: 3, reps: '30m distance (20kg)', rest: '90s', benefit: 'Single leg endurance', technique: 'Keep front knee tracking over 2nd toe.' },
-      { name: 'Wall Balls', sets: 4, reps: '25 reps (9kg / 6kg ball)', rest: '90s', benefit: 'Squat & push power under heart rate pressure', technique: 'Full depth squat, toss to 10ft target on extension.' }
+      { name: '1000m Rowing Intervals', sets: 3, reps: '1000m @ 2:00 pace', rest: '2 Min', benefit: 'Posterior chain endurance', technique: 'Legs drive first, then hips, then arms pull to sternum.' },
+      { name: 'Heavy Farmer Carry', sets: 4, reps: '50m distance (24kg)', rest: '90s', benefit: 'Grip & core anti-lateral flexion', technique: 'Stand tall, shoulders packed down, tight grip.' },
+      { name: 'Sandbag Walking Lunges', sets: 3, reps: '30m distance', rest: '90s', benefit: 'Single leg stamina', technique: 'Keep front knee tracking over 2nd toe.' },
+      { name: 'Wall Balls', sets: 4, reps: '25 reps (9kg / 6kg)', rest: '90s', benefit: 'Squat & push power under HR pressure', technique: 'Full depth squat, toss to 10ft target on extension.' }
     ],
     warmup: '5 min light jog + dynamic leg swings, arm circles, inchworms.',
     cooldown: '5 min walk + static quad stretch, hamstring stretch, calf stretch.',
@@ -46,11 +46,11 @@ const ATHLETE_GYM_PLANS = [
     equipment: 'Dumbbells, Treadmill / Run Track',
     description: 'Beginner-friendly station training using accessible equipment and bodyweight regressions.',
     exercises: [
-      { name: 'Treadmill Run / Run Outdoors', sets: 3, reps: '800m run', rest: '90s', benefit: 'Aerobic base', technique: 'Moderate conversational pace.' },
-      { name: 'Dumbbell Goblet Squat to Thruster', sets: 4, reps: '12 reps', rest: '60s', benefit: 'Wall ball alternative', technique: 'Deep squat, push overhead.' },
-      { name: 'Walking Dumbbell Farmers Walk', sets: 4, reps: '40m distance', rest: '60s', benefit: 'Grip & shoulder stability', technique: 'Brace core, walk heel-to-toe.' },
+      { name: 'Treadmill Run / Outdoor Run', sets: 3, reps: '800m run', rest: '90s', benefit: 'Aerobic base', technique: 'Moderate conversational pace.' },
+      { name: 'Dumbbell Goblet Thrusters', sets: 4, reps: '12 reps', rest: '60s', benefit: 'Wall ball alternative', technique: 'Deep squat, push overhead in one motion.' },
+      { name: 'Walking Dumbbell Farmers Carry', sets: 4, reps: '40m distance', rest: '60s', benefit: 'Grip & shoulder stability', technique: 'Brace core, walk heel-to-toe.' },
       { name: 'Bodyweight Burpee Stepping', sets: 3, reps: '10 reps', rest: '60s', benefit: 'Station endurance', technique: 'Step back into plank, step forward.' },
-      { name: 'Single Leg Bodyweight Lunges', sets: 3, reps: '12 / leg', rest: '60s', benefit: 'Leg stamina', technique: 'Upright torso.' }
+      { name: 'Single Leg Bodyweight Lunges', sets: 3, reps: '12 / leg', rest: '60s', benefit: 'Leg stamina', technique: 'Upright torso, controlled landing.' }
     ],
     warmup: 'Cat-cow, thoracic rotations, ankle circles.',
     cooldown: 'Foam rolling calves and quads.',
@@ -70,7 +70,7 @@ const ATHLETE_GYM_PLANS = [
       { name: 'Heavy Trap-Bar Deadlift', sets: 4, reps: '4-5 reps @ 80-85% 1RM', rest: '3 Min', benefit: 'Maximum lower body vertical force', technique: 'Hinge at hips, brace core, drive ground away explosively.' },
       { name: 'Barbell Front Squat', sets: 4, reps: '5 reps', rest: '2.5 Min', benefit: 'Quad & core anti-flexion', technique: 'Elbows high, vertical spine, full depth.' },
       { name: 'Weighted Pull-Ups', sets: 4, reps: '5-6 reps', rest: '2 Min', benefit: 'Upper body pull power & lat stiffness', technique: 'Full extension at bottom, chin over bar.' },
-      { name: 'Single-Leg Dumbbell Romanian Deadlift', sets: 3, reps: '8 / leg', rest: '90s', benefit: 'Hamstring & hip stability', technique: 'Slight knee bend, hinge till stretch in hamstring.' },
+      { name: 'Single-Leg DB Romanian Deadlift', sets: 3, reps: '8 / leg', rest: '90s', benefit: 'Hamstring & hip stability', technique: 'Slight knee bend, hinge till stretch in hamstring.' },
       { name: 'Pallof Press (Cable / Band)', sets: 3, reps: '12 / side', rest: '60s', benefit: 'Core anti-rotation stability', technique: 'Brace core, press handle forward without torso moving.' }
     ],
     warmup: 'Glute bridges, Monster walks, Hip openers.',
@@ -79,24 +79,23 @@ const ATHLETE_GYM_PLANS = [
   },
   {
     id: 'power-explosive',
-    name: 'Explosive Power & Plyometric Mastery',
+    name: 'Explosive Rate of Force Development (RFD)',
     category: 'power',
     level: 'Intermediate',
-    goal: 'Rate of Force Development (RFD) & Sprint Starts',
+    goal: 'Rate of Force Development & Sprint Starts',
     daysPerWeek: 3,
     duration: '45-50 Min',
     equipment: 'Plyo Box, Medicine Ball, Kettlebell',
-    description: 'High-intent neural training focusing on maximum speed of movement, tendon elastic recoil, and jump height.',
+    description: 'High-intent neural training focusing on maximum speed of movement, tendon elastic recoil, and power.',
     exercises: [
-      { name: 'Depth Jumps to Max Vertical Jump', sets: 4, reps: '4 jumps', rest: '2 Min', benefit: 'Reactive stretch-shortening cycle (SSC)', technique: 'Step off 30cm box, land soft and spring up instantly.' },
-      { name: 'Explosive Medicine Ball Chest Pass & Slam', sets: 4, reps: '6 slams', rest: '90s', benefit: 'Upper body rotational & vertical power', technique: 'Slam ball to ground using full hip & abdominal snap.' },
-      { name: 'Seated Box Jumps (Max Intent)', sets: 4, reps: '5 jumps', rest: '2 Min', benefit: 'Concentric starting power (zero momentum)', technique: 'Pause on seat, explode upward to high box.' },
+      { name: 'Seated Box Jump to Max Vertical', sets: 4, reps: '5 jumps', rest: '2 Min', benefit: 'Concentric starting power', technique: 'Pause on seat, explode upward with max intent.' },
+      { name: 'Explosive Medicine Ball Slams', sets: 4, reps: '6 slams', rest: '90s', benefit: 'Rotational & vertical upper body power', technique: 'Slam ball to ground using full hip & torso snap.' },
       { name: 'Heavy Kettlebell Swings', sets: 4, reps: '10 reps', rest: '90s', benefit: 'Hip snap & glute extension', technique: 'Hinge hips, drive forward with glutes.' },
-      { name: 'Plyometric Push-Ups (Hands Leaving Floor)', sets: 3, reps: '6 reps', rest: '90s', benefit: 'Upper body pressing speed', technique: 'Push off floor with maximum acceleration.' }
+      { name: 'Plyometric Push-Ups (Clap)', sets: 3, reps: '6 reps', rest: '90s', benefit: 'Upper body pressing speed', technique: 'Push off floor with maximum explosive acceleration.' }
     ],
     warmup: 'Ankle pogo hops, A-skips, Arm swings.',
     cooldown: 'Light walking & calf stretch.',
-    videoKeyword: 'Explosive plyometric power training'
+    videoKeyword: 'Explosive rate of force development workout'
   },
   {
     id: 'isometric-holds',
@@ -107,17 +106,172 @@ const ATHLETE_GYM_PLANS = [
     daysPerWeek: 3,
     duration: '35-40 Min',
     equipment: 'Bodyweight, Barbell, Resistance Loop',
-    description: 'Yielding and Overcoming Isometric holds that build immense tendon load capacity, decrease knee pain, and increase isometric strength.',
+    description: 'Yielding and Overcoming Isometric holds that build tendon load capacity and decrease knee pain.',
     exercises: [
       { name: 'Spanish Squat Isometric Hold', sets: 4, reps: '45 sec hold', rest: '90s', benefit: 'Patellar tendon loading & quad endurance', technique: 'Heavy band behind knees, sit back to 90 degrees, hold firm.' },
       { name: 'Single-Leg Isometric Wall Sit', sets: 3, reps: '30 sec / leg', rest: '60s', benefit: 'Unilateral quad stiffness', technique: 'Press foot into floor, 90 degree knee angle.' },
-      { name: 'Iso-Mid Thigh Pull (Barbell against Pins)', sets: 4, reps: '6 sec max push', rest: '2 Min', benefit: 'Peak isometric force production', technique: 'Pull against immovable pins with 100% max intent.' },
-      { name: 'Copenhagen Side Plank Hold', sets: 3, reps: '30 sec / side', rest: '60s', benefit: 'Adductor & groin bulletproofing', technique: 'Top leg on bench, hold hips high and straight.' },
-      { name: 'Isometric Dead Hang', sets: 3, reps: '45 sec hold', rest: '60s', benefit: 'Grip strength & shoulder decompression', technique: 'Active shoulders engaged, tight core.' }
+      { name: 'Iso-Mid Thigh Pull (Barbell on Pins)', sets: 4, reps: '6 sec max push', rest: '2 Min', benefit: 'Peak isometric force production', technique: 'Pull against immovable pins with 100% max intent.' },
+      { name: 'Copenhagen Side Plank Hold', sets: 3, reps: '30 sec / side', rest: '60s', benefit: 'Adductor & groin bulletproofing', technique: 'Top leg on bench, hold hips high and straight.' }
     ],
     warmup: 'Bodyweight squats, ankle mobility.',
     cooldown: 'Gentle leg elevation & Quad stretch.',
     videoKeyword: 'Spanish squat isometric hold knee rehabilitation'
+  },
+  {
+    id: 'plyo-vert-jump',
+    name: 'Jump & Plyometric Elasticity Protocol',
+    category: 'plyometric',
+    level: 'Intermediate',
+    goal: 'Max Vertical Jump & Reactive Elasticity',
+    daysPerWeek: 3,
+    duration: '45 Min',
+    equipment: 'Plyo Box, Hurdle / Cone, Band',
+    description: 'Advanced jump training targeting ground contact times (<200ms) and elastic energy storage in the Achilles tendon.',
+    exercises: [
+      { name: 'Continuous Pogo Hops (Ankle Stiffness)', sets: 4, reps: '15 sec', rest: '60s', benefit: 'Achilles tendon elastic energy', technique: 'Keep knees stiff, bounce off forefeet rapidly.' },
+      { name: 'Depth Jumps off 30cm Box', sets: 4, reps: '4 jumps', rest: '2 Min', benefit: 'Reactive stretch-shortening cycle (SSC)', technique: 'Step off box, absorb landing instantly and spring vertical.' },
+      { name: 'Penultimate Plant Approach Jumps', sets: 4, reps: '5 jumps', rest: '2 Min', benefit: 'Horizontal-to-vertical transfer', technique: 'Long penultimate stride, plant block foot hard.' },
+      { name: 'Single-Leg Hurdle Bounds', sets: 3, reps: '5 bounds / leg', rest: '90s', benefit: 'Unilateral jump power & landing control', technique: 'Explode sideways over hurdle, land stick.' }
+    ],
+    warmup: 'Dynamic leg swings, pogos, ankles mobility.',
+    cooldown: 'Soleus and gastrocnemius static stretch.',
+    videoKeyword: 'Vertical jump plyometric workout elastic recoil'
+  },
+  {
+    id: 'plyo-box-depth',
+    name: 'Plyometric Box & Horizontal Bound Power',
+    category: 'plyometric',
+    level: 'Advanced',
+    goal: 'Horizontal Broad Jump & Landing Stiffness',
+    daysPerWeek: 3,
+    duration: '50 Min',
+    equipment: 'High Plyo Box, Medicine Ball',
+    description: 'High-amplitude broad jumps, bounding, and landing mechanics for explosive multi-sport athletes.',
+    exercises: [
+      { name: 'Standing Broad Jump to Stick Landing', sets: 4, reps: '5 jumps', rest: '90s', benefit: 'Horizontal hip drive power', technique: 'Hinge hips back, swing arms, jump max distance.' },
+      { name: 'Alternating Single-Leg Bounds (30m)', sets: 4, reps: '30m distance', rest: '2 Min', benefit: 'Stride length & single leg propulsion', technique: 'Drive knee up and forward, paw the ground.' },
+      { name: 'Medicine Ball Scoop Throw & Jump', sets: 4, reps: '6 throws', rest: '90s', benefit: 'Full-body triple extension', technique: 'Scoop ball between legs, launch overhead into air.' }
+    ],
+    warmup: 'Skipping drills, lateral shuffles.',
+    cooldown: 'Hamstring stretch and foam rolling.',
+    videoKeyword: 'Plyometric bounding and broad jump workout'
+  },
+  {
+    id: 'agility-cod-reaction',
+    name: 'Agility, Reaction & COD Deceleration',
+    category: 'agility',
+    level: 'Intermediate',
+    goal: 'Change of Direction & Deceleration Control',
+    daysPerWeek: 3,
+    duration: '45 Min',
+    equipment: 'Cones, Agility Ladder, Reaction Balls',
+    description: 'Focuses on braking force, foot placement angles, and rapid multi-directional acceleration.',
+    exercises: [
+      { name: '5-10-5 Pro Agility Shuttle Run', sets: 5, reps: '3 rounds', rest: '90s', benefit: 'Lateral change of direction speed', technique: 'Stay low, touch lines with outside hand, push hard.' },
+      { name: 'Deceleration Stop & Stick (10m Sprint)', sets: 4, reps: '4 sprints', rest: '90s', benefit: 'Eccentric quad deceleration & ACL safety', technique: 'Sprint 10m, sink hips low into 2-step stop.' },
+      { name: 'Crossover Step & Shuffle Drill', sets: 4, reps: '15m distance', rest: '60s', benefit: 'Court / field recovery footwork', technique: 'Crossover lead leg, transition seamlessly into lateral shuffle.' },
+      { name: 'Visual Reaction Cone Taps (Partner)', sets: 4, reps: '30 sec', rest: '60s', benefit: 'Cognitive reaction & open-skill agility', technique: 'React to callout, accelerate to colored cone.' }
+    ],
+    warmup: 'High knees, butt kicks, carioca drills.',
+    cooldown: 'Groin / adductor stretch, hip flexor release.',
+    videoKeyword: 'Change of direction agility deceleration drills'
+  },
+  {
+    id: 'agility-reactive-shuttle',
+    name: 'Reactive Footwork & Rapid Crossover Speed',
+    category: 'agility',
+    level: 'All Levels',
+    goal: 'Footwork Frequency & Open Reaction',
+    daysPerWeek: 3,
+    duration: '40 Min',
+    equipment: 'Agility Ladder, Cones',
+    description: 'Fast footwork frequency drills designed to sharpen ground contact cadence and split-step timing.',
+    exercises: [
+      { name: 'Ladder In-Out & Ickey Shuffle', sets: 4, reps: '4 passes', rest: '60s', benefit: 'Foot cadence & coordination', technique: 'Stay light on toes, maintain athletic posture.' },
+      { name: 'L-Drill 3-Cone Agility Test', sets: 4, reps: '3 reps / direction', rest: '90s', benefit: 'Tight cornering & turning control', technique: 'Sprint to cone 1, backpedal, loop around cone 2.' },
+      { name: 'Lateral Skater Bouts to Cone Sprint', sets: 4, reps: '5 bounds + 5m sprint', rest: '90s', benefit: 'Lateral push-off into linear speed', technique: 'Bound side-to-side 4x, explode into forward sprint.' }
+    ],
+    warmup: 'Ankle bounces, lateral leg swings.',
+    cooldown: 'Calf & ankle stretching routine.',
+    videoKeyword: 'Agility ladder and reactive shuttle drills'
+  },
+  {
+    id: 'conditioning-engine',
+    name: 'Athletic Work Capacity & Repeat Sprint Ability (RSA)',
+    category: 'conditioning',
+    level: 'Intermediate',
+    goal: 'VO2 Max Engine & Anaerobic Lactic Tolerance',
+    daysPerWeek: 4,
+    duration: '50 Min',
+    equipment: 'SkiErg, Assault Bike, Treadmill, Kettlebell',
+    description: 'High-intensity interval conditioning designed to elevate anaerobic threshold and speed up heart rate recovery.',
+    exercises: [
+      { name: 'Assault Bike Sprint Intervals (15s Max / 45s Rest)', sets: 8, reps: '15s work / 45s rest', rest: '45s', benefit: 'Anaerobic power & lactat clearance', technique: 'Pedal & push arms with 100% max effort.' },
+      { name: 'Kettlebell Clean & Push Press Density', sets: 4, reps: '10 reps (20kg)', rest: '60s', benefit: 'Full-body lactic work capacity', technique: 'Clean KB to rack, dip and drive overhead.' },
+      { name: '100m Repeat Sprint Intervals @ 85%', sets: 6, reps: '100m sprint', rest: '60s', benefit: 'Repeat Sprint Ability (RSA)', technique: 'Maintain clean sprint posture down straightaway.' },
+      { name: 'Rowing Ergometer 500m Time Trial', sets: 3, reps: '500m sprint', rest: '2 Min', benefit: 'Cardiovascular power output', technique: 'Aggressive leg drive, maintain 30+ strokes/min.' }
+    ],
+    warmup: '5 min light jog + dynamic arm & leg mobility.',
+    cooldown: '5 min slow walk + deep diaphragmatic breathing.',
+    videoKeyword: 'Repeat sprint ability athletic conditioning workout'
+  },
+  {
+    id: 'conditioning-repeat-sprint',
+    name: 'Aerobic Base & Hybrid Threshold Circuit',
+    category: 'conditioning',
+    level: 'Beginner',
+    goal: 'Aerobic Engine & Energy System Base',
+    daysPerWeek: 3,
+    duration: '45 Min',
+    equipment: 'Rower, Jump Rope, Bodyweight',
+    description: 'Aerobic zone threshold conditioning to build endurance without compromising explosive speed.',
+    exercises: [
+      { name: 'Continuous Jump Rope & Shadow Movement', sets: 4, reps: '3 min round', rest: '60s', benefit: 'Calf endurance & foot stiffness', technique: 'Light bounce on forefeet.' },
+      { name: 'Bodyweight Circuit (Push-Up, Air Squat, Sit-Up)', sets: 4, reps: '15 reps each', rest: '60s', benefit: 'General muscular endurance', technique: 'Continuous movement rhythm.' },
+      { name: '2000m Rowing Zone 2 Engine', sets: 1, reps: '2000m steady pace', rest: '2 Min', benefit: 'Aerobic base building', technique: 'Keep HR around 130-145 bpm.' }
+    ],
+    warmup: 'Dynamic stretching, cat-cow.',
+    cooldown: 'Full body static stretch.',
+    videoKeyword: 'Aerobic base conditioning for explosive athletes'
+  },
+  {
+    id: 'mobility-prehab-hips',
+    name: 'Ankle, Knee & Hip Prehab Protocol',
+    category: 'mobility',
+    level: 'All Levels',
+    goal: 'Joint Mobility & Tendon Pain Prevention',
+    daysPerWeek: 4,
+    duration: '35 Min',
+    equipment: 'Foam Roller, Resistance Loop, Slant Board',
+    description: 'Targeted prehab focusing on ankle dorsiflexion, patellar tendon protection, and hip capsule space.',
+    exercises: [
+      { name: 'Slant Board Poliquin Step-Ups', sets: 3, reps: '15 / leg', rest: '60s', benefit: 'VMO knee stabilizer strengthening', technique: 'Heel elevated, drive knee forward past toes under control.' },
+      { name: 'Knee-to-Wall Ankle Dorsiflexion Mobilization', sets: 3, reps: '12 / ankle', rest: '45s', benefit: 'Ankle range for deep squatting & landing', technique: 'Drive knee forward over big toe while keeping heel down.' },
+      { name: '90/90 Hip Switch & Liftoffs', sets: 3, reps: '10 switches', rest: '45s', benefit: 'Hip internal & external rotation space', technique: 'Upright spine, rotate knees smoothly side-to-side.' },
+      { name: 'Single-Leg Tibialis Raise (against Wall)', sets: 3, reps: '20 reps', rest: '45s', benefit: 'Shin strength & shin splint prevention', technique: 'Lean back against wall, flex toes up to shins.' }
+    ],
+    warmup: 'Foam roll calves, IT band, and hamstrings.',
+    cooldown: 'Couch stretch (2 min per side).',
+    videoKeyword: 'Ankle dorsiflexion knee prehab poliquin step up'
+  },
+  {
+    id: 'mobility-shoulder-spine',
+    name: 'Shoulder Rotator & Thoracic Spine Freedom',
+    category: 'mobility',
+    level: 'All Levels',
+    goal: 'Overhead Range & Rotational Spine Health',
+    daysPerWeek: 3,
+    duration: '30 Min',
+    equipment: 'Bands, Foam Roller, Light DB',
+    description: 'Essential bulletproofing for throwing, spiking, and overhead pressing sports.',
+    exercises: [
+      { name: 'Thoracic Extension on Foam Roller', sets: 3, reps: '10 extensions', rest: '30s', benefit: 'Thoracic spine extension for overhead posture', technique: 'Support head, extend upper back over roller.' },
+      { name: 'Band Pull-Aparts & Face Pulls', sets: 4, reps: '20 reps', rest: '45s', benefit: 'Rear deltoid & rhomboid posture control', technique: 'Squeeze shoulder blades together at end range.' },
+      { name: 'Sidelying Thoracic Windmills', sets: 3, reps: '8 / side', rest: '45s', benefit: 'Rotational spine & chest opening', technique: 'Trace big circle with top arm, keep knees pinned.' }
+    ],
+    warmup: 'Cat-cow, shoulder circles.',
+    cooldown: 'Childs pose + Thread the needle stretch.',
+    videoKeyword: 'Thoracic spine mobility shoulder bulletproofing'
   },
   {
     id: 'sport-volleyball',
@@ -128,7 +282,7 @@ const ATHLETE_GYM_PLANS = [
     daysPerWeek: 4,
     duration: '60 Min',
     equipment: 'Barbell, Dumbbells, Plyo Box, Bands',
-    description: 'Designed specifically for setters, hitters, and blockers needing rapid 4-step approach jumps, blocking reaction, and shoulder protection.',
+    description: 'Designed specifically for setters, hitters, and blockers needing rapid approach jumps and shoulder safety.',
     exercises: [
       { name: 'Penultimate Approach Jump Drills', sets: 4, reps: '5 jumps', rest: '2 Min', benefit: 'Horizontal-to-vertical conversion speed', technique: 'Long 2nd step, fast plant-and-block foot placement.' },
       { name: 'Barbell Jump Squats (Light 20-30% 1RM)', sets: 4, reps: '5 jumps', rest: '2 Min', benefit: 'Loaded explosive extension', technique: 'Dip quickly and spring up with max velocity.' },
@@ -154,7 +308,7 @@ const ATHLETE_GYM_PLANS = [
       { name: 'Front-Leg Block Split Squat Iso Hold', sets: 4, reps: '30 sec / leg', rest: '90s', benefit: 'Bowler front leg force absorbtion', technique: 'Firm front heel lock, prevent knee collapse.' },
       { name: 'Rotational Medicine Ball Wall Throws', sets: 4, reps: '8 / side', rest: '90s', benefit: 'Batting shot power & bowling torso rotation', technique: 'Hip drive leads the arm throw into wall.' },
       { name: 'Sled Resisted 10m Sprints', sets: 5, reps: '10m sprint', rest: '90s', benefit: 'First 3-step wicket acceleration', technique: 'Drive low angle, push earth back.' },
-      { name: 'Single-Arm Dumbbell Row & Cable Anti-Rotation', sets: 3, reps: '10 reps', rest: '60s', benefit: 'Throwing arm lat stability', technique: 'Pull elbow to hip.' }
+      { name: 'Single-Arm DB Row & Cable Anti-Rotation', sets: 3, reps: '10 reps', rest: '60s', benefit: 'Throwing arm lat stability', technique: 'Pull elbow to hip.' }
     ],
     warmup: 'Thoracic rotations, hip mobility.',
     cooldown: 'Lat stretch & hamstring stretch.',
@@ -189,7 +343,7 @@ const ATHLETE_GYM_PLANS = [
     daysPerWeek: 4,
     duration: '55 Min',
     equipment: 'Barbell, Resistance Bands, Sled',
-    description: 'Designed for track sprinters focusing on drive phase, upright posture, and hamstring hamstring health.',
+    description: 'Designed for track sprinters focusing on drive phase, upright posture, and hamstring health.',
     exercises: [
       { name: 'Wall Drill A-Skips & High Knee Drive', sets: 4, reps: '15 sec', rest: '60s', benefit: 'Piston leg action & hip flexion speed', technique: '45 degree torso against wall, drive knee up hard.' },
       { name: 'Standing Broad Jump to 10m Acceleration', sets: 4, reps: '4 reps', rest: '2 Min', benefit: 'Horizontal push out of blocks', technique: 'Jump forward, land into immediate sprint stride.' },
@@ -365,6 +519,9 @@ function renderGymPlans(category) {
 // -------------------------------------------------------------
 // WORKOUT PLAN MODAL
 // -------------------------------------------------------------
+let activeModalRestTimer = null;
+let activeModalRestSeconds = 0;
+
 function openAthleteWorkoutModal(planId) {
   const plan = ATHLETE_GYM_PLANS.find(p => p.id === planId);
   if (!plan) return;
@@ -375,39 +532,72 @@ function openAthleteWorkoutModal(planId) {
   const youtubeUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(plan.videoKeyword)}`;
 
   content.innerHTML = `
-    <div class="athlete-card-badge badge-${plan.category}" style="font-size:0.8rem;">${plan.category.toUpperCase()}</div>
-    <h2 style="font-size:1.4rem; color:var(--text); margin:0.5rem 0;">${plan.name}</h2>
-    <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:1rem;">${plan.description}</p>
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">
+      <div>
+        <div class="athlete-card-badge badge-${plan.category}" style="font-size:0.8rem;">${plan.category.toUpperCase()}</div>
+        <h2 style="font-size:1.4rem; color:var(--text); margin:0.5rem 0;">${plan.name}</h2>
+        <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:0.5rem;">${plan.description}</p>
+      </div>
+      <div style="text-align:right; background:var(--surface2); padding:0.6rem 1rem; border-radius:8px; border:1px solid var(--border); min-width:130px;">
+        <span style="font-size:0.72rem; color:var(--text-muted); display:block;">SESSION PROGRESS</span>
+        <strong id="completed-ex-count" style="font-size:1.2rem; color:var(--accent);">0 / ${plan.exercises.length}</strong>
+      </div>
+    </div>
 
-    <div style="display:flex; flex-wrap:wrap; gap:1rem; background:var(--surface2); padding:0.85rem; border-radius:8px; margin-bottom:1.25rem; font-size:0.85rem;">
+    <div style="display:flex; flex-wrap:wrap; gap:1rem; background:var(--surface2); padding:0.85rem; border-radius:8px; margin-bottom:1rem; font-size:0.85rem;">
       <div><strong style="color:var(--accent);">Level:</strong> ${plan.level}</div>
       <div><strong style="color:var(--accent);">Equipment:</strong> ${plan.equipment}</div>
       <div><strong style="color:var(--accent);">Duration:</strong> ${plan.duration}</div>
+    </div>
+
+    <!-- Rest Timer Widget inside Modal -->
+    <div style="background:var(--surface2); border:1px solid var(--border); padding:0.75rem 1rem; border-radius:8px; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+      <div>
+        <strong style="color:var(--accent3); font-size:0.88rem;">⏱️ Live Rest Recovery Timer</strong>
+        <div style="font-size:0.75rem; color:var(--text-muted);">Start rest interval countdown between sets</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:0.5rem;">
+        <div id="modal-rest-timer-val" style="font-family:monospace; font-size:1.3rem; font-weight:800; color:var(--accent); min-width:60px;">00:00</div>
+        <button class="cat-btn" onclick="startModalRestTimer(60)" style="padding:0.3rem 0.6rem; font-size:0.78rem;">+60s</button>
+        <button class="cat-btn" onclick="startModalRestTimer(90)" style="padding:0.3rem 0.6rem; font-size:0.78rem;">+90s</button>
+        <button class="cat-btn" onclick="resetModalRestTimer()" style="padding:0.3rem 0.6rem; font-size:0.78rem; background:var(--surface); border:1px solid var(--border);">Reset</button>
+      </div>
     </div>
 
     <div style="margin-bottom:1rem; font-size:0.85rem; color:var(--text-muted);">
       <strong style="color:var(--accent3);">🔥 Warm-Up Routine:</strong> ${plan.warmup}
     </div>
 
-    <h3 style="font-size:1.1rem; color:var(--text); margin-top:1.25rem;">🏋️ Exercises & Athletic Technique</h3>
+    <h3 style="font-size:1.05rem; color:var(--text); margin-top:1rem; margin-bottom:0.75rem; display:flex; justify-content:space-between; align-items:center;">
+      <span>🏋️ Exercises & Athletic Technique</span>
+      <span style="font-size:0.78rem; color:var(--text-muted); font-weight:normal;">Check off completed exercises</span>
+    </h3>
     <table class="exercise-table">
       <thead>
         <tr>
+          <th style="width:40px; text-align:center;">Done</th>
           <th>Exercise</th>
           <th>Sets × Reps</th>
           <th>Rest</th>
-          <th>Athletic Benefit & Technique</th>
+          <th>Technique</th>
         </tr>
       </thead>
       <tbody>
-        ${plan.exercises.map(ex => `
-          <tr>
+        ${plan.exercises.map((ex, idx) => `
+          <tr id="ex-row-${idx}">
+            <td style="text-align:center;">
+              <input type="checkbox" onchange="toggleExerciseCheck(this, ${idx}, ${plan.exercises.length})" style="width:18px; height:18px; cursor:pointer;" />
+            </td>
             <td>
               <div class="exercise-name">${ex.name}</div>
               <div class="exercise-benefit">${ex.benefit}</div>
             </td>
             <td style="font-weight:700; color:var(--text);">${ex.sets} × ${ex.reps}</td>
-            <td style="color:var(--text-muted);">${ex.rest}</td>
+            <td>
+              <button class="cat-btn" onclick="parseAndStartRest('${ex.rest}')" style="padding:0.2rem 0.45rem; font-size:0.75rem; white-space:nowrap;">
+                ⏱️ ${ex.rest}
+              </button>
+            </td>
             <td style="font-size:0.82rem; color:var(--text-muted);">${ex.technique}</td>
           </tr>
         `).join('')}
@@ -418,9 +608,12 @@ function openAthleteWorkoutModal(planId) {
       <strong style="color:var(--accent2);">🧘 Cool-Down Routine:</strong> ${plan.cooldown}
     </div>
 
-    <div style="margin-top:1.5rem; display:flex; gap:0.75rem;">
-      <a href="${youtubeUrl}" target="_blank" rel="noopener" class="btn-primary" style="text-decoration:none; display:inline-block; font-size:0.85rem; padding:0.6rem 1rem;">
-        ▶️ Watch Video Demonstration
+    <div style="margin-top:1.5rem; display:flex; flex-wrap:wrap; gap:0.75rem;">
+      <button class="btn-primary" onclick="finishLiveWorkout('${plan.id}')" style="padding:0.6rem 1.25rem; font-size:0.88rem; flex:2; min-width:200px;">
+        ✅ Finish & Log Completed Workout
+      </button>
+      <a href="${youtubeUrl}" target="_blank" rel="noopener" class="btn-secondary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; font-size:0.85rem; padding:0.6rem 1rem; background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; flex:1; min-width:140px;">
+        ▶️ Watch Video Demo
       </a>
       <button class="view-plan-btn" onclick="closeAthleteModal()" style="width:auto; padding:0.6rem 1rem;">Close</button>
     </div>
@@ -429,7 +622,108 @@ function openAthleteWorkoutModal(planId) {
   modal.classList.add('open');
 }
 
+function toggleExerciseCheck(cb, idx, total) {
+  const row = document.getElementById(`ex-row-${idx}`);
+  if (row) {
+    if (cb.checked) {
+      row.style.opacity = '0.5';
+      row.style.textDecoration = 'line-through';
+    } else {
+      row.style.opacity = '1';
+      row.style.textDecoration = 'none';
+    }
+  }
+
+  const checkboxes = document.querySelectorAll('#workout-detail-modal input[type="checkbox"]');
+  let checkedCount = 0;
+  checkboxes.forEach(c => { if (c.checked) checkedCount++; });
+
+  const counter = document.getElementById('completed-ex-count');
+  if (counter) counter.textContent = `${checkedCount} / ${total}`;
+}
+
+function parseAndStartRest(restStr) {
+  let seconds = 60;
+  if (restStr.includes('90')) seconds = 90;
+  else if (restStr.includes('2 Min') || restStr.includes('120')) seconds = 120;
+  else if (restStr.includes('3 Min')) seconds = 180;
+  else if (restStr.includes('45')) seconds = 45;
+  startModalRestTimer(seconds);
+}
+
+function startModalRestTimer(sec) {
+  if (activeModalRestTimer) clearInterval(activeModalRestTimer);
+  activeModalRestSeconds = sec;
+  updateModalRestTimerDisplay();
+
+  activeModalRestTimer = setInterval(() => {
+    activeModalRestSeconds--;
+    if (activeModalRestSeconds <= 0) {
+      clearInterval(activeModalRestTimer);
+      activeModalRestSeconds = 0;
+      updateModalRestTimerDisplay();
+      if ('vibrate' in navigator) navigator.vibrate([200, 100, 200]);
+    } else {
+      updateModalRestTimerDisplay();
+    }
+  }, 1000);
+}
+
+function resetModalRestTimer() {
+  if (activeModalRestTimer) clearInterval(activeModalRestTimer);
+  activeModalRestSeconds = 0;
+  updateModalRestTimerDisplay();
+}
+
+function updateModalRestTimerDisplay() {
+  const el = document.getElementById('modal-rest-timer-val');
+  if (!el) return;
+  const mins = Math.floor(activeModalRestSeconds / 60).toString().padStart(2, '0');
+  const secs = (activeModalRestSeconds % 60).toString().padStart(2, '0');
+  el.textContent = `${mins}:${secs}`;
+}
+
+async function finishLiveWorkout(planId) {
+  const plan = ATHLETE_GYM_PLANS.find(p => p.id === planId);
+  if (!plan) return;
+
+  const checkboxes = document.querySelectorAll('#workout-detail-modal input[type="checkbox"]');
+  const completedExercises = [];
+  checkboxes.forEach((cb, idx) => {
+    if (cb.checked && plan.exercises[idx]) {
+      completedExercises.push(plan.exercises[idx].name);
+    }
+  });
+
+  try {
+    const res = await authFetch('/api/athlete/workout/complete', {
+      method: 'POST',
+      body: JSON.stringify({
+        planId: plan.id,
+        planName: plan.name,
+        category: plan.category,
+        durationMinutes: parseInt(plan.duration) || 60,
+        completedExercises
+      })
+    });
+
+    if (res && res.completionRecord) {
+      alert(`🎉 Workout Logged: ${plan.name}!\nGreat job completing ${completedExercises.length} exercises today.`);
+    } else {
+      alert(`🎉 Session Completed: ${plan.name}!`);
+    }
+
+    closeAthleteModal();
+    await loadAthleteData();
+  } catch (err) {
+    console.error('Failed to log workout completion:', err);
+    closeAthleteModal();
+    alert(`🎉 Session completed: ${plan.name}!`);
+  }
+}
+
 function closeAthleteModal() {
+  if (activeModalRestTimer) clearInterval(activeModalRestTimer);
   document.getElementById('workout-detail-modal').classList.remove('open');
 }
 
@@ -830,14 +1124,17 @@ function renderWeeklySchedule() {
   const grid = document.getElementById('weekly-schedule-grid');
   if (!grid) return;
 
-  const days = [
-    { day: 'Monday', title: '🏋️ Lower Body Power & Vert Jump', type: 'Gym Training', details: 'Depth jumps, Trap Bar Deadlift, Spanish squat holds.' },
-    { day: 'Tuesday', title: '🏟️ Ground Field Acceleration & COD', type: 'Ground Drills', details: '10m crouch starts, split-step court shuffles.' },
-    { day: 'Wednesday', title: '🧘 Active Recovery & Mobility', type: 'Rest & Recovery', details: '30 min walk, Copenhagen planks, foam rolling.' },
-    { day: 'Thursday', title: '🏋️ Upper Body Push-Pull & Rotational Power', type: 'Gym Training', details: 'Weighted pull-ups, landmine press, med ball wall slams.' },
-    { day: 'Friday', title: '🏟️ Sport-Specific Match Practice', type: 'Court Practice', details: 'High-intensity court footwork and tactical match play.' },
-    { day: 'Saturday', title: '🔥 HYROX Work Capacity / Conditioning', type: 'Conditioning', details: 'Sled push, rowing intervals, wall ball ladder.' },
-    { day: 'Sunday', title: '🌙 Full Rest & Glycogen Replenishment', type: 'Complete Rest', details: 'Turmeric milk, stretching, 9 hours sleep.' }
+  const sport = userProfile?.sport || 'General Athletic';
+  const goal = userProfile?.primaryGoal || 'Explosive Power';
+
+  let days = [
+    { day: 'Monday', title: `🏋️ Lower Body ${goal} & Vert Jump`, type: 'Gym Training', details: 'Depth jumps, Trap Bar Deadlifts, Spanish squat isometric holds.' },
+    { day: 'Tuesday', title: `🏟️ ${sport} Field Acceleration & COD`, type: 'Ground Drills', details: `Specific ${sport} agility drills, 10m crouch starts, split-step footwork.` },
+    { day: 'Wednesday', title: '🧘 Active Recovery & Mobility', type: 'Rest & Recovery', details: '30 min brisk walk, Copenhagen planks, foam rolling calves and quads.' },
+    { day: 'Thursday', title: `🏋️ Upper Body Push-Pull & ${sport} Power`, type: 'Gym Training', details: 'Weighted pull-ups, landmine rotational press, med ball slams.' },
+    { day: 'Friday', title: `🏟️ ${sport} Match Simulation & Drills`, type: 'Field / Court Practice', details: `High-intensity ${sport} specific court/field drills and match play.` },
+    { day: 'Saturday', title: '🔥 HYROX Work Capacity / Conditioning', type: 'Conditioning', details: 'Sled pushes, rowing intervals, farmer carries, wall balls.' },
+    { day: 'Sunday', title: '🌙 Full Rest & Glycogen Replenishment', type: 'Complete Rest', details: 'Tart cherry juice, passive stretching, 9 hours sleep.' }
   ];
 
   grid.innerHTML = days.map(d => `
@@ -851,9 +1148,29 @@ function renderWeeklySchedule() {
 }
 
 // -------------------------------------------------------------
-// ATHLETE WIZARD MODAL
+// ATHLETE WIZARD & RESET MODALS
 // -------------------------------------------------------------
 function openAthleteWizardModal() {
+  if (userProfile) {
+    if (document.getElementById('wiz-sport')) document.getElementById('wiz-sport').value = userProfile.sport || 'General Athletic';
+    if (document.getElementById('wiz-secondary-sport')) document.getElementById('wiz-secondary-sport').value = userProfile.secondarySport || '';
+    if (document.getElementById('wiz-position')) document.getElementById('wiz-position').value = userProfile.positionOrEvent || '';
+    if (document.getElementById('wiz-level')) document.getElementById('wiz-level').value = userProfile.level || 'intermediate';
+    if (document.getElementById('wiz-goal')) document.getElementById('wiz-goal').value = userProfile.primaryGoal || 'Explosive Power & Speed';
+    if (document.getElementById('wiz-days')) document.getElementById('wiz-days').value = userProfile.trainingDaysPerWeek || 4;
+    if (document.getElementById('wiz-age')) document.getElementById('wiz-age').value = userProfile.age || '';
+    if (document.getElementById('wiz-weight')) document.getElementById('wiz-weight').value = userProfile.bodyWeight || '';
+    if (document.getElementById('wiz-height')) document.getElementById('wiz-height').value = userProfile.height || '';
+    if (document.getElementById('wiz-duration')) document.getElementById('wiz-duration').value = userProfile.sessionDuration || '60 Min';
+    if (document.getElementById('wiz-equipment')) document.getElementById('wiz-equipment').value = userProfile.equipment || 'Full Gym';
+    if (document.getElementById('wiz-location')) document.getElementById('wiz-location').value = userProfile.trainingLocation || 'Mixed';
+    if (document.getElementById('wiz-diet-pref')) document.getElementById('wiz-diet-pref').value = userProfile.dietPreference || 'veg';
+    if (document.getElementById('wiz-budget')) document.getElementById('wiz-budget').value = userProfile.dietBudget || 'moderate';
+    if (document.getElementById('wiz-whey')) document.getElementById('wiz-whey').value = userProfile.isWheyFree ? 'true' : 'false';
+    if (document.getElementById('wiz-comp-date') && userProfile.competitionDate) {
+      document.getElementById('wiz-comp-date').value = new Date(userProfile.competitionDate).toISOString().split('T')[0];
+    }
+  }
   document.getElementById('athlete-wizard-modal').classList.add('open');
 }
 
@@ -861,39 +1178,154 @@ function closeWizardModal() {
   document.getElementById('athlete-wizard-modal').classList.remove('open');
 }
 
+function openResetProfileModal() {
+  document.getElementById('athlete-reset-modal').classList.add('open');
+}
+
+function closeResetProfileModal() {
+  document.getElementById('athlete-reset-modal').classList.remove('open');
+}
+
+async function confirmResetProfile() {
+  try {
+    const res = await authFetch('/api/athlete/profile/reset', {
+      method: 'POST'
+    });
+    if (res && res.profile) {
+      userProfile = res.profile;
+      applyUserProfileToUI();
+      closeResetProfileModal();
+      alert('🔄 Sport profile reset to defaults.');
+    }
+  } catch (err) {
+    console.error('Failed to reset profile:', err);
+    alert('Failed to reset profile. Please try again.');
+  }
+}
+
 async function handleWizardSubmit(e) {
   e.preventDefault();
-  const sport = document.getElementById('wiz-sport').value;
-  const positionOrEvent = document.getElementById('wiz-position').value;
-  const level = document.getElementById('wiz-level').value;
-  const primaryGoal = document.getElementById('wiz-goal').value;
-  const trainingDaysPerWeek = Number(document.getElementById('wiz-days').value);
-  const dietBudget = document.getElementById('wiz-budget').value;
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saving & Reconfiguring...';
+  }
+
+  const sport = document.getElementById('wiz-sport')?.value;
+  const secondarySport = document.getElementById('wiz-secondary-sport')?.value;
+  const positionOrEvent = document.getElementById('wiz-position')?.value;
+  const level = document.getElementById('wiz-level')?.value;
+  const primaryGoal = document.getElementById('wiz-goal')?.value;
+  const trainingDaysPerWeek = Number(document.getElementById('wiz-days')?.value || 4);
+  const age = document.getElementById('wiz-age')?.value ? Number(document.getElementById('wiz-age').value) : undefined;
+  const bodyWeight = document.getElementById('wiz-weight')?.value ? Number(document.getElementById('wiz-weight').value) : undefined;
+  const height = document.getElementById('wiz-height')?.value ? Number(document.getElementById('wiz-height').value) : undefined;
+  const sessionDuration = document.getElementById('wiz-duration')?.value;
+  const equipment = document.getElementById('wiz-equipment')?.value;
+  const trainingLocation = document.getElementById('wiz-location')?.value;
+  const dietPreference = document.getElementById('wiz-diet-pref')?.value;
+  const dietBudget = document.getElementById('wiz-budget')?.value;
+  const isWheyFree = document.getElementById('wiz-whey')?.value === 'true';
+  const competitionDate = document.getElementById('wiz-comp-date')?.value || undefined;
 
   try {
     const updated = await authFetch('/api/athlete/profile', {
       method: 'POST',
-      body: JSON.stringify({ sport, positionOrEvent, level, primaryGoal, trainingDaysPerWeek, dietBudget })
+      body: JSON.stringify({
+        sport,
+        secondarySport,
+        positionOrEvent,
+        level,
+        primaryGoal,
+        trainingDaysPerWeek,
+        age,
+        bodyWeight,
+        height,
+        sessionDuration,
+        equipment,
+        trainingLocation,
+        dietPreference,
+        dietBudget,
+        isWheyFree,
+        competitionDate
+      })
     });
 
-    userProfile = updated;
-    applyUserProfileToUI();
-    closeWizardModal();
+    if (updated && updated._id) {
+      userProfile = updated;
+      applyUserProfileToUI();
+      closeWizardModal();
+      alert('🎯 Profile updated and dashboard reconfigured!');
+    } else if (updated && updated.message) {
+      alert(`Error updating profile: ${updated.message}`);
+    }
   } catch (err) {
     console.error('Failed to update athlete wizard:', err);
+    alert('Failed to save profile settings. Please try again.');
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '💾 Save & Reconfigure Dashboard';
+    }
   }
 }
 
 function applyUserProfileToUI() {
   if (!userProfile) return;
-  document.getElementById('overview-sport').textContent = userProfile.sport;
-  document.getElementById('sum-sport').textContent = userProfile.sport;
-  document.getElementById('sum-level').textContent = userProfile.level.toUpperCase();
-  document.getElementById('sum-goal').textContent = userProfile.primaryGoal;
-  document.getElementById('sum-days').textContent = `${userProfile.trainingDaysPerWeek} Days`;
 
-  selectGroundSport(userProfile.sport);
+  const sport = userProfile.sport || 'General Athletic';
+  const level = (userProfile.level || 'intermediate').toUpperCase();
+  const goal = userProfile.primaryGoal || 'Explosive Power';
+  const days = userProfile.trainingDaysPerWeek || 4;
+  const eq = userProfile.equipment || 'Full Gym';
+  const dur = userProfile.sessionDuration || '60 Min';
+
+  const elemOverviewSport = document.getElementById('overview-sport');
+  if (elemOverviewSport) elemOverviewSport.textContent = sport;
+
+  const elemSumSport = document.getElementById('sum-sport');
+  if (elemSumSport) elemSumSport.textContent = sport;
+
+  const elemSumLevel = document.getElementById('sum-level');
+  if (elemSumLevel) elemSumLevel.textContent = level;
+
+  const elemSumGoal = document.getElementById('sum-goal');
+  if (elemSumGoal) elemSumGoal.textContent = goal;
+
+  const elemSumDays = document.getElementById('sum-days');
+  if (elemSumDays) elemSumDays.textContent = `${days} Days`;
+
+  const elemSumEq = document.getElementById('sum-equipment');
+  if (elemSumEq) elemSumEq.textContent = eq;
+
+  const elemSumDur = document.getElementById('sum-duration');
+  if (elemSumDur) elemSumDur.textContent = dur;
+
+  // Reconfigure Today's Training Focus Card on Dashboard
+  const todayTitle = document.getElementById('today-session-title');
+  const todayDesc = document.getElementById('today-session-desc');
+  if (todayTitle && todayDesc) {
+    todayTitle.textContent = `🏋️ ${sport} — ${goal} Focus`;
+    todayDesc.textContent = `Customized for ${userProfile.positionOrEvent || sport} at ${level} level (${eq}, ${days} days/week, ${dur}).`;
+  }
+
+  // Sync selectors in diet tab if available
+  const dietSelect = document.getElementById('diet-type-select');
+  if (dietSelect && userProfile.dietPreference) dietSelect.value = userProfile.dietPreference;
+
+  const budgetSelect = document.getElementById('diet-budget-select');
+  if (budgetSelect && userProfile.dietBudget) budgetSelect.value = userProfile.dietBudget;
+
+  const wheySelect = document.getElementById('diet-whey-select');
+  if (wheySelect) wheySelect.value = userProfile.isWheyFree ? 'true' : 'false';
+
+  // Reconfigure sub-components & tabs
+  if (typeof ATHLETE_GROUND_DRILLS !== 'undefined') {
+    selectGroundSport(ATHLETE_GROUND_DRILLS[sport] ? sport : 'Volleyball');
+  }
   updateAthleteDietUI();
+  renderWeeklySchedule();
+  renderGymPlans('all');
 }
 
 // -------------------------------------------------------------
@@ -902,11 +1334,13 @@ function applyUserProfileToUI() {
 async function loadAthleteData() {
   try {
     const profile = await authFetch('/api/athlete/profile');
-    userProfile = profile;
-    applyUserProfileToUI();
+    if (profile && profile._id) {
+      userProfile = profile;
+      applyUserProfileToUI();
+    }
 
     const progress = await authFetch('/api/athlete/progress');
-    athleteLogs = progress || [];
+    athleteLogs = Array.isArray(progress) ? progress : [];
 
     renderPRSummary();
     updateOverviewStats();

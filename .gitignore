@@ -4,3 +4,7 @@ backend/node_modules/
 backend/.env
 .DS_Store
 *.log
+.agent/
+.gemini/
+.ipynb_checkpoints/
+seed_error.txt
