@@ -108,7 +108,7 @@ router.post('/forgotpassword', async (req, res) => {
     user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
     await user.save();
 
-    const resetUrl = `https://gymfrontend0925.netlify.app/reset-password.html?token=${rawToken}`;
+    const resetUrl = `https://365-fitness-gym.netlify.app/reset-password.html?token=${rawToken}`;
     const message = `You requested a password reset for 365 FITNESS GYM.\n\nClick this link to set a new password:\n${resetUrl}\n\nIf you did not request this, please ignore this email.`;
 
     await resend.emails.send({
@@ -187,7 +187,7 @@ router.post('/email/request', auth, async (req, res) => {
     user.pendingEmail = newEmail.toLowerCase();
     await user.save();
 
-    const verifyUrl = `https://gymfrontend0925.netlify.app/verify-email.html?token=${rawToken}`;
+    const verifyUrl = `https://365-fitness-gym.netlify.app/verify-email.html?token=${rawToken}`;
     const message = `You requested to change your 365 FITNESS GYM email to ${user.pendingEmail}.\n\nClick this link to authorize the change:\n${verifyUrl}\n\nIf you did not request this, please secure your account.`;
 
     await resend.emails.send({
