@@ -23,7 +23,7 @@ Welcome to the Iron Forge Gym project! This is a modern, responsive web applicat
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/iron-forge-gym.git
+   git clone https://github.com/sukannnttt/iron-forge-gym.git
    ```
 
 2. Navigate to the project directory:
@@ -82,7 +82,7 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## Contact
 
-For any inquiries, please reach out to [your-email@example.com].
+For any inquiries, please reach out to [sukantrai826@gmail.com].
 
 ## API Endpoints
 
