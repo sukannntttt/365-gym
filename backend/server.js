@@ -23,6 +23,7 @@ app.use('/api/seed', require('./routes/seed'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/payment', require('./routes/payment'));
 app.use('/api/analytics', require('./routes/analytics'));
+app.use('/api/athlete', require('./routes/athlete'));
 
 const PORT = process.env.PORT || 5000;
 
