@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>365 FITNESS GYM — Athlete Training</title>
+  <meta name="description" content="Dedicated high-performance athletic training for strength, power, speed, HYROX, and sport-specific excellence." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/athlete.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-name">365 FITNESS GYM</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item" id="nav-dashboard">
+        <span class="nav-icon">🏠</span><span>Dashboard</span>
+      </a>
+      <a href="workout.html" class="nav-item" id="nav-workout">
+        <span class="nav-icon">🏋️</span><span>Workouts</span>
+      </a>
+      <a href="athlete.html" class="nav-item active" id="nav-athlete">
+        <span class="nav-icon">⚡</span><span>Athlete Training</span>
+      </a>
+      <a href="diet.html" class="nav-item" id="nav-diet">
+        <span class="nav-icon">🥗</span><span>Diet Plan</span>
+      </a>
+      <a href="log.html" class="nav-item" id="nav-log">
+        <span class="nav-icon">📋</span><span>Workout Log</span>
+      </a>
+      <a href="progress.html" class="nav-item" id="nav-progress">
+        <span class="nav-icon">📈</span><span>Progress</span>
+      </a>
+      <a href="bmi.html" class="nav-item" id="nav-bmi">
+        <span class="nav-icon">⚖️</span><span>BMI Calculator</span>
+      </a>
+      <a href="settings.html" class="nav-item" id="nav-settings">
+        <span class="nav-icon">⚙️</span><span>Settings</span>
+      </a>
+    </nav>
+    <button class="logout-btn" onclick="logout()">
+      <span>🚪</span> Logout
+    </button>
+  </aside>
+
+  <!-- Mobile Top Bar -->
+  <header class="mobile-header">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <span class="brand-name">⚡ 365 FITNESS GYM</span>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h1>⚡ ATHLETE PERFORMANCE</h1>
+        <p class="page-sub">Train for strength, speed, power, endurance, agility and peak competitive performance.</p>
+      </div>
+      <button class="btn-primary" onclick="openAthleteWizardModal()" style="font-size: 0.88rem; padding: 0.6rem 1.2rem;">
+        🎯 Personalise Plan
+      </button>
+    </div>
+
+    <!-- Top Sub-Navigation Tabs -->
+    <div class="athlete-subnav" id="athlete-subnav">
+      <button class="athlete-tab-btn active" data-tab="tab-overview">📊 Overview</button>
+      <button class="athlete-tab-btn" data-tab="tab-gym">🏋️ Gym Training</button>
+      <button class="athlete-tab-btn" data-tab="tab-ground">🏟️ Ground Training</button>
+      <button class="athlete-tab-btn" data-tab="tab-diet">🥗 Athlete Diet Plan</button>
+      <button class="athlete-tab-btn" data-tab="tab-recovery">🧘 Recovery & Rest</button>
+      <button class="athlete-tab-btn" data-tab="tab-schedule">📅 Weekly Schedule</button>
+      <button class="athlete-tab-btn" data-tab="tab-progress">📈 Performance Progress</button>
+    </div>
+
+    <!-- ================= TAB 1: OVERVIEW ================= -->
+    <div class="tab-panel active" id="tab-overview">
+      <div class="stats-grid" style="margin-bottom: 1.5rem;">
+        <div class="stat-card">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-info">
+            <div class="stat-value" id="overview-sport">General Athletic</div>
+            <div class="stat-label">Active Sport Focus</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-info">
+            <div class="stat-value" id="overview-readiness">88%</div>
+            <div class="stat-label">Daily Readiness Score</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📈</div>
+          <div class="stat-info">
+            <div class="stat-value" id="overview-jump">-- cm</div>
+            <div class="stat-label">Best Vertical Jump</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-info">
+            <div class="stat-value" id="overview-sprint">-- s</div>
+            <div class="stat-label">Best 100m Sprint</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Recommender / Current Setup -->
+        <div class="card">
+          <h2 class="card-title">🎯 Personalised Training Profile</h2>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">
+            Your custom sport settings dictate your recommended gym workouts, field drills, macro targets, and rest days.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 1.25rem;" id="overview-profile-summary">
+            <div style="background: var(--surface2); padding: 0.85rem; border-radius: 8px;">
+              <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">SPORT</span>
+              <strong id="sum-sport" style="color: var(--text); font-size: 0.95rem;">General Athletic</strong>
+            </div>
+            <div style="background: var(--surface2); padding: 0.85rem; border-radius: 8px;">
+              <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">LEVEL</span>
+              <strong id="sum-level" style="color: var(--text); font-size: 0.95rem;">Intermediate</strong>
+            </div>
+            <div style="background: var(--surface2); padding: 0.85rem; border-radius: 8px;">
+              <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">PRIMARY GOAL</span>
+              <strong id="sum-goal" style="color: var(--text); font-size: 0.95rem;">Explosive Power</strong>
+            </div>
+            <div style="background: var(--surface2); padding: 0.85rem; border-radius: 8px;">
+              <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">DAYS / WEEK</span>
+              <strong id="sum-days" style="color: var(--text); font-size: 0.95rem;">4 Days</strong>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="openAthleteWizardModal()" style="width: 100%;">⚙️ Update Sport & Parameters</button>
+        </div>
+
+        <!-- Today's Quick Readiness & Session -->
+        <div class="card">
+          <h2 class="card-title">⚡ Today's Training Focus</h2>
+          <div style="background: rgba(108, 99, 255, 0.1); border: 1px solid var(--accent); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+            <div style="font-weight: 800; color: #a29bfe; font-size: 1.05rem;" id="today-session-title">🏋️ Lower Body Power & Vertical Jump</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem;" id="today-session-desc">
+              Focus on rate of force development (RFD), triple extension, single-leg landing mechanics, and Spanish squat isometric holds.
+            </p>
+          </div>
+          <button class="view-plan-btn" onclick="switchTab('tab-gym')" style="margin-bottom: 0.5rem;">Explore All Gym Plans</button>
+          <button class="view-plan-btn" onclick="switchTab('tab-ground')" style="background: transparent; border-color: var(--border);">Go to Ground Training</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 2: GYM TRAINING ================= -->
+    <div class="tab-panel" id="tab-gym">
+      <div class="cat-filter-container" id="gym-category-filters">
+        <button class="cat-btn active" data-cat="all">All Programs</button>
+        <button class="cat-btn" data-cat="hyrox">🔥 HYROX</button>
+        <button class="cat-btn" data-cat="strength">💪 Athletic Strength</button>
+        <button class="cat-btn" data-cat="power">⚡ Explosive Power</button>
+        <button class="cat-btn" data-cat="isometric">🧘 Isometric Holds</button>
+        <button class="cat-btn" data-cat="speed">🏃 Speed & Accel</button>
+        <button class="cat-btn" data-cat="jump">🦘 Jump & Plyo</button>
+        <button class="cat-btn" data-cat="agility">🔄 Agility & Reaction</button>
+        <button class="cat-btn" data-cat="conditioning">🫀 Athletic Conditioning</button>
+        <button class="cat-btn" data-cat="sport-specific">⚽ Sport-Specific</button>
+        <button class="cat-btn" data-cat="mobility">🛡️ Mobility & Prehab</button>
+      </div>
+
+      <div class="athlete-cards-grid" id="gym-plans-container">
+        <!-- Injected dynamically via js/athlete.js -->
+      </div>
+    </div>
+
+    <!-- ================= TAB 3: GROUND TRAINING ================= -->
+    <div class="tab-panel" id="tab-ground">
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h2 class="card-title">🏟️ Field, Court & Outdoor Sessions</h2>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+          Field & court practice tailored to your sport. Includes acceleration mechanics, change of direction (COD), jump technique, and outdoor endurance.
+        </p>
+        
+        <div class="sports-grid" id="ground-sport-pills">
+          <!-- Sport Pills generated dynamically -->
+        </div>
+      </div>
+
+      <!-- Active Sport Ground Session Details -->
+      <div id="ground-session-display">
+        <!-- Injected by js/athlete.js -->
+      </div>
+    </div>
+
+    <!-- ================= TAB 4: ATHLETE DIET PLAN ================= -->
+    <div class="tab-panel" id="tab-diet">
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h2 class="card-title">🥗 Performance Nutrition & Macro Dashboard</h2>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">
+          Athletes require higher carbohydrates for glycogen replenishment, precise protein timing, and electrolyte balance compared to static bodybuilding.
+        </p>
+        
+        <div class="macro-grid" id="athlete-macro-cards">
+          <!-- Macro cards -->
+        </div>
+
+        <!-- Customizer Bar -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 1.25rem; background: var(--surface2); padding: 1rem; border-radius: 8px;">
+          <div style="flex: 1; min-width: 140px;">
+            <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Diet Type</label>
+            <select id="diet-type-select" onchange="updateAthleteDietUI()" style="width: 100%; padding: 0.4rem; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px;">
+              <option value="veg">Vegetarian</option>
+              <option value="non-veg">Non-Vegetarian</option>
+              <option value="egg">Eggitarian</option>
+              <option value="vegan">Vegan</option>
+            </select>
+          </div>
+          <div style="flex: 1; min-width: 140px;">
+            <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Budget Level</label>
+            <select id="diet-budget-select" onchange="updateAthleteDietUI()" style="width: 100%; padding: 0.4rem; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px;">
+              <option value="low">Budget-Friendly (Students)</option>
+              <option value="moderate" selected>Standard Balanced</option>
+              <option value="high">Premium High-Performance</option>
+            </select>
+          </div>
+          <div style="flex: 1; min-width: 140px;">
+            <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Protein Powder Option</label>
+            <select id="diet-whey-select" onchange="updateAthleteDietUI()" style="width: 100%; padding: 0.4rem; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px;">
+              <option value="false">Include Whey Protein</option>
+              <option value="true">100% Whole Food (Whey-Free)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Schedule & Timing -->
+      <div class="dashboard-grid">
+        <div class="card">
+          <h2 class="card-title">🍲 7-Day Indian Athletic Meal Plan</h2>
+          <div class="diet-timeline" id="athlete-meals-timeline">
+            <!-- Dynamic meal timeline -->
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">⏱️ Training Day vs Match Day Timing</h2>
+          <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.86rem; color: var(--text-muted);">
+            <div style="background: var(--surface2); padding: 0.9rem; border-radius: 8px;">
+              <strong style="color: var(--accent3); display: block; margin-bottom: 0.3rem;">⚡ Pre-Workout / Pre-Match (2-3 Hours Before)</strong>
+              Easily digestible complex carbs (oats, poha, boiled potatoes) + moderate lean protein. Low fat & low fiber to prevent GI distress.
+            </div>
+            <div style="background: var(--surface2); padding: 0.9rem; border-radius: 8px;">
+              <strong style="color: #ff9f43; display: block; margin-bottom: 0.3rem;">🚀 Immediate Pre-Match (30 Mins Before)</strong>
+              Fast-acting carbs: 1 banana, raisins, or electrolyte drink (ORS / coconut water).
+            </div>
+            <div style="background: var(--surface2); padding: 0.9rem; border-radius: 8px;">
+              <strong style="color: var(--accent); display: block; margin-bottom: 0.3rem;">🥤 Post-Session Recovery Window (Within 45 Mins)</strong>
+              3:1 Carbohydrate-to-Protein ratio (e.g. Sattu drink / Whey with banana / Paneer sandwich / Eggs with toast). Replenish glycogen & start muscle repair.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 5: RECOVERY & REST DAYS ================= -->
+    <div class="tab-panel" id="tab-recovery">
+      <div class="dashboard-grid" style="margin-bottom: 1.5rem;">
+        <!-- Daily Readiness Form -->
+        <div class="card">
+          <h2 class="card-title">📝 Daily Readiness & Fatigue Check</h2>
+          <form id="readiness-form" onsubmit="handleReadinessSubmit(event)">
+            <div class="form-group">
+              <label>Sleep Duration (Hours)</label>
+              <input type="number" id="read-sleep" value="8" min="3" max="14" step="0.5" required />
+            </div>
+            <div class="range-group">
+              <label>Sleep Quality <span>(1 = Poor, 5 = Excellent)</span></label>
+              <input type="range" id="read-sleep-q" min="1" max="5" value="4" oninput="document.getElementById('sq-val').textContent = this.value" />
+              <span style="font-size: 0.75rem; color: var(--accent); text-align: right;" id="sq-val">4</span>
+            </div>
+            <div class="range-group">
+              <label>Muscle Soreness <span>(1 = None, 5 = Severe)</span></label>
+              <input type="range" id="read-soreness" min="1" max="5" value="2" oninput="document.getElementById('sor-val').textContent = this.value" />
+              <span style="font-size: 0.75rem; color: var(--accent2); text-align: right;" id="sor-val">2</span>
+            </div>
+            <div class="range-group">
+              <label>Central Nervous System Fatigue <span>(1 = Fresh, 5 = Exhausted)</span></label>
+              <input type="range" id="read-fatigue" min="1" max="5" value="2" oninput="document.getElementById('fat-val').textContent = this.value" />
+              <span style="font-size: 0.75rem; color: #ff9f43; text-align: right;" id="fat-val">2</span>
+            </div>
+            <div class="range-group">
+              <label>Mental Motivation <span>(1 = Low, 5 = High)</span></label>
+              <input type="range" id="read-motivation" min="1" max="5" value="4" oninput="document.getElementById('mot-val').textContent = this.value" />
+              <span style="font-size: 0.75rem; color: var(--accent3); text-align: right;" id="mot-val">4</span>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">Calculate Readiness Score</button>
+          </form>
+        </div>
+
+        <!-- Readiness Score Output -->
+        <div class="card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+          <h2 class="card-title">⚡ Readiness Status</h2>
+          <div class="readiness-box" style="width: 100%; border: none;">
+            <div class="readiness-score-number" id="readiness-score-val">88</div>
+            <div class="readiness-status" id="readiness-score-status">GREEN — Prime for High Intensity Training</div>
+            <p style="font-size: 0.83rem; color: var(--text-muted); margin-top: 0.85rem;" id="readiness-advice">
+              Your recovery markers look optimal. Recommended today: High-power sprint or heavy athletic lifting session.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Recovery Routines -->
+      <div class="card">
+        <h2 class="card-title">🧘 Active Recovery & Prehab Routines</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem;">
+          <div style="background: var(--surface2); padding: 1rem; border-radius: 8px;">
+            <strong style="color: var(--text); display: block; margin-bottom: 0.3rem;">🦵 Ankle & Tendon Stiffness</strong>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.4;">
+              Eccentric calf drops, isometric soleus wall holds (45s), ankle rotations, toe walks.
+            </p>
+          </div>
+          <div style="background: var(--surface2); padding: 1rem; border-radius: 8px;">
+            <strong style="color: var(--text); display: block; margin-bottom: 0.3rem;">🧘 Hip Flexor & Groin Decompression</strong>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.4;">
+              Copenhagen plank regressions (15s/side), 90/90 hip switches, couch stretch (1 min/side).
+            </p>
+          </div>
+          <div style="background: var(--surface2); padding: 1rem; border-radius: 8px;">
+            <strong style="color: var(--text); display: block; margin-bottom: 0.3rem;">🏐 Overhead Shoulder Health</strong>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.4;">
+              Thoracic spine rotations, band Y-T-W raises (15 reps), wall slides with lift-off.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 6: WEEKLY SCHEDULE ================= -->
+    <div class="tab-panel" id="tab-schedule">
+      <div class="card">
+        <h2 class="card-title">📅 7-Day Unified Microcycle Schedule</h2>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">
+          Seamlessly balances gym sessions, ground field practice, recovery days, and match-day nutrition.
+        </p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;" id="weekly-schedule-grid">
+          <!-- Generated by js/athlete.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 7: PERFORMANCE PROGRESS ================= -->
+    <div class="tab-panel" id="tab-progress">
+      <div class="dashboard-grid" style="margin-bottom: 1.5rem;">
+        <!-- Log Metric Form -->
+        <div class="card">
+          <h2 class="card-title">➕ Log Performance Metric</h2>
+          <form id="athlete-metric-form" onsubmit="handleMetricSubmit(event)">
+            <div class="form-group">
+              <label>Metric Type</label>
+              <select id="met-type" onchange="updateMetricUnitLabel()" required>
+                <option value="vertical_jump">🦘 Vertical Jump (cm)</option>
+                <option value="broad_jump">📏 Standing Broad Jump (cm)</option>
+                <option value="sprint_10m">⚡ 10m Sprint Acceleration (sec)</option>
+                <option value="sprint_30m">🏃 30m Sprint Speed (sec)</option>
+                <option value="sprint_100m">🥇 100m Sprint Time (sec)</option>
+                <option value="pull_ups">💪 Max Weighted Pull-ups (reps)</option>
+                <option value="iso_hold">🧘 Spanish Squat / Iso Hold (sec)</option>
+                <option value="hyrox_time">🔥 HYROX Completion (mins)</option>
+                <option value="strength_pr">🏋️ Strength PR (kg)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Value</label>
+              <input type="number" id="met-val" placeholder="e.g. 65" step="0.01" required />
+            </div>
+            <div class="form-group" id="exercise-name-group" style="display: none;">
+              <label>Exercise / Drill Name</label>
+              <input type="text" id="met-exercise" placeholder="e.g. Trap Bar Deadlift" />
+            </div>
+            <div class="form-group">
+              <label>Notes / Context</label>
+              <input type="text" id="met-notes" placeholder="e.g. Felt explosive after rest day" />
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">Save Performance Record</button>
+          </form>
+        </div>
+
+        <!-- PR Records & Chart -->
+        <div class="card" style="flex: 2;">
+          <h2 class="card-title">🏆 Personal Records (PRs)</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.85rem; margin-bottom: 1rem;" id="pr-cards-grid">
+            <!-- Dynamic PR cards -->
+          </div>
+          <h3 style="font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem;">Metric History Trend</h3>
+          <canvas id="athlete-chart" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- WORKOUT PLAN DETAIL MODAL -->
+  <div class="athlete-modal" id="workout-detail-modal">
+    <div class="modal-content-card">
+      <button class="modal-close-btn" onclick="closeAthleteModal()">✕</button>
+      <div id="modal-plan-content">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ATHLETE WIZARD MODAL -->
+  <div class="athlete-modal" id="athlete-wizard-modal">
+    <div class="modal-content-card" style="max-width: 550px;">
+      <button class="modal-close-btn" onclick="closeWizardModal()">✕</button>
+      <h2 class="card-title" style="margin-bottom: 0.5rem;">🎯 Personalise Your Sport Profile</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+        Select your main athletic discipline to tailor your training programs, field practice, and nutritional targets.
+      </p>
+      
+      <form id="wizard-form" onsubmit="handleWizardSubmit(event)">
+        <div class="form-group">
+          <label>Primary Sport / Discipline</label>
+          <select id="wiz-sport" required>
+            <option value="General Athletic">General Athletic Performance</option>
+            <option value="HYROX">HYROX / Functional Fitness</option>
+            <option value="Volleyball">Volleyball</option>
+            <option value="Cricket">Cricket</option>
+            <option value="Badminton">Badminton</option>
+            <option value="Sprinting">Sprinting (100m/200m/400m)</option>
+            <option value="Football">Football / Soccer</option>
+            <option value="Basketball">Basketball</option>
+            <option value="Hockey">Field Hockey</option>
+            <option value="Tennis">Tennis</option>
+            <option value="Swimming">Swimming</option>
+            <option value="Boxing">Boxing / Combat Sports</option>
+            <option value="Wrestling">Wrestling</option>
+            <option value="Gymnastics">Gymnastics</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Position / Event Focus</label>
+          <input type="text" id="wiz-position" placeholder="e.g. Setter / Fast Bowler / 100m Sprint" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Experience Level</label>
+            <select id="wiz-level">
+              <option value="beginner">Beginner</option>
+              <option value="intermediate" selected>Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Primary Goal</label>
+            <select id="wiz-goal">
+              <option value="Explosive Power">Explosive Power & Speed</option>
+              <option value="Vertical Jump">Max Vertical Jump</option>
+              <option value="Athletic Strength">Raw Athletic Strength</option>
+              <option value="HYROX Stamina">HYROX & Work Capacity</option>
+              <option value="Injury Prevention">Prehab & Tendon Resilience</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Gym Days / Week</label>
+            <select id="wiz-days">
+              <option value="2">2 Days / Week</option>
+              <option value="3">3 Days / Week</option>
+              <option value="4" selected>4 Days / Week</option>
+              <option value="5">5 Days / Week</option>
+              <option value="6">6 Days / Week</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Diet Budget</label>
+            <select id="wiz-budget">
+              <option value="low">Budget-Friendly</option>
+              <option value="moderate" selected>Standard</option>
+              <option value="high">Premium</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem;">Save & Reconfigure Dashboard</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="src/api.js"></script>
+  <script src="src/auth.js"></script>
+  <script src="js/athlete.js"></script>
+</body>
+</html>
