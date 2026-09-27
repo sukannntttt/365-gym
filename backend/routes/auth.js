@@ -4,10 +4,12 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { Resend } = require('resend');
+const { OAuth2Client } = require('google-auth-library');
 const auth = require('../middleware/auth');
 const User = require('../models/User');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // register
 router.post('/register', async (req, res) => {
@@ -18,7 +20,7 @@ router.post('/register', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash(password, salt);
     const role = email.toLowerCase() === 'sukantrai826@gmail.com' ? 'admin' : 'user';
-    user = new User({ name, email, password: hashed, age, height, weight, goal, dietPreference: dietPreference || 'veg', role });
+    user = new User({ name, email, password: hashed, age, height, weight, goal, dietPreference: dietPreference || 'veg', role, authProvider: 'local' });
     await user.save();
     const payload = { user: { id: user.id } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
@@ -32,12 +34,57 @@ router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+    if (user.authProvider === 'google' && !user.password) {
+      return res.status(400).json({ message: 'This account uses Google Sign-In. Please use the Google button to log in.' });
+    }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
     const payload = { user: { id: user.id } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
     res.json({ token });
   } catch (err) { res.status(500).json({ message: err.message }); }
+});
+
+// Google OAuth
+router.post('/google', async (req, res) => {
+  const { credential } = req.body;
+  if (!credential) return res.status(400).json({ message: 'Google credential is required' });
+
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+    const { sub: googleId, email, name, picture } = ticket.getPayload();
+
+    let user = await User.findOne({ $or: [{ googleId }, { email }] });
+
+    if (user) {
+      if (!user.googleId) {
+        user.googleId = googleId;
+        user.authProvider = 'google';
+        if (picture && !user.avatar) user.avatar = picture;
+        await user.save();
+      }
+    } else {
+      const role = email.toLowerCase() === 'sukantrai826@gmail.com' ? 'admin' : 'user';
+      user = new User({
+        name, email, googleId,
+        avatar: picture,
+        authProvider: 'google',
+        role,
+        dietPreference: 'veg'
+      });
+      await user.save();
+    }
+
+    const payload = { user: { id: user.id } };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
+    res.json({ token, isNewUser: !user.goal });
+  } catch (err) {
+    console.error('Google auth error:', err.message);
+    res.status(401).json({ message: 'Invalid Google token' });
+  }
 });
 
 // me (protected)
@@ -53,13 +100,12 @@ router.post('/forgotpassword', async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      // Don't leak that the email doesn't exist, just say email sent
       return res.json({ message: 'If that email exists, a reset link was sent.' });
     }
 
     const rawToken = crypto.randomBytes(20).toString('hex');
     user.resetPasswordToken = crypto.createHash('sha256').update(rawToken).digest('hex');
-    user.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 mins
+    user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
     await user.save();
 
     const resetUrl = `https://gymfrontend0925.netlify.app/reset-password.html?token=${rawToken}`;
@@ -102,13 +148,12 @@ router.post('/resetpassword/:token', async (req, res) => {
   }
 });
 
-// Update Profile (Name, Goal, Height, Weight, Age)
+// Update Profile
 router.put('/profile', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
     
-    // Only allow updating specific fields
     const { name, goal, height, weight, age, dietPreference } = req.body;
     if (name) user.name = name;
     if (goal) user.goal = goal;
@@ -130,17 +175,15 @@ router.post('/email/request', auth, async (req, res) => {
     const { newEmail } = req.body;
     if (!newEmail) return res.status(400).json({ message: 'New email is required.' });
 
-    // Ensure the new email doesn't already belong to someone else
     const exists = await User.findOne({ email: newEmail.toLowerCase() });
     if (exists) return res.status(400).json({ message: 'Email is already in use.' });
 
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    // Generate secure token
     const rawToken = crypto.randomBytes(20).toString('hex');
     user.emailChangeToken = crypto.createHash('sha256').update(rawToken).digest('hex');
-    user.emailChangeExpire = Date.now() + 15 * 60 * 1000; // 15 mins
+    user.emailChangeExpire = Date.now() + 15 * 60 * 1000;
     user.pendingEmail = newEmail.toLowerCase();
     await user.save();
 
@@ -149,7 +192,7 @@ router.post('/email/request', auth, async (req, res) => {
 
     await resend.emails.send({
       from: 'onboarding@resend.dev',
-      to: user.email, // Send to CURRENT email
+      to: user.email,
       subject: '365 FITNESS GYM Email Change Authorization',
       text: message
     });
@@ -171,10 +214,7 @@ router.post('/email/verify/:token', async (req, res) => {
 
     if (!user) return res.status(400).json({ message: 'Invalid or expired authorization link.' });
 
-    // Change the email definitively
     user.email = user.pendingEmail;
-    
-    // Clear out tokens
     user.emailChangeToken = undefined;
     user.emailChangeExpire = undefined;
     user.pendingEmail = undefined;
