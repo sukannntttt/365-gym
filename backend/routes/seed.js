@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const { auth, adminAuth } = require('../middleware/auth');
 const Diet = require('../models/Diet');
 const WorkoutPlan = require('../models/WorkoutPlan');
 
-// POST /api/seed -> populates DB
-router.get('/', async (req, res) => {
+// POST /api/seed -> populates DB (admin only)
+router.get('/', [auth, adminAuth], async (req, res) => {
   try {
-    try { await Diet.collection.dropIndex('goal_1'); } catch(e) {}
-    
+    try { await Diet.collection.dropIndex('goal_1'); } catch (e) {}
+
     await Diet.deleteMany({});
     await WorkoutPlan.deleteMany({});
 
@@ -80,12 +81,9 @@ router.get('/', async (req, res) => {
     // ─────────────────────────────────────────
     //  WORKOUT PLANS
     // ─────────────────────────────────────────
-
-    // ── FAT LOSS: 5-day cardio + strength ──
     await WorkoutPlan.create([
       {
-        goal: 'fat loss',
-        day: 'Day 1 — Upper Body + Cardio',
+        goal: 'fat loss', day: 'Day 1 — Upper Body + Cardio',
         exercises: [
           { name: 'Treadmill Warm-up', sets: 1, reps: '10 min', rest: '—' },
           { name: 'Push-ups', sets: 4, reps: '15-20', rest: '45s' },
@@ -96,8 +94,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'fat loss',
-        day: 'Day 2 — Lower Body + HIIT',
+        goal: 'fat loss', day: 'Day 2 — Lower Body + HIIT',
         exercises: [
           { name: 'Bodyweight Squats', sets: 4, reps: '20', rest: '45s' },
           { name: 'Walking Lunges', sets: 3, reps: '16 (8 each leg)', rest: '45s' },
@@ -108,8 +105,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'fat loss',
-        day: 'Day 3 — Active Recovery + Core',
+        goal: 'fat loss', day: 'Day 3 — Active Recovery + Core',
         exercises: [
           { name: '30-min Brisk Walk or Light Jog', sets: 1, reps: '30 min', rest: '—' },
           { name: 'Plank Hold', sets: 4, reps: '45s', rest: '30s' },
@@ -119,8 +115,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'fat loss',
-        day: 'Day 4 — Full Body Circuit',
+        goal: 'fat loss', day: 'Day 4 — Full Body Circuit',
         exercises: [
           { name: 'Jumping Jacks (Warm-up)', sets: 1, reps: '3 min', rest: '—' },
           { name: 'Dumbbell Squat to Press', sets: 4, reps: '12', rest: '60s' },
@@ -131,22 +126,16 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'fat loss',
-        day: 'Day 5 — Cardio Blast',
+        goal: 'fat loss', day: 'Day 5 — Cardio Blast',
         exercises: [
           { name: 'Cycling or Elliptical (steady state)', sets: 1, reps: '20 min', rest: '—' },
           { name: 'Sprint Intervals (30s sprint / 60s walk)', sets: 8, reps: '1 round', rest: '60s' },
           { name: 'Stair Climber', sets: 1, reps: '10 min', rest: '—' },
           { name: 'Cool-down Stretches', sets: 1, reps: '5 min', rest: '—' }
         ]
-      }
-    ]);
-
-    // ── MUSCLE GAIN: Push Pull Legs (6-day) ──
-    await WorkoutPlan.create([
+      },
       {
-        goal: 'muscle gain',
-        day: 'Day 1 — Push (Chest, Shoulders, Triceps)',
+        goal: 'muscle gain', day: 'Day 1 — Push (Chest, Shoulders, Triceps)',
         exercises: [
           { name: 'Barbell Bench Press', sets: 4, reps: '8-10', rest: '90s' },
           { name: 'Incline Dumbbell Press', sets: 4, reps: '10-12', rest: '90s' },
@@ -158,8 +147,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'muscle gain',
-        day: 'Day 2 — Pull (Back, Biceps)',
+        goal: 'muscle gain', day: 'Day 2 — Pull (Back, Biceps)',
         exercises: [
           { name: 'Deadlift', sets: 4, reps: '5-6', rest: '120s' },
           { name: 'Pull-ups or Lat Pulldown', sets: 4, reps: '8-12', rest: '90s' },
@@ -171,8 +159,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'muscle gain',
-        day: 'Day 3 — Legs (Quads, Hamstrings, Glutes)',
+        goal: 'muscle gain', day: 'Day 3 — Legs (Quads, Hamstrings, Glutes)',
         exercises: [
           { name: 'Barbell Back Squat', sets: 5, reps: '6-8', rest: '120s' },
           { name: 'Romanian Deadlift', sets: 4, reps: '10', rest: '90s' },
@@ -183,8 +170,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'muscle gain',
-        day: 'Day 4 — Push (Volume Focus)',
+        goal: 'muscle gain', day: 'Day 4 — Push (Volume Focus)',
         exercises: [
           { name: 'Incline Barbell Press', sets: 4, reps: '8-10', rest: '90s' },
           { name: 'Flat Dumbbell Press', sets: 4, reps: '10-12', rest: '75s' },
@@ -196,8 +182,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'muscle gain',
-        day: 'Day 5 — Pull (Volume Focus)',
+        goal: 'muscle gain', day: 'Day 5 — Pull (Volume Focus)',
         exercises: [
           { name: 'Weighted Pull-ups', sets: 4, reps: '6-8', rest: '90s' },
           { name: 'Single Arm DB Row', sets: 4, reps: '10-12 each', rest: '75s' },
@@ -208,8 +193,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'muscle gain',
-        day: 'Day 6 — Legs + Core',
+        goal: 'muscle gain', day: 'Day 6 — Legs + Core',
         exercises: [
           { name: 'Front Squat or Hack Squat', sets: 4, reps: '8-10', rest: '90s' },
           { name: 'Bulgarian Split Squat', sets: 3, reps: '10 each leg', rest: '90s' },
@@ -219,14 +203,9 @@ router.get('/', async (req, res) => {
           { name: 'Weighted Plank', sets: 3, reps: '45s', rest: '45s' },
           { name: 'Cable Crunches', sets: 3, reps: '15', rest: '45s' }
         ]
-      }
-    ]);
-
-    // ── WEIGHT GAIN: 4-day compound focus ──
-    await WorkoutPlan.create([
+      },
       {
-        goal: 'weight gain',
-        day: 'Day 1 — Chest & Triceps (Mass)',
+        goal: 'weight gain', day: 'Day 1 — Chest & Triceps (Mass)',
         exercises: [
           { name: 'Flat Barbell Bench Press', sets: 5, reps: '5', rest: '120s' },
           { name: 'Incline Dumbbell Press', sets: 4, reps: '8-10', rest: '90s' },
@@ -237,8 +216,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'weight gain',
-        day: 'Day 2 — Back & Biceps (Mass)',
+        goal: 'weight gain', day: 'Day 2 — Back & Biceps (Mass)',
         exercises: [
           { name: 'Conventional Deadlift', sets: 5, reps: '5', rest: '180s' },
           { name: 'Barbell Row (heavy)', sets: 5, reps: '5-6', rest: '120s' },
@@ -249,8 +227,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'weight gain',
-        day: 'Day 3 — Legs (Heavy Compound)',
+        goal: 'weight gain', day: 'Day 3 — Legs (Heavy Compound)',
         exercises: [
           { name: 'Barbell Back Squat (heavy)', sets: 5, reps: '5', rest: '180s' },
           { name: 'Leg Press (overload)', sets: 5, reps: '8-10', rest: '120s' },
@@ -261,8 +238,7 @@ router.get('/', async (req, res) => {
         ]
       },
       {
-        goal: 'weight gain',
-        day: 'Day 4 — Shoulders & Arms (Mass)',
+        goal: 'weight gain', day: 'Day 4 — Shoulders & Arms (Mass)',
         exercises: [
           { name: 'Barbell Overhead Press (heavy)', sets: 5, reps: '5-6', rest: '120s' },
           { name: 'Arnold Press', sets: 4, reps: '8-10', rest: '90s' },
@@ -275,9 +251,10 @@ router.get('/', async (req, res) => {
       }
     ]);
 
-    res.json({ message: 'Seed complete!' });
+    return res.json({ success: true, message: 'Seed complete!' });
   } catch (err) {
-    res.status(500).json({ message: 'Error seeding', error: err.message });
+    console.error('Seed error:', err.message);
+    return res.status(500).json({ success: false, message: 'Error seeding' });
   }
 });
 

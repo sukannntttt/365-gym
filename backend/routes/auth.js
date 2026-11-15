@@ -5,60 +5,95 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { Resend } = require('resend');
 const { OAuth2Client } = require('google-auth-library');
-const auth = require('../middleware/auth');
+const { auth, adminAuth, superAdminAuth } = require('../middleware/auth');
+const { noteAuthFailure, noteAuthSuccess } = require('../middleware/rateLimit');
+const {
+  validators, handleValidationErrors,
+} = require('../middleware/validation');
+const { body, param } = require('express-validator');
 const User = require('../models/User');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// register
-router.post('/register', async (req, res) => {
+// ---------- Register ----------
+router.post('/register', [
+  validators.name,
+  validators.email,
+  validators.password,
+  body('age').optional().isInt({ min: 13, max: 100 }).toInt(),
+  body('height').optional().isInt({ min: 50, max: 250 }).toInt(),
+  body('weight').optional().isFloat({ min: 20, max: 300 }).toInt(),
+  body('goal').optional().trim().isLength({ min: 1, max: 100 }),
+  body('dietPreference').optional().isIn(['veg', 'non-veg']),
+], handleValidationErrors, async (req, res) => {
   const { name, email, password, age, height, weight, goal, dietPreference } = req.body;
   try {
     let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ message: 'User already exists' });
-    const salt = await bcrypt.genSalt(10);
+    if (user) {
+      return res.status(400).json({ success: false, message: 'User already exists' });
+    }
+    const salt = await bcrypt.genSalt(12);
     const hashed = await bcrypt.hash(password, salt);
-    const role = email.toLowerCase() === 'sukantrai826@gmail.com' ? 'admin' : 'user';
-    user = new User({ name, email, password: hashed, age, height, weight, goal, dietPreference: dietPreference || 'veg', role, authProvider: 'local' });
+    const role = email.toLowerCase() === 'sukantrai826@gmail.com' ? 'admin' : 'member';
+    user = new User({
+      name, email, password: hashed, age, height, weight, goal,
+      dietPreference: dietPreference || 'veg', role, authProvider: 'local',
+    });
     await user.save();
-    const payload = { user: { id: user.id } };
+    const payload = { user: { id: user.id, role: user.role } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.json({ token, user: { id: user.id, name: user.name, email: user.email, goal: user.goal, dietPreference: user.dietPreference } });
-  } catch (err) { res.status(500).json({ message: err.message }); }
+    return res.json({ success: true, token, user: { id: user.id, name: user.name, email: user.email, goal: user.goal, dietPreference: user.dietPreference } });
+  } catch (err) {
+    console.error('Register error:', err.message);
+    return res.status(500).json({ success: false, message: 'Registration failed' });
+  }
 });
 
-// login
-router.post('/login', async (req, res) => {
+// ---------- Login ----------
+router.post('/login', [
+  validators.email,
+  body('password').notEmpty().withMessage('Password is required'),
+], handleValidationErrors, async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!user) {
+      noteAuthFailure(req);
+      return res.status(400).json({ success: false, message: 'Invalid credentials' });
+    }
     if (user.authProvider === 'google' && !user.password) {
-      return res.status(400).json({ message: 'This account uses Google Sign-In. Please use the Google button to log in.' });
+      noteAuthFailure(req);
+      return res.status(400).json({ success: false, message: 'This account uses Google Sign-In. Please use the Google button to log in.' });
     }
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-    const payload = { user: { id: user.id } };
+    if (!isMatch) {
+      noteAuthFailure(req);
+      return res.status(400).json({ success: false, message: 'Invalid credentials' });
+    }
+    noteAuthSuccess(req);
+    const payload = { user: { id: user.id, role: user.role } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.json({ token });
-  } catch (err) { res.status(500).json({ message: err.message }); }
+    return res.json({ success: true, token });
+  } catch (err) {
+    console.error('Login error:', err.message);
+    return res.status(500).json({ success: false, message: 'Login failed' });
+  }
 });
 
-// Google OAuth
-router.post('/google', async (req, res) => {
+// ---------- Google OAuth ----------
+router.post('/google', [
+  body('credential').notEmpty().withMessage('Google credential is required'),
+], handleValidationErrors, async (req, res) => {
   const { credential } = req.body;
-  if (!credential) return res.status(400).json({ message: 'Google credential is required' });
-
   try {
     const ticket = await googleClient.verifyIdToken({
       idToken: credential,
-      audience: process.env.GOOGLE_CLIENT_ID
+      audience: process.env.GOOGLE_CLIENT_ID,
     });
     const { sub: googleId, email, name, picture } = ticket.getPayload();
 
     let user = await User.findOne({ $or: [{ googleId }, { email }] });
-
     if (user) {
       if (!user.googleId) {
         user.googleId = googleId;
@@ -67,40 +102,44 @@ router.post('/google', async (req, res) => {
         await user.save();
       }
     } else {
-      const role = email.toLowerCase() === 'sukantrai826@gmail.com' ? 'admin' : 'user';
+      const role = email.toLowerCase() === 'sukantrai826@gmail.com' ? 'admin' : 'member';
       user = new User({
-        name, email, googleId,
-        avatar: picture,
-        authProvider: 'google',
-        role,
-        dietPreference: 'veg'
+        name, email, googleId, avatar: picture, authProvider: 'google',
+        role, dietPreference: 'veg',
       });
       await user.save();
     }
 
-    const payload = { user: { id: user.id } };
+    const payload = { user: { id: user.id, role: user.role } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.json({ token, isNewUser: !user.goal });
+    return res.json({ success: true, token, isNewUser: !user.goal });
   } catch (err) {
     console.error('Google auth error:', err.message);
-    res.status(401).json({ message: 'Invalid Google token' });
+    return res.status(401).json({ success: false, message: 'Invalid Google token' });
   }
 });
 
-// me (protected)
+// ---------- Me (protected) ----------
 router.get('/me', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
-    res.json(user);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+    return res.json({ success: true, user });
+  } catch (err) {
+    console.error('Me error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to load profile' });
+  }
 });
 
-// forgot-password
-router.post('/forgotpassword', async (req, res) => {
+// ---------- Forgot password ----------
+router.post('/forgotpassword', [
+  validators.email,
+], handleValidationErrors, async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.json({ message: 'If that email exists, a reset link was sent.' });
+      // Do not reveal whether the email exists
+      return res.json({ success: true, message: 'If that email exists, a reset link was sent.' });
     }
 
     const rawToken = crypto.randomBytes(20).toString('hex');
@@ -115,45 +154,55 @@ router.post('/forgotpassword', async (req, res) => {
       from: 'onboarding@resend.dev',
       to: user.email,
       subject: '365 FITNESS GYM Password Reset',
-      text: message
+      text: message,
     });
 
-    res.json({ message: 'If that email exists, a reset link was sent.' });
+    return res.json({ success: true, message: 'If that email exists, a reset link was sent.' });
   } catch (err) {
-    res.status(500).json({ message: 'Server error setting up email.' });
+    console.error('Forgot password error:', err.message);
+    return res.status(500).json({ success: false, message: 'Server error setting up email.' });
   }
 });
 
-// reset-password
-router.post('/resetpassword/:token', async (req, res) => {
+// ---------- Reset password ----------
+router.post('/resetpassword/:token', [
+  param('token').trim().isLength({ min: 1 }).withMessage('Invalid reset token'),
+  validators.password,
+], handleValidationErrors, async (req, res) => {
   try {
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
     const user = await User.findOne({
       resetPasswordToken,
-      resetPasswordExpire: { $gt: Date.now() }
+      resetPasswordExpire: { $gt: Date.now() },
     });
+    if (!user) return res.status(400).json({ success: false, message: 'Invalid or expired token.' });
 
-    if (!user) return res.status(400).json({ message: 'Invalid or expired token.' });
-
-    const salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(12);
     user.password = await bcrypt.hash(req.body.password, salt);
-
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
 
-    res.json({ message: 'Password reset successful!' });
+    return res.json({ success: true, message: 'Password reset successful!' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Reset password error:', err.message);
+    return res.status(500).json({ success: false, message: 'Password reset failed' });
   }
 });
 
-// Update Profile
-router.put('/profile', auth, async (req, res) => {
+// ---------- Update profile ----------
+router.put('/profile', auth, [
+  validators.optionalName,
+  body('goal').optional().trim().isLength({ min: 1, max: 100 }),
+  body('height').optional().isInt({ min: 50, max: 250 }).toInt(),
+  body('weight').optional().isFloat({ min: 20, max: 300 }).toInt(),
+  body('age').optional().isInt({ min: 13, max: 100 }).toInt(),
+  body('dietPreference').optional().isIn(['veg', 'non-veg']),
+], handleValidationErrors, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
-    
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+
     const { name, goal, height, weight, age, dietPreference } = req.body;
     if (name) user.name = name;
     if (goal) user.goal = goal;
@@ -161,25 +210,26 @@ router.put('/profile', auth, async (req, res) => {
     if (weight) user.weight = weight;
     if (age) user.age = age;
     if (dietPreference) user.dietPreference = dietPreference;
-    
+
     await user.save();
-    res.json({ message: 'Profile updated successfully', user });
+    return res.json({ success: true, message: 'Profile updated successfully', user });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Profile update error:', err.message);
+    return res.status(500).json({ success: false, message: 'Profile update failed' });
   }
 });
 
-// Request Email Change
-router.post('/email/request', auth, async (req, res) => {
+// ---------- Request email change ----------
+router.post('/email/request', auth, [
+  body('newEmail').isEmail().withMessage('Valid email is required').normalizeEmail(),
+], handleValidationErrors, async (req, res) => {
   try {
     const { newEmail } = req.body;
-    if (!newEmail) return res.status(400).json({ message: 'New email is required.' });
-
     const exists = await User.findOne({ email: newEmail.toLowerCase() });
-    if (exists) return res.status(400).json({ message: 'Email is already in use.' });
+    if (exists) return res.status(400).json({ success: false, message: 'Email is already in use.' });
 
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
 
     const rawToken = crypto.randomBytes(20).toString('hex');
     user.emailChangeToken = crypto.createHash('sha256').update(rawToken).digest('hex');
@@ -194,25 +244,27 @@ router.post('/email/request', auth, async (req, res) => {
       from: 'onboarding@resend.dev',
       to: user.email,
       subject: '365 FITNESS GYM Email Change Authorization',
-      text: message
+      text: message,
     });
-    
-    res.json({ message: 'Authorization email sent to your CURRENT address. Please confirm it is you.' });
+
+    return res.json({ success: true, message: 'Authorization email sent to your CURRENT address. Please confirm it is you.' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Email change request error:', err.message);
+    return res.status(500).json({ success: false, message: 'Email change request failed' });
   }
 });
 
-// Verify Email Change
-router.post('/email/verify/:token', async (req, res) => {
+// ---------- Verify email change ----------
+router.post('/email/verify/:token', [
+  param('token').trim().isLength({ min: 1 }).withMessage('Invalid token'),
+], handleValidationErrors, async (req, res) => {
   try {
     const emailChangeToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
     const user = await User.findOne({
       emailChangeToken,
-      emailChangeExpire: { $gt: Date.now() }
+      emailChangeExpire: { $gt: Date.now() },
     });
-
-    if (!user) return res.status(400).json({ message: 'Invalid or expired authorization link.' });
+    if (!user) return res.status(400).json({ success: false, message: 'Invalid or expired authorization link.' });
 
     user.email = user.pendingEmail;
     user.emailChangeToken = undefined;
@@ -220,9 +272,10 @@ router.post('/email/verify/:token', async (req, res) => {
     user.pendingEmail = undefined;
     await user.save();
 
-    res.json({ message: 'Email successfully changed!' });
+    return res.json({ success: true, message: 'Email successfully changed!' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Email verify error:', err.message);
+    return res.status(500).json({ success: false, message: 'Email verification failed' });
   }
 });
 

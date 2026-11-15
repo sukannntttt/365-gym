@@ -1,80 +1,76 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
+const { auth, roleAllowed } = require('../middleware/auth');
 const User = require('../models/User');
 const WorkoutLog = require('../models/WorkoutLog');
 const Progress = require('../models/Progress');
 
-// Admin Check Middleware
-const adminAuth = async (req, res, next) => {
-  try {
-    const user = await User.findById(req.user.id);
-    if (!user || user.role !== 'admin') {
-      return res.status(403).json({ message: 'Access denied: Admins only.' });
-    }
-    next();
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
-  }
-};
+const adminAuth = roleAllowed('admin', 'superAdmin');
+const superAdminAuth = roleAllowed('superAdmin');
 
-// GET /api/admin/users
+// ---------- GET /api/admin/users ----------
 router.get('/users', [auth, adminAuth], async (req, res) => {
   try {
     const users = await User.find().select('-password').sort({ _id: -1 });
-    
-    // Quick overall stats
     const totalWorkouts = await WorkoutLog.countDocuments();
     const totalProgress = await Progress.countDocuments();
-
-    res.json({
+    return res.json({
+      success: true,
       totalUsers: users.length,
       totalWorkouts,
       totalProgress,
-      users
+      users,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Admin users error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to load users' });
   }
 });
 
-// Utility: promote manually if user exists before schema update
-router.post('/promote', async (req, res) => {
-  const { secret, email } = req.body;
-  if (secret !== process.env.JWT_SECRET) return res.status(403).json({ message: 'Invalid secret' });
-  
-  const user = await User.findOneAndUpdate({ email: email.toLowerCase() }, { role: 'admin' }, { new: true });
-  res.json({ user });
+// ---------- POST /api/admin/promote (super admin only) ----------
+router.post('/promote', [auth, superAdminAuth], async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email || typeof email !== 'string') {
+      return res.status(400).json({ success: false, message: 'Email is required' });
+    }
+    const user = await User.findOneAndUpdate(
+      { email: email.toLowerCase() },
+      { role: 'admin' },
+      { new: true }
+    ).select('-password');
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+    return res.json({ success: true, user });
+  } catch (err) {
+    console.error('Promote error:', err.message);
+    return res.status(500).json({ success: false, message: 'Promote failed' });
+  }
 });
 
-// POST /api/admin/pay-fee/:id
+// ---------- POST /api/admin/pay-fee/:id ----------
 router.post('/pay-fee/:id', [auth, adminAuth], async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
-    
-    // Calculate new date: +30 days
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+
     const currentDue = user.feeDueDate ? new Date(user.feeDueDate) : new Date();
     const baseDate = currentDue > new Date() ? currentDue : new Date();
-    
     const newDueDate = new Date(baseDate.getTime() + (30 * 24 * 60 * 60 * 1000));
     user.feeDueDate = newDueDate;
 
-    // Apply the pending tier if it exists
     if (user.pendingTier) {
       user.membershipTier = user.pendingTier;
-      user.pendingTier = undefined; // Clear after applying
+      user.pendingTier = undefined;
     } else {
-      // Default to Pro if nothing was pending (legacy support)
       user.membershipTier = 'Pro';
     }
-
-    user.pendingTxnId = undefined; // Clear the transaction ID
+    user.pendingTxnId = undefined;
     await user.save();
-    
-    res.json({ message: 'Fee marked paid', feeDueDate: user.feeDueDate });
+
+    return res.json({ success: true, message: 'Fee marked paid', feeDueDate: user.feeDueDate });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Pay fee error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to mark fee paid' });
   }
 });
 

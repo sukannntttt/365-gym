@@ -1,60 +1,63 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
+const { auth } = require('../middleware/auth');
 const AthleteProfile = require('../models/AthleteProfile');
 const AthleteProgress = require('../models/AthleteProgress');
+const { body, param, validationResult } = require('express-validator');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key_365gym';
-
-// Auth middleware
-const auth = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
-  if (!token) return res.status(401).json({ message: 'No auth token, access denied' });
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch (err) {
-    res.status(401).json({ message: 'Invalid token' });
+function handleValidationErrors(req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation failed.',
+      errors: errors.array().map(e => ({ field: e.path || e.param, message: e.msg })),
+    });
   }
-};
+  next();
+}
 
-// GET Athlete Profile
+// ---------- GET Athlete Profile ----------
 router.get('/profile', auth, async (req, res) => {
   try {
     let profile = await AthleteProfile.findOne({ userId: req.user.id });
     if (!profile) {
       profile = await AthleteProfile.create({ userId: req.user.id });
     }
-    res.json(profile);
+    return res.json({ success: true, profile });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Get athlete profile error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to load profile' });
   }
 });
 
-// PUT / POST Athlete Profile
-router.post('/profile', auth, async (req, res) => {
+// ---------- PUT / POST Athlete Profile ----------
+router.post('/profile', auth, [
+  body('sport').optional().trim().isLength({ min: 1, max: 50 }),
+  body('secondarySport').optional().trim().isLength({ max: 50 }),
+  body('positionOrEvent').optional().trim().isLength({ max: 50 }),
+  body('level').optional().isIn(['beginner', 'intermediate', 'advanced']),
+  body('primaryGoal').optional().trim().isLength({ min: 1, max: 200 }),
+  body('secondaryGoals').optional().isArray({ max: 10 }),
+  body('age').optional().isInt({ min: 10, max: 100 }).toInt(),
+  body('bodyWeight').optional().isFloat({ min: 20, max: 300 }).toFloat(),
+  body('height').optional().isInt({ min: 50, max: 250 }).toInt(),
+  body('trainingDaysPerWeek').optional().isInt({ min: 1, max: 7 }).toInt(),
+  body('sessionDuration').optional().trim().isLength({ max: 50 }),
+  body('equipment').optional().trim().isLength({ max: 100 }),
+  body('trainingLocation').optional().trim().isLength({ max: 100 }),
+  body('dietBudget').optional().isIn(['low', 'moderate', 'high']),
+  body('dietPreference').optional().isIn(['veg', 'non-veg', 'egg', 'vegan']),
+  body('isWheyFree').optional().isBoolean(),
+  body('competitionDate').optional().isISO8601(),
+], handleValidationErrors, async (req, res) => {
   try {
     const {
-      sport,
-      secondarySport,
-      positionOrEvent,
-      level,
-      primaryGoal,
-      secondaryGoals,
-      age,
-      bodyWeight,
-      height,
-      trainingDaysPerWeek,
-      sessionDuration,
-      equipment,
-      trainingLocation,
-      dietBudget,
-      dietPreference,
-      isWheyFree,
-      competitionDate
+      sport, secondarySport, positionOrEvent, level, primaryGoal, secondaryGoals,
+      age, bodyWeight, height, trainingDaysPerWeek, sessionDuration, equipment,
+      trainingLocation, dietBudget, dietPreference, isWheyFree, competitionDate,
     } = req.body;
-    
+
     let profile = await AthleteProfile.findOne({ userId: req.user.id });
     if (!profile) {
       profile = new AthleteProfile({ userId: req.user.id });
@@ -66,27 +69,28 @@ router.post('/profile', auth, async (req, res) => {
     if (level !== undefined) profile.level = level;
     if (primaryGoal !== undefined) profile.primaryGoal = primaryGoal;
     if (secondaryGoals !== undefined) profile.secondaryGoals = secondaryGoals;
-    if (age !== undefined) profile.age = age ? Number(age) : null;
-    if (bodyWeight !== undefined) profile.bodyWeight = bodyWeight ? Number(bodyWeight) : null;
-    if (height !== undefined) profile.height = height ? Number(height) : null;
-    if (trainingDaysPerWeek !== undefined) profile.trainingDaysPerWeek = Number(trainingDaysPerWeek);
+    if (age !== undefined) profile.age = age;
+    if (bodyWeight !== undefined) profile.bodyWeight = bodyWeight;
+    if (height !== undefined) profile.height = height;
+    if (trainingDaysPerWeek !== undefined) profile.trainingDaysPerWeek = trainingDaysPerWeek;
     if (sessionDuration !== undefined) profile.sessionDuration = sessionDuration;
     if (equipment !== undefined) profile.equipment = equipment;
     if (trainingLocation !== undefined) profile.trainingLocation = trainingLocation;
     if (dietBudget !== undefined) profile.dietBudget = dietBudget;
     if (dietPreference !== undefined) profile.dietPreference = dietPreference;
     if (isWheyFree !== undefined) profile.isWheyFree = isWheyFree;
-    if (competitionDate !== undefined) profile.competitionDate = competitionDate ? new Date(competitionDate) : null;
+    if (competitionDate !== undefined) profile.competitionDate = new Date(competitionDate);
     profile.updatedAt = Date.now();
 
     await profile.save();
-    res.json(profile);
+    return res.json({ success: true, profile });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Update athlete profile error:', err.message);
+    return res.status(500).json({ success: false, message: 'Profile update failed' });
   }
 });
 
-// POST Reset Athlete Profile Preferences (Preserves Logs & History)
+// ---------- POST Reset Athlete Profile Preferences ----------
 router.post('/profile/reset', auth, async (req, res) => {
   try {
     let profile = await AthleteProfile.findOne({ userId: req.user.id });
@@ -114,19 +118,23 @@ router.post('/profile/reset', auth, async (req, res) => {
       profile.updatedAt = Date.now();
       await profile.save();
     }
-    res.json({ message: 'Profile preferences reset to defaults successfully', profile });
+    return res.json({ success: true, message: 'Profile preferences reset to defaults successfully', profile });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Reset athlete profile error:', err.message);
+    return res.status(500).json({ success: false, message: 'Profile reset failed' });
   }
 });
 
-// POST Log Completed Workout Session
-router.post('/workout/complete', auth, async (req, res) => {
+// ---------- POST Log Completed Workout Session ----------
+router.post('/workout/complete', auth, [
+  body('planId').trim().isLength({ min: 1, max: 100 }).withMessage('planId is required'),
+  body('planName').optional().trim().isLength({ max: 200 }),
+  body('category').optional().trim().isLength({ max: 100 }),
+  body('durationMinutes').optional().isInt({ min: 1, max: 1440 }).toInt(),
+  body('completedExercises').optional().isArray({ max: 100 }),
+], handleValidationErrors, async (req, res) => {
   try {
     const { planId, planName, category, durationMinutes, completedExercises } = req.body;
-    if (!planId) {
-      return res.status(400).json({ message: 'planId is required' });
-    }
 
     let profile = await AthleteProfile.findOne({ userId: req.user.id });
     if (!profile) {
@@ -138,44 +146,48 @@ router.post('/workout/complete', auth, async (req, res) => {
       planName: planName || 'Workout Session',
       category: category || 'general',
       completedAt: new Date(),
-      durationMinutes: durationMinutes ? Number(durationMinutes) : 0,
-      completedExercises: Array.isArray(completedExercises) ? completedExercises : []
+      durationMinutes: durationMinutes || 0,
+      completedExercises: Array.isArray(completedExercises) ? completedExercises : [],
     };
 
     profile.completedWorkouts.push(completionRecord);
     await profile.save();
 
-    res.json({ message: 'Workout completed and logged successfully', completionRecord, totalCompleted: profile.completedWorkouts.length });
+    return res.json({ success: true, message: 'Workout completed and logged successfully', completionRecord, totalCompleted: profile.completedWorkouts.length });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Complete workout error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to log workout' });
   }
 });
 
-// POST Save Custom Schedule Updates
-router.post('/schedule/update', auth, async (req, res) => {
+// ---------- POST Save Custom Schedule Updates ----------
+router.post('/schedule/update', auth, [
+  body('schedule').isArray({ max: 500 }).withMessage('schedule must be an array of day objects'),
+], handleValidationErrors, async (req, res) => {
   try {
     const { schedule } = req.body;
-    if (!Array.isArray(schedule)) {
-      return res.status(400).json({ message: 'schedule must be an array of day objects' });
-    }
-
     let profile = await AthleteProfile.findOne({ userId: req.user.id });
     if (!profile) {
       profile = new AthleteProfile({ userId: req.user.id });
     }
-
     profile.customSchedule = schedule;
     profile.updatedAt = Date.now();
     await profile.save();
-
-    res.json({ message: 'Custom schedule saved successfully', customSchedule: profile.customSchedule });
+    return res.json({ success: true, message: 'Custom schedule saved successfully', customSchedule: profile.customSchedule });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Save schedule error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to save schedule' });
   }
 });
 
-// POST Log Daily Readiness
-router.post('/readiness', auth, async (req, res) => {
+// ---------- POST Log Daily Readiness ----------
+router.post('/readiness', auth, [
+  body('sleepHours').optional().isFloat({ min: 0, max: 24 }).toFloat(),
+  body('sleepQuality').optional().isInt({ min: 1, max: 5 }).toInt(),
+  body('soreness').optional().isInt({ min: 1, max: 5 }).toInt(),
+  body('fatigue').optional().isInt({ min: 1, max: 5 }).toInt(),
+  body('motivation').optional().isInt({ min: 1, max: 5 }).toInt(),
+], handleValidationErrors, async (req, res) => {
   try {
     const { sleepHours, sleepQuality, soreness, fatigue, motivation } = req.body;
 
@@ -184,11 +196,6 @@ router.post('/readiness', auth, async (req, res) => {
       profile = new AthleteProfile({ userId: req.user.id });
     }
 
-    // Calculate readiness score (0-100)
-    // Sleep: (hours/8 * 25) max 25 + (quality/5 * 25) max 25 = max 50
-    // Soreness: (6 - soreness)/5 * 15 max 15
-    // Fatigue: (6 - fatigue)/5 * 15 max 15
-    // Motivation: (motivation/5) * 20 max 20
     const sleepScore = Math.min(25, (Number(sleepHours) / 8) * 25) + (Number(sleepQuality) / 5) * 25;
     const sorenessScore = ((6 - Number(soreness)) / 5) * 15;
     const fatigueScore = ((6 - Number(fatigue)) / 5) * 15;
@@ -202,87 +209,87 @@ router.post('/readiness', auth, async (req, res) => {
       soreness: Number(soreness),
       fatigue: Number(fatigue),
       motivation: Number(motivation),
-      readinessScore: totalScore
+      readinessScore: totalScore,
     };
 
     profile.readinessLogs.push(newLog);
-    // Keep last 30 logs
     if (profile.readinessLogs.length > 30) {
       profile.readinessLogs = profile.readinessLogs.slice(-30);
     }
-
     await profile.save();
-    res.json({ profile, latestLog: newLog });
+    return res.json({ success: true, profile, latestLog: newLog });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Readiness log error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to log readiness' });
   }
 });
 
-// Toggle completed schedule item
-router.post('/schedule/toggle', auth, async (req, res) => {
+// ---------- Toggle completed schedule item ----------
+router.post('/schedule/toggle', auth, [
+  body('itemId').trim().isLength({ min: 1, max: 100 }),
+], handleValidationErrors, async (req, res) => {
   try {
     const { itemId } = req.body;
     let profile = await AthleteProfile.findOne({ userId: req.user.id });
     if (!profile) {
       profile = new AthleteProfile({ userId: req.user.id });
     }
-
     const idx = profile.completedScheduleItems.indexOf(itemId);
     if (idx > -1) {
       profile.completedScheduleItems.splice(idx, 1);
     } else {
       profile.completedScheduleItems.push(itemId);
     }
-
     await profile.save();
-    res.json({ completedItems: profile.completedScheduleItems });
+    return res.json({ success: true, completedItems: profile.completedScheduleItems });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Toggle schedule error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to toggle schedule item' });
   }
 });
 
-// GET Athlete Performance Progress
+// ---------- GET Athlete Performance Progress ----------
 router.get('/progress', auth, async (req, res) => {
   try {
     const logs = await AthleteProgress.find({ userId: req.user.id }).sort({ date: -1 });
-    res.json(logs);
+    return res.json({ success: true, logs });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Get athlete progress error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to load progress' });
   }
 });
 
-// POST Log Athlete Performance Progress
-router.post('/progress', auth, async (req, res) => {
+// ---------- POST Log Athlete Performance Progress ----------
+router.post('/progress', auth, [
+  body('metricType').trim().isLength({ min: 1, max: 100 }).withMessage('metricType is required'),
+  body('value').isFloat().withMessage('value must be a number'),
+  body('unit').trim().isLength({ min: 1, max: 50 }).withMessage('unit is required'),
+  body('exerciseName').optional().trim().isLength({ max: 200 }),
+  body('notes').optional().trim().isLength({ max: 1000 }),
+], handleValidationErrors, async (req, res) => {
   try {
     const { metricType, value, unit, exerciseName, notes } = req.body;
-
-    if (!metricType || value === undefined || !unit) {
-      return res.status(400).json({ message: 'Missing required metric fields' });
-    }
-
     const newLog = await AthleteProgress.create({
-      userId: req.user.id,
-      metricType,
-      value: Number(value),
-      unit,
-      exerciseName,
-      notes
+      userId: req.user.id, metricType, value: Number(value), unit, exerciseName, notes,
     });
-
-    res.json(newLog);
+    return res.json({ success: true, log: newLog });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Create athlete progress error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to log progress' });
   }
 });
 
-// DELETE Athlete Performance Log
-router.delete('/progress/:id', auth, async (req, res) => {
+// ---------- DELETE Athlete Performance Log ----------
+router.delete('/progress/:id', auth, [
+  param('id').isMongoId().withMessage('Invalid ID format'),
+], handleValidationErrors, async (req, res) => {
   try {
     const log = await AthleteProgress.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
-    if (!log) return res.status(404).json({ message: 'Metric record not found' });
-    res.json({ message: 'Metric record deleted successfully' });
+    if (!log) return res.status(404).json({ success: false, message: 'Metric record not found' });
+    return res.json({ success: true, message: 'Metric record deleted successfully' });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Delete athlete progress error:', err.message);
+    return res.status(500).json({ success: false, message: 'Failed to delete progress record' });
   }
 });
 
